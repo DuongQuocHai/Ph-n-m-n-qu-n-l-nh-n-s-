@@ -65,7 +65,7 @@
                     <EditText
                         android:textColorHint="#ffffff"
                         android:id="@+id/edtuser"
-                        android:layout_width="330dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_account_box_black_24dp"
                         android:drawablePadding="30dp"
@@ -78,7 +78,7 @@
                         android:layout_marginTop="20dp"
                         android:textColorHint="#ffffff"
                         android:id="@+id/edtpass"
-                        android:layout_width="330dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
                         android:drawablePadding="30dp"
