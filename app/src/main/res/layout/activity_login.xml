@@ -21,7 +21,7 @@
             android:layout_height="130dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logo"/>
 
         <RelativeLayout
             android:id="@+id/relly"
@@ -36,7 +36,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Welcome  Back,"
                 android:textColor="#ffff"
-                android:textSize="40dp"
+                android:textSize="35dp"
                 app:fontFamily="@font/abril_fatface" />
 
             <TextView
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:textColorHint="#ffffff"
+                        android:textColorHint="#B3FFFFFF"
                         android:id="@+id/edtuser"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -76,7 +76,7 @@
 
                     <EditText
                         android:layout_marginTop="20dp"
-                        android:textColorHint="#ffffff"
+                        android:textColorHint="#B3FFFFFF"
                         android:id="@+id/edtpass"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
