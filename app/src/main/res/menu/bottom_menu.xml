@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_lichcong"
+        android:icon="@drawable/logo"
+        android:title="Lịch công" />
+
+    <item
+        android:id="@+id/nav_chamcong"
+        android:icon="@drawable/logo"
+        android:title="Chấm công" />
+
+    <item
+        android:id="@+id/nav_them"
+        android:icon="@drawable/logo"
+        android:title="Thêm" />
+
+</menu>
