@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NhanVienActivity">
+
+    <EditText
+        android:id="@+id/search_nhan_vien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/radius"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="20dp"
+        android:hint="Tìm kiếm"
+        android:paddingLeft="15dp"
+        android:textColorHint="#4f4f4f" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/search_nhan_vien"
+        android:background="#EDEDED">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:drawableRight="@drawable/ic_check"
+                android:paddingRight="20dp"
+                android:text="Tất cả"
+                android:textAllCaps="false"
+                android:textColor="#6B6B6B" />
+
+            <Button
+                android:id="@+id/btn_chi_nhanh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:drawableRight="@drawable/ic_check"
+                android:paddingRight="20dp"
+                android:text="Chi nhánh"
+                android:textAllCaps="false"
+                android:textColor="#6B6B6B" />
+
+            <Button
+                android:id="@+id/btn_chuc_vu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:drawableRight="@drawable/ic_check"
+                android:paddingRight="20dp"
+                android:text="Chức vụ"
+                android:textAllCaps="false"
+                android:textColor="#6B6B6B" />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/lv_nhan_vien"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </LinearLayout>
+</RelativeLayout>
