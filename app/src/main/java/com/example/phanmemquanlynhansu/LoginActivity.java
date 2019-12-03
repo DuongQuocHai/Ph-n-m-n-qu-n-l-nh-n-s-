@@ -29,11 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-
         relly = (RelativeLayout) findViewById(R.id.relly);
         relly2 = (RelativeLayout) findViewById(R.id.relly2);
 

@@ -64,6 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Báo cáo"
+                    android:gravity="center_vertical"
                     android:textColor="#2c3e50"
 
                     />
