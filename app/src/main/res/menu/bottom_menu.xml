@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+ <item
+     android:id="@+id/lichcong"
+     android:title="Lịch công"
+     android:icon="@drawable/calendar"
+     />
     <item
-        android:id="@+id/nav_lichcong"
-        android:icon="@drawable/logo"
-        android:title="Lịch công" />
-
+        android:id="@+id/chamcong"
+        android:title="Chấm công"
+        android:icon="@drawable/lock"
+        />
     <item
-        android:id="@+id/nav_chamcong"
-        android:icon="@drawable/logo"
-        android:title="Chấm công" />
-
-    <item
-        android:id="@+id/nav_them"
-        android:icon="@drawable/logo"
-        android:title="Thêm" />
-
+        android:id="@+id/them"
+        android:title="Thêm"
+        android:icon="@drawable/more"
+        />
 </menu>

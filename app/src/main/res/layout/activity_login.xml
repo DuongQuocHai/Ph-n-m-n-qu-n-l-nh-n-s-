@@ -9,11 +9,11 @@
     tools:context=".LoginActivity">
 
     <RelativeLayout
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
         <ImageView
             android:id="@+id/ivlogo"
@@ -21,7 +21,7 @@
             android:layout_height="130dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/logo"/>
+            app:srcCompat="@drawable/logo" />
 
         <RelativeLayout
             android:id="@+id/relly"
@@ -29,12 +29,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivlogo"
             android:visibility="gone">
+
             <TextView
                 android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Welcome  Back,"
+                android:text="Tăng Ca"
                 android:textColor="#ffff"
                 android:textSize="35dp"
                 app:fontFamily="@font/abril_fatface" />
@@ -43,77 +43,80 @@
                 android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
                 android:text="Please to Log In to acces."
                 android:textColor="#FCFAFA"
                 android:textSize="20dp"
                 app:fontFamily="serif"
-                android:layout_below="@+id/tv1" />
+                android:layout_marginTop="20dp"/>
 
             <LinearLayout
-                android:layout_marginTop="40dp"
                 android:id="@+id/linel"
-                android:layout_below="@id/tv2"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv2"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <EditText
-                        android:textColorHint="#B3FFFFFF"
                         android:id="@+id/edtuser"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:background="@drawable/background_edt"
                         android:drawableLeft="@drawable/ic_account_box_black_24dp"
                         android:drawablePadding="30dp"
                         android:hint="Username"
                         android:inputType="text"
-                        android:background="@drawable/background_edt"
-                        android:paddingLeft="10dp" />
+                        android:paddingLeft="10dp"
+                        android:textColor="#454444"
+                        android:textColorHint="#B3FFFFFF" />
 
                     <EditText
-                        android:layout_marginTop="20dp"
-                        android:textColorHint="#B3FFFFFF"
                         android:id="@+id/edtpass"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/background_edt"
                         android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
                         android:drawablePadding="30dp"
-                        android:hint="******"
+                        android:hint="••••••"
                         android:inputType="textPassword"
-                        android:background="@drawable/background_edt"
-                        android:paddingLeft="10dp" />
+                        android:paddingLeft="10dp"
+                        android:textColor="#454444"
+                        android:textColorHint="#B3FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
 
             <Button
-                android:layout_centerInParent="true"
-                android:layout_marginTop="40dp"
-                android:layout_below="@+id/linel"
                 android:id="@+id/btnlogin"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/linel"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/background_btn"
                 android:text="Sign In"
-                android:textColor="#ffff"
-                />
+                android:textColor="#ffff" />
         </RelativeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relly2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nhóm 8©"
-            app:fontFamily="monospace" />
+            app:fontFamily="@font/abeezee_italic" />
     </RelativeLayout>
 </RelativeLayout>

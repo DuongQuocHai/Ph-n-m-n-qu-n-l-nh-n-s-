@@ -1,53 +1,99 @@
 package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Fragment.FragmentChamCong;
 import com.example.phanmemquanlynhansu.Fragment.FragmentLichCong;
 import com.example.phanmemquanlynhansu.Fragment.FragmentThem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView bottomNav;
-
+    ImageView imgMore, imgReload, imgBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_homepage,
-                new FragmentLichCong()).commit();
-
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+//        getSupportActionBar().setElevation(0);
+        View view = getSupportActionBar().getCustomView();
+        imgBack = view.findViewById(R.id.action_bar_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-
-                switch (item.getItemId()) {
-                    case R.id.nav_lichcong:
-                        selectedFragment = new FragmentLichCong();
-                        break;
-
-                    case R.id.nav_chamcong:
-                        selectedFragment = new FragmentChamCong();
-                        break;
-
-                    case R.id.nav_them:
-                        selectedFragment = new FragmentThem();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_homepage, selectedFragment).commit();
-                return false;
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Back", Toast.LENGTH_LONG).show();
             }
-
+        });
+        imgMore = view.findViewById(R.id.action_bar_more);
+        imgMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "More", Toast.LENGTH_LONG).show();
+            }
+        });
+        imgReload = view.findViewById(R.id.action_bar_reload);
+        imgReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Reload", Toast.LENGTH_LONG).show();
+            }
         });
 
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_homepage,
+//                new FragmentLichCong()).commit();
 
+        defaultFragment(new FragmentLichCong());
+        bottomNav.setOnNavigationItemSelectedListener(this);
+
+        }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment selectedFragment = null;
+
+        switch (item.getItemId()) {
+            case R.id.lichcong:
+                selectedFragment = new FragmentLichCong();
+                Toast.makeText(this, "Lịch Công", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.chamcong:
+                selectedFragment = new FragmentChamCong();
+                Toast.makeText(this, "Chấm Công", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.them:
+                selectedFragment = new FragmentThem();
+                Toast.makeText(this, "Thêm", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return defaultFragment(selectedFragment);
     }
+
+    private boolean defaultFragment(Fragment fragment) {
+        if (fragment !=null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_homepage, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
 }
