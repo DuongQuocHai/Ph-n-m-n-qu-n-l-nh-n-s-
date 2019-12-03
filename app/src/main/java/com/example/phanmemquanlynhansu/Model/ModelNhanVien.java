@@ -1,11 +1,11 @@
 package com.example.phanmemquanlynhansu.Model;
 
-public class NhanVien {
+public class ModelNhanVien {
     private String name;
     private String  chucVu;
     private String  chiNhanh;
 
-    public NhanVien(String name, String chucVu, String chiNhanh) {
+    public ModelNhanVien(String name, String chucVu, String chiNhanh) {
         this.name = name;
         this.chucVu = chucVu;
         this.chiNhanh = chiNhanh;
@@ -35,7 +35,7 @@ public class NhanVien {
         this.chiNhanh = chiNhanh;
     }
     public String toString() {
-        return "NhanVien{" +
+        return "ModelNhanVien{" +
                 "name='" + name + '\'' +
                 ", chucVu='" + chucVu + '\'' +
                 ", chiNhanh='" + chiNhanh + '\'' +

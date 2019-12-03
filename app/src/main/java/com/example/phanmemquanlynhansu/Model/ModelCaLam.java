@@ -1,13 +1,13 @@
-package com.example.phanmemquanlynhansu.Modal;
+package com.example.phanmemquanlynhansu.Model;
 
-public class ModalCaLam {
+public class ModelCaLam {
     String maCaLam, tenCaLam, tgBatDauCaLam, tgKetThucCaLam, tongGioLam;
     Double luongCaLam, luong1GioLam;
 
-    public ModalCaLam() {
+    public ModelCaLam() {
     }
 
-    public ModalCaLam(String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, Double luongCaLam, Double luong1GioLam) {
+    public ModelCaLam(String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, Double luongCaLam, Double luong1GioLam) {
         this.maCaLam = maCaLam;
         this.tenCaLam = tenCaLam;
         this.tgBatDauCaLam = tgBatDauCaLam;

@@ -1,26 +1,20 @@
 package com.example.phanmemquanlynhansu.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.phanmemquanlynhansu.Model.NhanVien;
-import com.example.phanmemquanlynhansu.R;
+import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 
 import java.util.List;
 
-public class NhanVienAdapter extends ArrayAdapter<NhanVien> {
+public class NhanVienAdapter extends ArrayAdapter<ModelNhanVien> {
     private Context context;
     private int resource;
-    private List<NhanVien> object;
+    private List<ModelNhanVien> object;
 
-    public NhanVienAdapter(Context context, int resource, List<NhanVien> objects, List<NhanVien> object) {
+    public NhanVienAdapter(Context context, int resource, List<ModelNhanVien> objects, List<ModelNhanVien> object) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
