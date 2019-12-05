@@ -32,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-<<<<<<< HEAD
-=======
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -42,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
         myRef.setValue("Hello, World!");
 
->>>>>>> fad3d3f8b32477b3bcfc3b555c99b18ba284c43f
         relly = (RelativeLayout) findViewById(R.id.relly);
         relly2 = (RelativeLayout) findViewById(R.id.relly2);
         handler.postDelayed(runnable, 2000);
