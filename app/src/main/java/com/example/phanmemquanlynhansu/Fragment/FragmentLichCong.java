@@ -15,20 +15,11 @@ import com.example.phanmemquanlynhansu.CaLamActivity;
 import com.example.phanmemquanlynhansu.R;
 
 public class FragmentLichCong extends Fragment {
-    Button btnClick;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lichcong,container,false);
-        btnClick = view.findViewById(R.id.btnclick);
 
-        btnClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CaLamActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }

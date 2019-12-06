@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".SuaCaLamActivity">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Tạo ca"
+        android:text="Sửa ca làm"
         android:textSize="30sp" />
 
     <LinearLayout
@@ -25,7 +29,7 @@
         <TextView
             android:textSize="20sp"
             android:textAllCaps="true"
-            android:id="@+id/txt_ma_dlthemcl"
+            android:id="@+id/txt_ma_suacl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -44,7 +48,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/edt_ten_dlthemcl"
+            android:id="@+id/edt_ten_suacl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -52,7 +56,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -62,22 +66,38 @@
             android:text="Bắt đầu lúc: "
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txt_giobd_dlthemcl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <EditText
             android:layout_weight="1"
-            android:textSize="20sp" />
-        <Button
-            android:id="@+id/btn_giobd_dlthemcl"
-            android:text="haha"
-            android:layout_weight="0"
+            android:id="@+id/edt_giobd_suacl"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:text=" giờ"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text=" : "
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/edt_phutbd_suacl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:text=" phút"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -87,20 +107,34 @@
             android:text="Kết thúc lúc: "
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txt_giokt_dlthemcl"
-            android:textSize="20sp"
+        <EditText
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <Button
-            android:id="@+id/btn_giokt_dlthemcl"
-            android:text="haha"
-            android:layout_weight="0"
+            android:id="@+id/edt_giokt_suacl"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            />
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" giờ"
+            android:textSize="20sp" />
+        <TextView
+            android:text=" : "
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/edt_phutkt_suacl"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:text=" phút"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
     <LinearLayout
@@ -117,9 +151,9 @@
 
         <TextView
             android:textSize="20sp"
-            android:id="@+id/txt_tongtglam_dlthemcl"
+            android:id="@+id/txt_tongtglam_suacl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
     <LinearLayout
@@ -136,7 +170,7 @@
 
         <EditText
             android:textSize="20sp"
-            android:id="@+id/edt_luong1h_dlthemcl"
+            android:id="@+id/edt_luong1h_suacl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -154,7 +188,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/txt_luong1ca_dlthemcl"
+            android:id="@+id/txt_luong1ca_suacl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -166,19 +200,19 @@
         android:layout_height="wrap_content">
         <Button
             android:text="Hủy"
-            android:id="@+id/btn_huy_dlthemcl"
-            android:onClick="clickCaLam"
+            android:id="@+id/btn_huy_suacl"
+            android:onClick="clickSuaCaLam"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/btn_them_dlthemcl"
-            android:onClick="clickCaLam"
-            android:text="Thêm"
+            android:id="@+id/btn_them_suacl"
+            android:onClick="clickSuaCaLam"
+            android:text="Lưu"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-</LinearLayout>
 
+</LinearLayout>

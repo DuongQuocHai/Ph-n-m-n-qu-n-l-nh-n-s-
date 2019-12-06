@@ -9,12 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".CaLamActivity"></activity>
-
-        <activity android:name=".NhanVienActivity"></activity>
-        <activity android:name=".ThemNhanVienActivity"></activity>
-
+        <activity android:name=".SuaCaLamActivity"></activity>
+        <activity android:name=".CaLamActivity" />
+        <activity android:name=".NhanVienActivity" />
+        <activity android:name=".ThemNhanVienActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -9,12 +9,12 @@ import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 
 import java.util.List;
 
-public class NhanVienAdapter extends ArrayAdapter<ModelNhanVien> {
+public class AdapterNhanVien extends ArrayAdapter<ModelNhanVien> {
     private Context context;
     private int resource;
     private List<ModelNhanVien> object;
 
-    public NhanVienAdapter(Context context, int resource, List<ModelNhanVien> objects, List<ModelNhanVien> object) {
+    public AdapterNhanVien(Context context, int resource, List<ModelNhanVien> objects, List<ModelNhanVien> object) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;

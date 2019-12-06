@@ -1,13 +1,15 @@
 package com.example.phanmemquanlynhansu.Model;
 
-public class ModelCaLam {
+import java.io.Serializable;
+
+public class ModelCaLam  implements Serializable {
     String maCaLam, tenCaLam, tgBatDauCaLam, tgKetThucCaLam, tongGioLam;
-    Double luongCaLam, luong1GioLam;
+    double luongCaLam, luong1GioLam;
 
     public ModelCaLam() {
     }
 
-    public ModelCaLam(String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, Double luongCaLam, Double luong1GioLam) {
+    public ModelCaLam(String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, double luongCaLam, double luong1GioLam) {
         this.maCaLam = maCaLam;
         this.tenCaLam = tenCaLam;
         this.tgBatDauCaLam = tgBatDauCaLam;
@@ -57,19 +59,19 @@ public class ModelCaLam {
         this.tongGioLam = tongGioLam;
     }
 
-    public Double getLuongCaLam() {
+    public double getLuongCaLam() {
         return luongCaLam;
     }
 
-    public void setLuongCaLam(Double luongCaLam) {
+    public void setLuongCaLam(double luongCaLam) {
         this.luongCaLam = luongCaLam;
     }
 
-    public Double getLuong1GioLam() {
+    public double getLuong1GioLam() {
         return luong1GioLam;
     }
 
-    public void setLuong1GioLam(Double luong1GioLam) {
+    public void setLuong1GioLam(double luong1GioLam) {
         this.luong1GioLam = luong1GioLam;
     }
 }

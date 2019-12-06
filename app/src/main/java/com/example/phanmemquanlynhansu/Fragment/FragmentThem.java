@@ -12,25 +12,51 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.phanmemquanlynhansu.CaLamActivity;
 import com.example.phanmemquanlynhansu.NhanVienActivity;
 import com.example.phanmemquanlynhansu.R;
 
+import java.text.ParseException;
+
 public class FragmentThem extends Fragment {
-    LinearLayout nhanVien;
+    View view;
+    LinearLayout btnNhanVien,btnCaLam;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_them,container,false);
-        nhanVien = (LinearLayout) view.findViewById(R.id.nhanVien);
-        nhanVien.setOnClickListener(new View.OnClickListener() {
+        view = inflater.inflate(R.layout.fragment_them,container,false);
+        addControl();
+        addEvent();
+
+
+
+
+
+        return view;
+    }
+    public void addControl(){
+        btnNhanVien = view.findViewById(R.id.btn_nhanvien_fgthem);
+        btnCaLam = view.findViewById(R.id.btn_calam_fgthem);
+
+    }
+    public void addEvent(){
+        btnNhanVien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), NhanVienActivity.class);
+                Intent intent = new Intent(getContext(),NhanVienActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnCaLam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),CaLamActivity.class);
                 startActivity(intent);
             }
         });
 
-        return view;
     }
+
+
 
 }
