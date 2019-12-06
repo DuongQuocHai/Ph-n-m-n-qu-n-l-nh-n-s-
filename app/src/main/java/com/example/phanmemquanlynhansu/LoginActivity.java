@@ -35,14 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-<<<<<<< HEAD
-=======
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-
->>>>>>> 30026902dfbd93807347ca40cfc6aed89d8b2650
         relly = (RelativeLayout) findViewById(R.id.relly);
         relly2 = (RelativeLayout) findViewById(R.id.relly2);
         handler.postDelayed(runnable, 2000);
