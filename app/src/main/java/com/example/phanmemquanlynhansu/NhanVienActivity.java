@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.phanmemquanlynhansu.Fragment.FragmentThem;
+
 public class NhanVienActivity extends AppCompatActivity {
     ListView lvNhanVien;
     ImageView ivBack, ivAdd;
@@ -22,6 +24,14 @@ public class NhanVienActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_nhan_vien);
         View view = getSupportActionBar().getCustomView();
+        ivBack = view.findViewById(R.id.action_bar_back);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NhanVienActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
         ivAdd = view.findViewById(R.id.action_bar_add);
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override

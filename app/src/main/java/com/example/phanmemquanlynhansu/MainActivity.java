@@ -32,27 +32,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 //        getSupportActionBar().setElevation(0);
         View view = getSupportActionBar().getCustomView();
-        imgBack = view.findViewById(R.id.action_bar_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Back", Toast.LENGTH_LONG).show();
-            }
-        });
-        imgMore = view.findViewById(R.id.action_bar_more);
-        imgMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "More", Toast.LENGTH_LONG).show();
-            }
-        });
-        imgReload = view.findViewById(R.id.action_bar_reload);
-        imgReload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Reload", Toast.LENGTH_LONG).show();
-            }
-        });
 
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_homepage,
 //                new FragmentLichCong()).commit();
