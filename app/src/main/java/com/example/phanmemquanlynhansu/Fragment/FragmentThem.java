@@ -12,12 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.phanmemquanlynhansu.CaLamActivity;
+import com.example.phanmemquanlynhansu.CuaHangActivity;
 import com.example.phanmemquanlynhansu.NhanVienActivity;
 import com.example.phanmemquanlynhansu.R;
 
 public class FragmentThem extends Fragment {
     View view;
-    LinearLayout btnNhanVien,btnCaLam;
+    LinearLayout btnNhanVien,btnCaLam, btnCuaHang;
     LinearLayout nhanVien;
 
     @Nullable
@@ -36,6 +37,7 @@ public class FragmentThem extends Fragment {
     public void addControl(){
         btnNhanVien = view.findViewById(R.id.btn_nhanvien_fgthem);
         btnCaLam = view.findViewById(R.id.btn_calam_fgthem);
+        btnCuaHang = view.findViewById(R.id.btn_cuahang_fgthem);
 
     }
     public void addEvent(){
@@ -53,7 +55,13 @@ public class FragmentThem extends Fragment {
                 startActivity(intent);
             }
         });
-
+        btnCuaHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CuaHangActivity.class);
+                startActivity(intent);
+            }
+        });
         
     }
 
