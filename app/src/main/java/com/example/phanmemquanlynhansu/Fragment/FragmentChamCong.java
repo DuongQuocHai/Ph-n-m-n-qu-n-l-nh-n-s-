@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import com.example.phanmemquanlynhansu.R;
 
 public class FragmentChamCong extends Fragment {
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chamcong,container,false);

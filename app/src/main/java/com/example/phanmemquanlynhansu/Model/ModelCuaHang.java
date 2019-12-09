@@ -3,7 +3,7 @@ package com.example.phanmemquanlynhansu.Model;
 import java.io.Serializable;
 
 public class ModelCuaHang implements Serializable {
-    String maCuaHang, tenCuaHang, diaChi;
+    String maCuaHang, tenCuaHang, diaChi, id;
 
     public ModelCuaHang() {
 
@@ -12,6 +12,15 @@ public class ModelCuaHang implements Serializable {
         this.maCuaHang = maCuaHang;
         this.tenCuaHang = tenCuaHang;
         this.diaChi = diaChi;
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMaCuaHang() {
