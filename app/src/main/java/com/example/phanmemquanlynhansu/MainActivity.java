@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.chamcong:
-                selectedFragment = new FragmentChamCong();
+//                selectedFragment = new FragmentChamCong();
                 Toast.makeText(this, "Chấm Công", Toast.LENGTH_SHORT).show();
                 break;
 
