@@ -48,17 +48,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.lichcong:
                 selectedFragment = new FragmentLichCong();
-                Toast.makeText(this, "Lịch Công", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.chamcong:
-//                selectedFragment = new FragmentChamCong();
-                Toast.makeText(this, "Chấm Công", Toast.LENGTH_SHORT).show();
+                selectedFragment = new FragmentChamCong();
                 break;
 
             case R.id.them:
                 selectedFragment = new FragmentThem();
-                Toast.makeText(this, "Thêm", Toast.LENGTH_SHORT).show();
                 break;
         }
         return defaultFragment(selectedFragment);
