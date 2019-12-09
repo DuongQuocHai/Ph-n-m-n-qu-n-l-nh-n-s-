@@ -1,6 +1,7 @@
 package com.example.phanmemquanlynhansu.Function;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,8 +43,8 @@ public class Function {
         return date;
     }
 
-    public String soGioLam(String strGioBd, String strGioKt ){
-        java.util.Date bd = null ;
+    public String soGioLam(String strGioBd, String strGioKt) {
+        java.util.Date bd = null;
         java.util.Date kt = null;
         bd = converttoTime(strGioBd);
         kt = converttoTime(strGioKt);
@@ -52,32 +53,50 @@ public class Function {
         int gioKetThuc = kt.getHours() * 60 + kt.getMinutes();
         int soPhut = (gioKetThuc - gioBatDau) % 60;
         int soGio = (gioKetThuc - gioBatDau) / 60;
-        String gioLam ;
+        String gioLam;
         if (soGio < 10) {
-            gioLam = "0" + soGio + ":"+ String.valueOf(soPhut);
-        } if (soPhut < 10) {
+            gioLam = "0" + soGio + ":" + String.valueOf(soPhut);
+        }
+        if (soPhut < 10) {
             gioLam = String.valueOf(soGio) + ":" + "0" + soPhut;
-        } if (soPhut < 10 && soPhut < 10) {
-            gioLam = "0" + soGio + ":"+ "0" + soPhut;
-        } else gioLam = String.valueOf(soGio) + ":"+ String.valueOf(soPhut);
+        }
+        if (soPhut < 10 && soPhut < 10) {
+            gioLam = "0" + soGio + ":" + "0" + soPhut;
+        } else gioLam = String.valueOf(soGio) + ":" + String.valueOf(soPhut);
         return gioLam;
     }
 
-    public double luong1CL(String strGioBd, String strGioKt, double luong1Gio) {
+//    public double luong1CL(String strGioBd, String strGioKt, double luong1Gio) {
 //        double luong1Gio = Double.parseDouble(edtLuong1Gio.getText().toString());
 //        double gioBatDau = Integer.parseInt(giobd) * 60 + Integer.parseInt(phutbd);
 //        double gioKetThuc = Integer.parseInt(giokt) * 60 + Integer.parseInt(phutkt);
 //        double soGio = (gioKetThuc - gioBatDau) / 60;
 //        double tongLuong1Cl = soGio * luong1Gio;
-        java.util.Date bd = null ;
-        java.util.Date kt = null;
-        bd = converttoTime(strGioBd);
-        kt = converttoTime(strGioKt);
+//        java.util.Date bd = null ;
+//        java.util.Date kt = null;
+//        bd = converttoTime(strGioBd);
+//        kt = converttoTime(strGioKt);
+//
+//        double gioBatDau = bd.getHours() * 60 + bd.getMinutes();
+//        double gioKetThuc = kt.getHours() * 60 + kt.getMinutes();
+//        double soGio = (gioKetThuc - gioBatDau) / 60;
+//        double luongCaLam = soGio * luong1Gio;
+//        return luongCaLam;
+//    }
 
-        double gioBatDau = bd.getHours() * 60 + bd.getMinutes();
-        double gioKetThuc = kt.getHours() * 60 + kt.getMinutes();
-        double soGio = (gioKetThuc - gioBatDau) / 60;
-        double luongCaLam = soGio * luong1Gio;
-        return luongCaLam;
+    public double luong1CL(String tongGioLam, String luong1Gio) {
+        double luongCaLam =0;
+        if (luong1Gio.equals("")){
+            return  luongCaLam;
+        }else {
+            Log.e("luong1gio", luong1Gio);
+            java.util.Date giolam = null;
+            giolam = converttoTime(tongGioLam);
+            luongCaLam = (giolam.getHours() + giolam.getMinutes() / 60) * Double.parseDouble(luong1Gio);
+            return luongCaLam;
+        }
+
     }
+
+
 }

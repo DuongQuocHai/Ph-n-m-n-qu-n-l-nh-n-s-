@@ -31,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -44,12 +45,29 @@ public class CaLamActivity extends AppCompatActivity {
     EditText edttenCaLam, edtLuong1Gio;
     TextView txtTongGioCl, txtLuong1Ca, txtMaCaLam, txtGioBd, txtGioKt;
     Button btnGioBd, btnGioKt;
-    String maCl, tenCl, tgBdCl, tgKtCl, tongGioCl;
+    String maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, luong1Gio, luong1Ca;
     DatabaseReference mData;
-    double luong1Gio, luong1Ca;
     Function function = new Function();
     ArrayList<ModelCaLam> list;
     AdapterCaLam adapterCaLam;
+
+    public void clickCaLam(View view) throws ParseException {
+        switch (view.getId()) {
+            case R.id.btn_them_calam:
+                showDialogThemCaLam();
+                break;
+            case R.id.btn_huy_dlthemcl:
+//                Dialog dialog = new Dialog(CaLamActivity.this);
+//                dialog.dismiss();
+//                showTimePicker();
+                getString();
+                txtTongGioCl.setText(function.soGioLam(tgBdCl, tgKtCl));
+                break;
+            case R.id.btn_them_dlthemcl:
+                addCaLam();
+                break;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +89,19 @@ public class CaLamActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        lvCaLam.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                mData = FirebaseDatabase.getInstance().getReference("CaLam");
+                mData.child(list.get(position).getId()).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                        Toast.makeText(CaLamActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     public void addControl() {
@@ -80,37 +111,14 @@ public class CaLamActivity extends AppCompatActivity {
         lvCaLam.setAdapter(adapterCaLam);
     }
 
-    public void clickCaLam(View view) throws ParseException {
-        switch (view.getId()) {
-            case R.id.btn_them_calam:
-                showDialogThemCaLam();
-                break;
-            case R.id.btn_huy_dlthemcl:
-//                Dialog dialog = new Dialog(CaLamActivity.this);
-//                dialog.dismiss();
-//                showTimePicker();
-                getString();
-                txtTongGioCl.setText(function.soGioLam(tgBdCl,tgKtCl));
-                break;
-            case R.id.btn_them_dlthemcl:
-                addCaLam();
-                break;
-        }
-    }
-
     public void readData() {
         mData = FirebaseDatabase.getInstance().getReference();
         mData.child("CaLam").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 ModelCaLam modelCaLam = dataSnapshot.getValue(ModelCaLam.class);
-                list.add(new ModelCaLam(modelCaLam.getMaCaLam(),
-                        modelCaLam.getTenCaLam(),
-                        modelCaLam.getTgBatDauCaLam(),
-                        modelCaLam.getTgKetThucCaLam(),
-                        modelCaLam.getTongGioLam(),
-                        modelCaLam.getLuongCaLam(),
-                        modelCaLam.getLuong1GioLam()));
+                list.add(modelCaLam);
+                modelCaLam.setId(dataSnapshot.getKey());
                 adapterCaLam.notifyDataSetChanged();
             }
 
@@ -136,6 +144,26 @@ public class CaLamActivity extends AppCompatActivity {
         });
 
     }
+
+//    public void readData(){
+//        mData = FirebaseDatabase.getInstance().getReference("CaLam");
+//        mData.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot data : dataSnapshot.getChildren()) {
+//                    ModelCaLam modelCaLam = data.getValue(ModelCaLam.class);
+//                    modelCaLam.setId(data.getKey());
+//                    list.add(modelCaLam);
+//                }
+//                Toast.makeText(getApplicationContext(), "Load Data Success", Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
     public void showDialogThemCaLam() throws ParseException {
         Dialog dialog = new Dialog(CaLamActivity.this);
@@ -166,6 +194,40 @@ public class CaLamActivity extends AppCompatActivity {
                 txtMaCaLam.setText(function.convert(edttenCaLam.getText().toString()));
             }
         });
+
+        txtGioKt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtTongGioCl.setText(String.valueOf(function.soGioLam(txtGioBd.getText().toString(), txtGioKt.getText().toString())));
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtLuong1Gio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtLuong1Ca.setText(String.valueOf(function.luong1CL(txtTongGioCl.getText().toString(), edtLuong1Gio.getText().toString())));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         btnGioBd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,21 +249,18 @@ public class CaLamActivity extends AppCompatActivity {
         tenCl = edttenCaLam.getText().toString();
         tgBdCl = txtGioBd.getText().toString();
         tgKtCl = txtGioKt.getText().toString();
-        luong1Gio = Double.parseDouble(edtLuong1Gio.getText().toString());
+        luong1Gio = edtLuong1Gio.getText().toString();
+        tongGioCl = txtTongGioCl.getText().toString();
+        luong1Ca = txtLuong1Ca.getText().toString();
     }
 
 
     public void addCaLam() {
-        mData = FirebaseDatabase.getInstance().getReference();
+        mData = FirebaseDatabase.getInstance().getReference("CaLam");
         getString();
-        tongGioCl = function.soGioLam(tgBdCl, tgKtCl);
-        txtTongGioCl.setText(tongGioCl);
-
-        luong1Ca = function.luong1CL(tgBdCl,tgKtCl,luong1Gio);
-        txtLuong1Ca.setText(luong1Ca+"");
-
-        ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, 0, 0);
-        mData.child("CaLam").push().setValue(modelCaLam);
+        String uid = mData.push().getKey();
+        ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, Double.parseDouble(luong1Ca), Double.parseDouble(luong1Gio));
+        mData.child(uid).setValue(modelCaLam);
     }
 
     public void showTimePicker(final TextView txt) {

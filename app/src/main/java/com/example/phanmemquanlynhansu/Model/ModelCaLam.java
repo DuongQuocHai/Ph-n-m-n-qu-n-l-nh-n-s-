@@ -2,14 +2,30 @@ package com.example.phanmemquanlynhansu.Model;
 
 import java.io.Serializable;
 
-public class ModelCaLam  implements Serializable {
+public class ModelCaLam implements Serializable {
+    String id;
     String maCaLam, tenCaLam, tgBatDauCaLam, tgKetThucCaLam, tongGioLam;
     double luongCaLam, luong1GioLam;
 
-    public ModelCaLam() {
+    @Override
+    public String toString() {
+        return "ModelCaLam{" +
+                "id='" + id + '\'' +
+                ", maCaLam='" + maCaLam + '\'' +
+                ", tenCaLam='" + tenCaLam + '\'' +
+                ", tgBatDauCaLam='" + tgBatDauCaLam + '\'' +
+                ", tgKetThucCaLam='" + tgKetThucCaLam + '\'' +
+                ", tongGioLam='" + tongGioLam + '\'' +
+                ", luongCaLam=" + luongCaLam +
+                ", luong1GioLam=" + luong1GioLam +
+                '}';
     }
 
-    public ModelCaLam(String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, double luongCaLam, double luong1GioLam) {
+    public ModelCaLam() {
+
+    }
+
+    public ModelCaLam( String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, double luongCaLam, double luong1GioLam) {
         this.maCaLam = maCaLam;
         this.tenCaLam = tenCaLam;
         this.tgBatDauCaLam = tgBatDauCaLam;
@@ -17,6 +33,14 @@ public class ModelCaLam  implements Serializable {
         this.tongGioLam = tongGioLam;
         this.luongCaLam = luongCaLam;
         this.luong1GioLam = luong1GioLam;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMaCaLam() {

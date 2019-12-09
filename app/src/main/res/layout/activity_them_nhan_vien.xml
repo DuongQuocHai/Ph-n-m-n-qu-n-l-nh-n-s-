@@ -2,6 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/img_themnv"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/avatar"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+    <Button
+        android:id="@+id/btn_chonhinh_themnv"
+        android:text="chọn hình"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,13 +25,13 @@
             android:layout_height="wrap_content"
             android:text="ID:"
             android:layout_alignParentLeft="true"/>
-        <TextView
-            android:id="@+id/tvID"
+        <EditText
+            android:id="@+id/edt_id_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="150dp"
-            android:text="1"/>
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +44,7 @@
             android:text="Họ và tên:"
             android:layout_alignParentLeft="true"/>
         <EditText
-            android:id="@+id/edtName"
+            android:id="@+id/edt_ten_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -51,7 +64,7 @@
             android:text="Chức vụ:"/>
         <Spinner
 
-            android:id="@+id/spnChucVu"
+            android:id="@+id/spn_chucvu_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -68,7 +81,7 @@
             android:layout_alignParentLeft="true"
             android:text="Chi nhánh:"/>
         <Spinner
-            android:id="@+id/spnChiNhanh"
+            android:id="@+id/spn_chinhanh_thmenv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -86,14 +99,14 @@
             android:layout_weight="0.5"
             android:text="Giới tính:"/>
         <CheckBox
-            android:id="@+id/ckbNam"
+            android:id="@+id/ckb_nam_themnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:checked="true"
             android:text="Nam"/>
         <CheckBox
-            android:id="@+id/ckbNu"
+            android:id="@+id/ckb_nu_themnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -110,7 +123,7 @@
             android:text="Số điện thoại:"
             android:layout_alignParentLeft="true"/>
         <EditText
-            android:id="@+id/edtSdt"
+            android:id="@+id/edt_sdt_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -130,7 +143,7 @@
             android:layout_alignParentLeft="true"
             android:text="Địa chỉ:"/>
         <EditText
-            android:id="@+id/edtDiaChi"
+            android:id="@+id/edt_diachi_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -138,4 +151,8 @@
             android:paddingLeft="200dp"
             />
     </RelativeLayout>
+    <Button
+        android:text="Làm mới"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
