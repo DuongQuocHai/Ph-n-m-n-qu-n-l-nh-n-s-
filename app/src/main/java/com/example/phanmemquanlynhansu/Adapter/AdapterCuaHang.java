@@ -54,7 +54,6 @@ public class AdapterCuaHang extends BaseAdapter {
         TextView txtMaCuaHang = row.findViewById(R.id.txt_ma_itcuahang);
         TextView txtTenCuaHang = row.findViewById(R.id.txt_ten_itcuahang);
         TextView txtDiaChiCuaHang = row.findViewById(R.id.txt_diachi_itcuahang);
-        ImageView ivDeleteCH = row.findViewById(R.id.iv_xoacuahang);
 
 
         ModelCuaHang modelCuaHang = list.get(position);
@@ -62,16 +61,7 @@ public class AdapterCuaHang extends BaseAdapter {
         txtMaCuaHang.setText(modelCuaHang.getMaCuaHang());
         txtTenCuaHang.setText(modelCuaHang.getTenCuaHang());
         txtDiaChiCuaHang.setText(modelCuaHang.getDiaChi());
-        final String keyId = modelCuaHang.getId();
 
-
-        ivDeleteCH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
-                mData.child("CuaHang").child(keyId).removeValue();
-            }
-        });
         return row;
     }
 }

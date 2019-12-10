@@ -2,12 +2,14 @@ package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -50,24 +53,10 @@ public class CaLamActivity extends AppCompatActivity {
     Function function = new Function();
     ArrayList<ModelCaLam> list;
     AdapterCaLam adapterCaLam;
+    View view;
+    ImageView ivLoading;
+    AnimationDrawable animation;
 
-    public void clickCaLam(View view) throws ParseException {
-        switch (view.getId()) {
-            case R.id.btn_them_calam:
-                showDialogThemCaLam();
-                break;
-            case R.id.btn_huy_dlthemcl:
-//                Dialog dialog = new Dialog(CaLamActivity.this);
-//                dialog.dismiss();
-//                showTimePicker();
-                getString();
-                txtTongGioCl.setText(function.soGioLam(tgBdCl, tgKtCl));
-                break;
-            case R.id.btn_them_dlthemcl:
-                addCaLam();
-                break;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +91,16 @@ public class CaLamActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_calam);
+        view = getSupportActionBar().getCustomView();
+
+        ivLoading = findViewById(R.id.iv_loading);
+        ivLoading.setBackgroundResource(R.drawable.loading);
+        animation = (AnimationDrawable) ivLoading.getBackground();
+        animation.start();
     }
 
     public void addControl() {
@@ -109,6 +108,26 @@ public class CaLamActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapterCaLam = new AdapterCaLam(CaLamActivity.this, list);
         lvCaLam.setAdapter(adapterCaLam);
+    }
+
+    public void clickCaLam(View view) throws ParseException {
+        switch (view.getId()) {
+            case R.id.action_bar_add_calam:
+                showDialogThemCaLam();
+                break;
+            case R.id.action_bar_back_calam:
+                break;
+            case R.id.btn_huy_dlthemcl:
+//                Dialog dialog = new Dialog(CaLamActivity.this);
+//                dialog.dismiss();
+//                showTimePicker();
+                getString();
+                txtTongGioCl.setText(function.soGioLam(tgBdCl,tgKtCl));
+                break;
+            case R.id.btn_them_dlthemcl:
+                addCaLam();
+                break;
+        }
     }
 
     public void readData() {
@@ -121,6 +140,7 @@ public class CaLamActivity extends AppCompatActivity {
                 list.add(modelCaLam);
                 modelCaLam.setId(dataSnapshot.getKey());
                 adapterCaLam.notifyDataSetChanged();
+                ivLoading.setVisibility(View.GONE);
             }
 
             @Override
@@ -262,6 +282,7 @@ public class CaLamActivity extends AppCompatActivity {
         String uid = mData.push().getKey();
         ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, Double.parseDouble(luong1Ca), Double.parseDouble(luong1Gio));
         mData.child(uid).setValue(modelCaLam);
+
     }
 
     public void showTimePicker(final TextView txt) {

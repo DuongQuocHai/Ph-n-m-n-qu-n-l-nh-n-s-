@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context=".SuaCaLamActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Sửa ca làm"
-        android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,13 +66,15 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/btn_giobd_suacl"
-            android:onClick="clickSuaCl"
-            android:text="haha"
-            android:layout_weight="0"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="62dp"
+            android:layout_weight="0"
+            android:onClick="clickSuaCaLam"
+            android:text="haha"
+            tools:ignore="OnClick" />
 
     </LinearLayout>
     <LinearLayout
@@ -99,12 +95,14 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/btn_giokt_suacl"
-            android:onClick="clickSuaCl"
-            android:layout_weight="0"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:onClick="clickSuaCaLam"
+             />
 
     </LinearLayout>
     <LinearLayout
@@ -164,25 +162,10 @@
             android:layout_weight="1"
             android:textSize="20sp" />
     </LinearLayout>
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:text="Hủy"
-            android:id="@+id/btn_huy_suacl"
-            android:onClick="clickSuaCl"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/btn_luu_suacl"
-            android:onClick="clickSuaCl"
-            android:text="Lưu"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Xoá ca làm"
+        android:textColor="#FF1744"/>
 </LinearLayout>

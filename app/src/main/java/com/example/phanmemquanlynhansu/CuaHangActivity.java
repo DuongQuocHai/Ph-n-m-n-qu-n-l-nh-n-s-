@@ -2,30 +2,30 @@ package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-import com.example.phanmemquanlynhansu.Adapter.AdapterCaLam;
 import com.example.phanmemquanlynhansu.Adapter.AdapterCuaHang;
-import com.example.phanmemquanlynhansu.Model.ModelCaLam;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -39,6 +39,10 @@ public class CuaHangActivity extends AppCompatActivity {
     ArrayList<ModelCuaHang> list;
     String maCH, tenCH,diaChiCH, id;
     Dialog dialog;
+    View view;
+    ProgressBar progressBarCuaHang;
+    AnimationDrawable animation;
+    ImageView ivLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,10 @@ public class CuaHangActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapterCuaHang = new AdapterCuaHang(CuaHangActivity.this, list);
         lvCuaHang.setAdapter(adapterCuaHang);
+        ivLoading = findViewById(R.id.iv_loading);
+        ivLoading.setBackgroundResource(R.drawable.loading);
+        animation = (AnimationDrawable) ivLoading.getBackground();
+        animation.start();
     }
 
     private void addEvents() {
@@ -65,16 +73,23 @@ public class CuaHangActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_cuahang);
+
     }
     public void clickCuaHang(View view) throws ParseException {
         switch (view.getId()) {
-            case R.id.btn_them_cuahang:
+            case R.id.action_bar_add_cuahang:
                 showDialogThemCaLam();
+                break;
+            case R.id.action_bar_back_cuahang:
                 break;
             case R.id.btn_them_cuahang1:
                 addCuaHang();
                 break;
             case R.id.btn_huy_cuahang1:
+                dialog.dismiss();
                 break;
         }
     }
@@ -113,6 +128,7 @@ public class CuaHangActivity extends AppCompatActivity {
                 list.add(modelCuaHang);
                 adapterCuaHang.notifyDataSetChanged();
 
+                ivLoading.setVisibility(View.GONE);
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

@@ -4,19 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".CuaHangActivity">
-
+    tools:context=".CuaHangActivity"
+    android:orientation="vertical">
     <ListView
-        android:id="@+id/lv_cuahang"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent"
+        android:id="@+id/lv_chucvu"/>
     <ImageView
         android:id="@+id/iv_loading"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerInParent="true" />
-
 
 </RelativeLayout>
