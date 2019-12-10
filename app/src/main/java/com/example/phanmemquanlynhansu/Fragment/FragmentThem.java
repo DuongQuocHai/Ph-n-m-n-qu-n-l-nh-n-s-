@@ -12,18 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.phanmemquanlynhansu.CaLamActivity;
+import com.example.phanmemquanlynhansu.ChucVuActivity;
 import com.example.phanmemquanlynhansu.CuaHangActivity;
 import com.example.phanmemquanlynhansu.NhanVienActivity;
 import com.example.phanmemquanlynhansu.R;
 
 public class FragmentThem extends Fragment {
     View view;
-<<<<<<< HEAD
-    LinearLayout btnNhanVien,btnCaLam;
-=======
-    LinearLayout btnNhanVien,btnCaLam, btnCuaHang;
-    LinearLayout nhanVien;
->>>>>>> 2f1520a69523b59f0884c6f517041849c8799dde
+    LinearLayout btnNhanVien,btnCaLam, btnCuaHang, btnChucVu;
 
     @Nullable
     @Override
@@ -36,11 +32,8 @@ public class FragmentThem extends Fragment {
     public void addControl(){
         btnNhanVien = view.findViewById(R.id.btn_nhanvien_fgthem);
         btnCaLam = view.findViewById(R.id.btn_calam_fgthem);
-<<<<<<< HEAD
-=======
         btnCuaHang = view.findViewById(R.id.btn_cuahang_fgthem);
-
->>>>>>> 2f1520a69523b59f0884c6f517041849c8799dde
+        btnChucVu = view.findViewById(R.id.btn_chuc_vu_fgthem);
     }
     public void addEvent(){
         btnNhanVien.setOnClickListener(new View.OnClickListener() {
@@ -57,10 +50,7 @@ public class FragmentThem extends Fragment {
                 startActivity(intent);
             }
         });
-<<<<<<< HEAD
 
-
-=======
         btnCuaHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,8 +58,14 @@ public class FragmentThem extends Fragment {
                 startActivity(intent);
             }
         });
-        
->>>>>>> 2f1520a69523b59f0884c6f517041849c8799dde
+
+        btnChucVu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChucVuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

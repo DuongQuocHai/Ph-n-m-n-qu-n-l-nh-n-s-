@@ -1,5 +1,6 @@
 package com.example.phanmemquanlynhansu;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
@@ -29,23 +30,24 @@ import java.util.Calendar;
 public class SuaCaLamActivity extends AppCompatActivity {
     EditText edttenCaLam, edtLuong1Gio;
     TextView txtTongGioCl, txtLuong1Ca, txtMaCaLam, txtGioBdCl, txtGioKtCl;
-    Button btnGioBD, btnGioKt;
     String maCl, tenCl, gioBdCl, gioKtCl, tongGioCl, luong1Ca, luong1Gio;
 
     ModelCaLam modelCaLam;
     Function function = new Function();
 
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sua_ca_lam);
         addControl();
         getData();
-
-
     }
 
-    public void addControl() {
+    public void addControl(){
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_sua_calam);
         edttenCaLam = findViewById(R.id.edt_ten_suacl);
         edtLuong1Gio = findViewById(R.id.edt_luong1h_suacl);
         txtMaCaLam = findViewById(R.id.txt_ma_suacl);
@@ -53,8 +55,34 @@ public class SuaCaLamActivity extends AppCompatActivity {
         txtLuong1Ca = findViewById(R.id.txt_luong1ca_suacl);
         txtGioBdCl = findViewById(R.id.txt_giobd_suacl);
         txtGioKtCl = findViewById(R.id.txt_giokt_suacl);
-    }
 
+    }
+    public void clickSuaCaLam(View view) {
+        switch (view.getId()) {
+            case R.id.action_bar_sua_calam:
+                getString();
+                String uid = modelCaLam.getId();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("CaLam");
+                myRef.child(uid).child("luong1GioLam").setValue(Double.parseDouble(luong1Gio) );
+                myRef.child(uid).child("luongCaLam").setValue(Double.parseDouble(luong1Ca) );
+                myRef.child(uid).child("maCaLam").setValue(maCl);
+                myRef.child(uid).child("tenCaLam").setValue(tenCl);
+                myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);
+                myRef.child(uid).child("tgKetThucCaLam").setValue(gioKtCl);
+                myRef.child(uid).child("tongGioLam").setValue(tongGioCl);
+                break;
+            case R.id.action_bar_back_sua_calam:
+                finish();
+                break;
+            case R.id.btn_giobd_suacl:
+                showTimePicker(txtGioBdCl);
+                break;
+            case R.id.btn_giokt_suacl:
+                showTimePicker(txtGioKtCl);
+                break;
+        }
+    }
     public void getString() {
         maCl = txtMaCaLam.getText().toString();
         tenCl = edttenCaLam.getText().toString();
@@ -66,9 +94,11 @@ public class SuaCaLamActivity extends AppCompatActivity {
     }
 
 
+
     public void getData() {
         Intent intent = getIntent();
         modelCaLam = (ModelCaLam) intent.getSerializableExtra("ModelCalam");
+        Log.e("=====",modelCaLam.getMaCaLam());
         if (modelCaLam != null) {
             txtMaCaLam.setText(modelCaLam.getMaCaLam());
             edttenCaLam.setText(modelCaLam.getTenCaLam());
@@ -127,33 +157,6 @@ public class SuaCaLamActivity extends AppCompatActivity {
 
     }
 
-    public void clickSuaCl(View view) {
-        switch (view.getId()) {
-            case R.id.btn_giobd_suacl:
-                showTimePicker(txtGioBdCl);
-                break;
-            case R.id.btn_giokt_suacl:
-                showTimePicker(txtGioKtCl);
-                break;
-            case R.id.btn_huy_suacl:
-                finish();
-                break;
-            case R.id.btn_luu_suacl:
-                getString();
-                String uid = modelCaLam.getId();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("CaLam");
-                myRef.child(uid).child("luong1GioLam").setValue(luong1Gio);
-                myRef.child(uid).child("luongCaLam").setValue(luong1Ca);
-                myRef.child(uid).child("maCaLam").setValue(maCl);
-                myRef.child(uid).child("tenCaLam").setValue(tenCl);
-                myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);
-                myRef.child(uid).child("tgKetThucCaLam").setValue(gioKtCl);
-                myRef.child(uid).child("tongGioLam").setValue(tongGioCl);
-                break;
-        }
-    }
-
     public void showTimePicker(final TextView txt) {
         final Calendar calendar = Calendar.getInstance();
         int gio = calendar.get(Calendar.HOUR_OF_DAY);
@@ -168,5 +171,6 @@ public class SuaCaLamActivity extends AppCompatActivity {
         }, gio, phut, true);
         timePickerDialog.show();
     }
+
 
 }

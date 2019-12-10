@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SuaCuaHangActivity"></activity>
+        <activity android:name=".ChucVuActivity"></activity>
+        <activity android:name=".SuaChucVuActivity"></activity>
         <activity android:name=".CuaHangActivity" />
         <activity android:name=".SuaCaLamActivity" />
         <activity android:name=".CaLamActivity" />

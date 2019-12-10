@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SuaCuaHangActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,11 +13,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mã cửa hàng: " />
+            android:text="Mã chức vụ: " />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_macuahang_edit"/>
+            android:id="@+id/edt_machucvu_edit"/>
 
     </LinearLayout>
     <LinearLayout
@@ -28,11 +27,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tên cửa hàng: " />
+            android:text="Tên chức vụ: " />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_tencuahang_edit"/>
+            android:id="@+id/edt_tenchucvu_edit"/>
 
     </LinearLayout>
     <LinearLayout
@@ -42,11 +41,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Địa chỉ: " />
+            android:text="Ghi chú: " />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_diachi_edit"/>
+            android:id="@+id/edt_ghichu_edit"/>
 
     </LinearLayout>
     <TextView
@@ -54,8 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textColor="#FF1744"
-        android:text="Xoá cửa hàng"
-        android:id="@+id/txt_xoa_cuahang"
-        android:onClick="clickSuaCuaHang"/>
+        android:text="Xoá chức vụ"
+        android:id="@+id/txt_xoa_chucvu"
+        android:onClick="clickSuaChucVu" />
 
 </LinearLayout>

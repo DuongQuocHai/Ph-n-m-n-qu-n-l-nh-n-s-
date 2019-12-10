@@ -30,12 +30,6 @@
             android:layout_height="wrap_content"
             android:hint="Mã địa chỉ" />
     </LinearLayout>
-    <ImageView
-        android:id="@+id/iv_xoacuahang"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_weight="0"
-        android:src="@drawable/ic_close"
-        />
+
 
 </LinearLayout>

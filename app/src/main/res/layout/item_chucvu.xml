@@ -2,36 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/idLinearLayout">
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_user"/>
+    android:orientation="horizontal"
+    android:background="@drawable/line_bottom">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="10dp">
+        android:layout_weight="1">
+
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/txt_ma_itchucvu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tên nhân viên"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:hint="Mã chức vụ"
+            android:textStyle="bold" />
+
         <TextView
-            android:id="@+id/tv_chucvu"
+            android:id="@+id/txt_ten_itchucvu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chức vụ"
-            android:textSize="20sp"/>
+            android:hint="Tên chức vụ" />
+
         <TextView
-            android:id="@+id/tv_chinhanh"
+            android:id="@+id/txt_ghichu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chi nhánh"
-            android:textSize="20sp"/>
+            android:hint="Ghi chú" />
     </LinearLayout>
+
 
 </LinearLayout>
