@@ -1,11 +1,31 @@
 package com.example.phanmemquanlynhansu.Function;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.example.phanmemquanlynhansu.ThemNhanVienActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Function {
 
@@ -64,25 +84,8 @@ public class Function {
             gioLam = "0" + soGio + ":" + "0" + soPhut;
         } else gioLam = String.valueOf(soGio) + ":" + String.valueOf(soPhut);
         return gioLam;
-    }
 
-//    public double luong1CL(String strGioBd, String strGioKt, double luong1Gio) {
-//        double luong1Gio = Double.parseDouble(edtLuong1Gio.getText().toString());
-//        double gioBatDau = Integer.parseInt(giobd) * 60 + Integer.parseInt(phutbd);
-//        double gioKetThuc = Integer.parseInt(giokt) * 60 + Integer.parseInt(phutkt);
-//        double soGio = (gioKetThuc - gioBatDau) / 60;
-//        double tongLuong1Cl = soGio * luong1Gio;
-//        java.util.Date bd = null ;
-//        java.util.Date kt = null;
-//        bd = converttoTime(strGioBd);
-//        kt = converttoTime(strGioKt);
-//
-//        double gioBatDau = bd.getHours() * 60 + bd.getMinutes();
-//        double gioKetThuc = kt.getHours() * 60 + kt.getMinutes();
-//        double soGio = (gioKetThuc - gioBatDau) / 60;
-//        double luongCaLam = soGio * luong1Gio;
-//        return luongCaLam;
-//    }
+    }
 
     public double luong1CL(String tongGioLam, String luong1Gio) {
         double luongCaLam =0;

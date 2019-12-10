@@ -143,8 +143,8 @@ public class SuaCaLamActivity extends AppCompatActivity {
                 String uid = modelCaLam.getId();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("CaLam");
-                myRef.child(uid).child("luong1GioLam").setValue(luong1Gio);
-                myRef.child(uid).child("luongCaLam").setValue(luong1Ca);
+                myRef.child(uid).child("luong1GioLam").setValue(Double.parseDouble(luong1Gio));
+                myRef.child(uid).child("luongCaLam").setValue(Double.parseDouble(luong1Ca));
                 myRef.child(uid).child("maCaLam").setValue(maCl);
                 myRef.child(uid).child("tenCaLam").setValue(tenCl);
                 myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);

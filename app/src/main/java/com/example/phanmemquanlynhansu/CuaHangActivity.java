@@ -43,19 +43,19 @@ public class CuaHangActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cua_hang);
-        addControl();
-        addEnvents();
+        addControls();
+        addEvents();
         reaData();
     }
 
-    private void addControl() {
+    private void addControls() {
         lvCuaHang = findViewById(R.id.lv_cuahang);
         list = new ArrayList<>();
         adapterCuaHang = new AdapterCuaHang(CuaHangActivity.this, list);
         lvCuaHang.setAdapter(adapterCuaHang);
     }
 
-    private void addEnvents() {
+    private void addEvents() {
         lvCuaHang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

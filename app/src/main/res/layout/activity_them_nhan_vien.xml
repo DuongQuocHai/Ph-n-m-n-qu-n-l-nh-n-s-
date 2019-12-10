@@ -10,29 +10,12 @@
         android:src="@drawable/avatar"
         app:civ_border_width="2dp"
         app:civ_border_color="#FF000000"/>
+
     <Button
         android:id="@+id/btn_chonhinh_themnv"
         android:text="chọn hình"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ID:"
-            android:layout_alignParentLeft="true"/>
-        <EditText
-            android:id="@+id/edt_id_themnv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="150dp"
-            />
-    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +35,67 @@
             android:paddingLeft="200dp"
             />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line_bottom"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Tên đăng nhập:" />
+        <EditText
+            android:id="@+id/edt_tendn_themnv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="200dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line_bottom"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Mật khẩu đăng nhập:" />
+        <EditText
+            android:id="@+id/edt_mathau_themnv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="200dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line_bottom"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Nhập lại mật khẩu:" />
+        <EditText
+            android:id="@+id/edt_nhaplaimk_them"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="200dp"
+            />
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,19 +142,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Giới tính:"/>
-        <CheckBox
-            android:id="@+id/ckb_nam_themnv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:checked="true"
-            android:text="Nam"/>
-        <CheckBox
-            android:id="@+id/ckb_nu_themnv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="Nữ"/>
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/rd_nam_themnv"
+                android:text="Nam"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/rd_nu_themnv"
+                android:text="Nữ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RadioGroup>
+
+
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -152,6 +201,7 @@
             />
     </RelativeLayout>
     <Button
+        android:id="@+id/btn_lammoi_themnv"
         android:text="Làm mới"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -113,6 +113,7 @@ public class CaLamActivity extends AppCompatActivity {
 
     public void readData() {
         mData = FirebaseDatabase.getInstance().getReference();
+        list.clear();
         mData.child("CaLam").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

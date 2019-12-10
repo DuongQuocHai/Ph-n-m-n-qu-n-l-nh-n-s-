@@ -70,7 +70,7 @@
                 android:textColor="#6B6B6B" />
         </LinearLayout>
         <ListView
-            android:id="@+id/lv_nhan_vien"
+            android:id="@+id/lv_nhanvien"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
     </LinearLayout>

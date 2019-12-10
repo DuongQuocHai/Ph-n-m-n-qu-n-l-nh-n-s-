@@ -20,7 +20,7 @@
 
         <ImageButton
             android:layout_centerVertical="true"
-            android:id="@+id/action_bar_back"
+            android:id="@+id/btn_back_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -30,7 +30,7 @@
 
         <TextView
             android:layout_centerVertical="true"
-            android:id="@+id/action_bar_them"
+            android:id="@+id/btn_them_themnv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

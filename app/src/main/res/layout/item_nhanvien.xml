@@ -2,36 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/idLinearLayout">
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/calendar"/>
+    android:orientation="horizontal"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/avatar"
+        app:civ_border_color="#00FFFFFF"
+        android:id="@+id/img_nhanvien_itemnv"
+        app:civ_border_width="2dp" />
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="10dp">
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/txt_ten_itemnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tên nhân viên"
             android:textStyle="bold"
             android:textSize="20sp"/>
         <TextView
-            android:id="@+id/tv_chucvu"
+            android:id="@+id/txt_chucvu_itemnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chức vụ"
             android:textSize="20sp"/>
         <TextView
-            android:id="@+id/tv_chinhanh"
+            android:id="@+id/txt_cuahang_itemnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chi nhánh"
             android:textSize="20sp"/>
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_call_itemnv"
+        android:layout_weight="0"
+        android:src="@drawable/iconcall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
