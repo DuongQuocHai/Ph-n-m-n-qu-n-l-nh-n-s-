@@ -1,15 +1,13 @@
 package com.example.phanmemquanlynhansu;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.google.firebase.database.DatabaseReference;
@@ -30,13 +28,19 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sua_cua_hang);
         addControls();
+        addEvents();
         getData();
 
     }
 
+    private void addEvents() {
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_sua_cuahang);
+        View view = getSupportActionBar().getCustomView();
+    }
+
     private void addControls() {
-        btnEdit = findViewById(R.id.btn_editcuahang);
-        btnHuy = findViewById(R.id.btn_huy);
         edtEditMaCH = findViewById(R.id.edt_macuahang_edit);
         edtEditTenCH = findViewById(R.id.edt_tencuahang_edit);
         edtEditDiaChi = findViewById(R.id.edt_diachi_edit);
@@ -53,14 +57,23 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     }
     public void clickSuaCuaHang(View view) throws ParseException {
         switch (view.getId()) {
-            case R.id.btn_editcuahang:
+            case R.id.action_bar_sua_cuahang:
                 editCuaHang(keyId);
                 break;
-            case R.id.btn_huy:
+            case R.id.action_bar_back_sua_cuahang:
                 finish();
                 break;
+            case  R.id.txt_xoa_cuahang:
+                deleteCuaHang(keyId);
         }
     }
+
+    private void deleteCuaHang(String keyId) {
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+        mData.child("CuaHang").child(keyId).removeValue();
+        finish();
+    }
+
     private void getString() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

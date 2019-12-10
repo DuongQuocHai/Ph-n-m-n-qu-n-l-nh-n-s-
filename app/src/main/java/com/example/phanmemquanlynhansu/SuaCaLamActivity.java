@@ -1,12 +1,13 @@
 package com.example.phanmemquanlynhansu;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Model.ModelCaLam;
 
@@ -14,15 +15,32 @@ public class SuaCaLamActivity extends AppCompatActivity {
     EditText edttenCaLam, edtGioBd, edtPhutBd, edtGioKt, edtPhutKt, edtLuong1Gio;
     TextView txtTongGioCl, txtLuong1Ca, txtMaCaLam;
     String maCl, tenCl, gioBdCl, phutBdCl, gioKtCl, phutKtCl, tongGioCl;
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sua_ca_lam);
         addControl();
+        addEvents();
         getData();
 
 
+    }
+
+    private void addEvents() {
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_sua_calam);
+    }
+
+    public void clickSuaCaLam() {
+        switch (view.getId()) {
+            case R.id.action_bar_sua_calam:
+
+                break;
+            case R.id.action_bar_back_sua_calam:
+                break;
+        }
     }
 
     public void addControl(){

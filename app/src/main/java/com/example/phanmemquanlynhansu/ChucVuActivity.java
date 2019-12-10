@@ -1,25 +1,23 @@
 package com.example.phanmemquanlynhansu;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
+import com.example.phanmemquanlynhansu.Adapter.AdapterChucVu;
 import com.example.phanmemquanlynhansu.Adapter.AdapterCuaHang;
+import com.example.phanmemquanlynhansu.Model.ModelChucVu;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,104 +28,102 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class CuaHangActivity extends AppCompatActivity {
-    ListView lvCuaHang;
-    EditText  edtTenCuaHang, edtDiaChi, edtMaCuaHang;
-    AdapterCuaHang adapterCuaHang;
-    ModelCuaHang modelCuaHang;
+public class ChucVuActivity extends AppCompatActivity {
+    ListView lvChucVu;
+    EditText  edtTenChucVu, edtMaChucVu, edtGhiChu;
+    AdapterChucVu adapterChucVu;
+    ModelChucVu modelChucVu;
     DatabaseReference mData;
-    ArrayList<ModelCuaHang> list;
-    String maCH, tenCH,diaChiCH, id;
+    ArrayList<ModelChucVu> list;
+    String maCV, tenCV, ghiChu, id;
     Dialog dialog;
     View view;
-    ProgressBar progressBarCuaHang;
     AnimationDrawable animation;
     ImageView ivLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cua_hang);
+        setContentView(R.layout.activity_chuc_vu);
         addControl();
         addEnvents();
         reaData();
     }
 
     private void addControl() {
-        lvCuaHang = findViewById(R.id.lv_cuahang);
+        lvChucVu = findViewById(R.id.lv_chucvu);
         list = new ArrayList<>();
-        adapterCuaHang = new AdapterCuaHang(CuaHangActivity.this, list);
-        lvCuaHang.setAdapter(adapterCuaHang);
-        ivLoading = findViewById(R.id.iv_loading);
-        ivLoading.setBackgroundResource(R.drawable.loading);
-        animation = (AnimationDrawable) ivLoading.getBackground();
-        animation.start();
+        adapterChucVu = new AdapterChucVu(ChucVuActivity.this, list);
+        lvChucVu.setAdapter(adapterChucVu);
     }
 
     private void addEnvents() {
-        lvCuaHang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvChucVu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CuaHangActivity.this, SuaCuaHangActivity.class);
-                modelCuaHang = list.get(position);
-                intent.putExtra("ModelCuaHang", modelCuaHang);
+                Intent intent = new Intent(ChucVuActivity.this, SuaChucVuActivity.class);
+                modelChucVu = list.get(position);
+                intent.putExtra("ModelChucVu", modelChucVu);
                 startActivity(intent);
             }
         });
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_cuahang);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_chucvu);
 
+        ivLoading = findViewById(R.id.iv_loading);
+        ivLoading.setBackgroundResource(R.drawable.loading);
+        animation = (AnimationDrawable) ivLoading.getBackground();
+        animation.start();
     }
-    public void clickCuaHang(View view) throws ParseException {
+    public void clickChucVu(View view) throws ParseException {
         switch (view.getId()) {
-            case R.id.action_bar_add_cuahang:
-                showDialogThemCaLam();
+            case R.id.action_bar_add_chucvu:
+                showDialogThemChucVu();
                 break;
-            case R.id.action_bar_back_cuahang:
+            case R.id.action_bar_back_chucvu:
                 break;
-            case R.id.btn_them_cuahang1:
+            case R.id.btn_them_chucvu:
                 addCuaHang();
                 break;
-            case R.id.btn_huy_cuahang1:
+            case R.id.btn_huy_chucvu:
                 dialog.dismiss();
                 break;
         }
     }
 
-    private void showDialogThemCaLam() {
-        dialog = new Dialog(CuaHangActivity.this);
-        dialog.setContentView(R.layout.dialog_themcuahang);
+    private void showDialogThemChucVu() {
+        dialog = new Dialog(ChucVuActivity.this);
+        dialog.setContentView(R.layout.dialog_themchucvu);
 
-        edtMaCuaHang = dialog.findViewById(R.id.edt_macuahang);
-        edtTenCuaHang = dialog.findViewById(R.id.edt_tencuahang);
-        edtDiaChi = dialog.findViewById(R.id.edt_diachicuahang);
+        edtMaChucVu = dialog.findViewById(R.id.edt_machucvu);
+        edtTenChucVu = dialog.findViewById(R.id.edt_tenchucvu);
+        edtGhiChu= dialog.findViewById(R.id.edt_ghichu);
 
         dialog.show();
     }
     public void getString() {
-        maCH = edtMaCuaHang.getText().toString();
-        tenCH = edtTenCuaHang.getText().toString();
-        diaChiCH = edtDiaChi.getText().toString();
+        maCV = edtMaChucVu.getText().toString();
+        tenCV = edtTenChucVu.getText().toString();
+        ghiChu = edtGhiChu.getText().toString();
 
     }
     public void addCuaHang() {
         mData = FirebaseDatabase.getInstance().getReference();
         getString();
-        modelCuaHang = new ModelCuaHang(maCH, tenCH, diaChiCH);
-        mData.child("CuaHang").push().setValue(modelCuaHang);
+        modelChucVu = new ModelChucVu(maCV, tenCV, ghiChu);
+        mData.child("ChucVu").push().setValue(modelChucVu);
         dialog.dismiss();
     }
     private void reaData() {
         mData = FirebaseDatabase.getInstance().getReference();
-        mData.child("CuaHang").addChildEventListener(new ChildEventListener() {
+        mData.child("ChucVu").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    ModelCuaHang modelCuaHang = dataSnapshot.getValue(ModelCuaHang.class);
+                    ModelChucVu modelChucVu = dataSnapshot.getValue(ModelChucVu.class);
                     id = dataSnapshot.getKey();
-                modelCuaHang.setId(id);
-                list.add(modelCuaHang);
-                adapterCuaHang.notifyDataSetChanged();
-
+                modelChucVu.setId(id);
+                list.add(modelChucVu);
+                adapterChucVu.notifyDataSetChanged();
                 ivLoading.setVisibility(View.GONE);
             }
             @Override
