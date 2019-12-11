@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+    <FrameLayout
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/img_themnv"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:src="@drawable/avatar"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
-
-    <Button
-        android:id="@+id/btn_chonhinh_themnv"
-        android:text="chọn hình"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <RelativeLayout
+        app:civ_border_width="1dp"
+        app:civ_border_color="#909090"
+        />
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_edit_nhanvien"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_edit"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#fff"
+            android:layout_gravity="right"
+            android:layout_marginTop="80dp"
+            />
+    </FrameLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Họ và tên:"
-            android:layout_alignParentLeft="true"/>
+            android:text="Họ và tên:"/>
         <EditText
             android:id="@+id/edt_ten_themnv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="200dp"
-            />
-    </RelativeLayout>
-    <RelativeLayout
+            android:gravity="right"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bottom"
@@ -44,18 +55,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:text="Tên đăng nhập:" />
         <EditText
             android:id="@+id/edt_tendn_themnv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="200dp"
+            android:gravity="right"
             />
-    </RelativeLayout>
-    <RelativeLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bottom"
@@ -64,18 +73,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:text="Mật khẩu đăng nhập:" />
         <EditText
             android:id="@+id/edt_mathau_themnv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="200dp"
+            android:gravity="right"
             />
-    </RelativeLayout>
-    <RelativeLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bottom"
@@ -84,17 +91,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:text="Nhập lại mật khẩu:" />
         <EditText
             android:id="@+id/edt_nhaplaimk_them"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="200dp"
+            android:gravity="right"
             />
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -109,7 +114,7 @@
         <Spinner
 
             android:id="@+id/spn_chucvu_themnv"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             />
@@ -126,7 +131,7 @@
             android:text="Chi nhánh:"/>
         <Spinner
             android:id="@+id/spn_chinhanh_thmenv"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             />
@@ -161,7 +166,7 @@
 
 
     </LinearLayout>
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bottom"
@@ -169,19 +174,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Số điện thoại:"
-            android:layout_alignParentLeft="true"/>
+            android:text="Số điện thoại:" />
         <EditText
             android:id="@+id/edt_sdt_themnv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:inputType="number"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="200dp"
+            android:gravity="right"
             />
-    </RelativeLayout>
-    <RelativeLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bottom"
@@ -189,20 +192,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:text="Địa chỉ:"/>
         <EditText
             android:id="@+id/edt_diachi_themnv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
-            android:paddingLeft="200dp"
+            android:gravity="right"
             />
-    </RelativeLayout>
+    </LinearLayout>
     <Button
         android:id="@+id/btn_lammoi_themnv"
         android:text="Làm mới"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient"/>
 </LinearLayout>

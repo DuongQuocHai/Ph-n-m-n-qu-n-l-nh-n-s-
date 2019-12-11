@@ -6,7 +6,7 @@
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
     android:paddingBottom="20dp"
-    android:background="@color/colorAccent">
+    android:background="@drawable/gradient">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,11 +62,13 @@
             android:layout_weight="1"
             android:text="Huỷ"
             android:id="@+id/btn_huy_chucvu"
+            android:background="@drawable/background_btn"
             android:onClick="clickChucVu"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/background_btn"
             android:text="Thêm"
             android:id="@+id/btn_them_chucvu"
             android:onClick="clickChucVu"/>

@@ -8,13 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:src="@drawable/avatar"
             app:civ_border_color="#00FFFFFF"
             app:civ_border_width="2dp" />
@@ -43,7 +43,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:textSize="15sp"
             android:text="Công viên phần mềm quang trung" />
 

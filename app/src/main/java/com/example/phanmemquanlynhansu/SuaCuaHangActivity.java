@@ -88,7 +88,7 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelCuaHang = new ModelCuaHang(maCH, tenCH, diaChi);
-        mData.child("CuaHang").child(uid).setValue(modelCuaHang);
+        mData.child("CuaHang").child(uid).setValue(modelCuaHang);list.clear();
         finish();
     }
 

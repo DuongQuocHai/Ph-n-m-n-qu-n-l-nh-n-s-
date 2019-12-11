@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CuaHangActivity">
+    tools:context=".CuaHangActivity"
+    android:layout_margin="10dp">
 
     <ListView
         android:id="@+id/lv_cuahang"
