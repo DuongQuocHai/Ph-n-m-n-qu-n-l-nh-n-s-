@@ -50,7 +50,7 @@ public class ThemNhanVienActivity extends AppCompatActivity {
     Spinner spnChucVu, spnChiNhanh;
     EditText edtTen, edtSdt, edtDiaChi, edtUser, edtPass, edtRePass;
     RadioButton rdNam, rdNu;
-    CircleImageView imgNhanVien;
+    CircleImageView imgNhanVien, imgEditNhanVien;
     Button btnLamMoi, btnChonHinh;
     View view;
 
@@ -99,7 +99,7 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         rdNam = findViewById(R.id.rd_nam_themnv);
         rdNu = findViewById(R.id.rd_nu_themnv);
         imgNhanVien = findViewById(R.id.img_themnv);
-        btnChonHinh = findViewById(R.id.btn_chonhinh_themnv);
+        imgEditNhanVien = findViewById(R.id.img_edit_nhanvien);
         btnLamMoi = findViewById(R.id.btn_lammoi_themnv);
         ganDsCuaHangVaoSpiner();
         ganDsChucVuVaoSpiner();
@@ -119,7 +119,7 @@ public class ThemNhanVienActivity extends AppCompatActivity {
             }
         });
 
-        btnChonHinh.setOnClickListener(new View.OnClickListener() {
+        imgEditNhanVien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImg();

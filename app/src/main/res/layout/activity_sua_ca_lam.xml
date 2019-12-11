@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SuaCaLamActivity">
+    tools:context=".SuaCaLamActivity"
+    android:layout_margin="10dp">
 
 
     <LinearLayout
@@ -99,8 +100,9 @@
         <Button
             android:id="@+id/btn_giokt_suacl"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="62dp"
             android:layout_weight="0"
+            android:text="Hihi"
             android:onClick="clickSuaCaLam"
              />
 

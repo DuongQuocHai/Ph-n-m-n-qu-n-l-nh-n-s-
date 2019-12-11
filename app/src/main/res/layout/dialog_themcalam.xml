@@ -7,7 +7,7 @@
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
     android:paddingBottom="20dp"
-    android:background="@color/colorAccent">
+    android:background="@drawable/gradient">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -177,11 +177,13 @@
             android:onClick="clickCaLam"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_btn"/>
         <Button
             android:id="@+id/btn_them_dlthemcl"
             android:onClick="clickCaLam"
             android:text="Thêm"
+            android:background="@drawable/background_btn"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

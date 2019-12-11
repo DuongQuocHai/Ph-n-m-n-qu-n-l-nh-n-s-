@@ -46,7 +46,7 @@ public class AdapterCaLam extends BaseAdapter {
 
         ModelCaLam modelCaLam =list.get(position);
         txtTenCL.setText(modelCaLam.getTenCaLam());
-        txtGioLam.setText(modelCaLam.getTgBatDauCaLam()+" - "+modelCaLam.getTgKetThucCaLam());
+        txtGioLam.setText("từ "+ modelCaLam.getTgBatDauCaLam()+" đến "+modelCaLam.getTgKetThucCaLam());
 
 
         return row;

@@ -117,7 +117,7 @@ public class CuaHangActivity extends AppCompatActivity {
         mData.child("CuaHang").push().setValue(modelCuaHang);
         dialog.dismiss();
     }
-    private void reaData() {
+    public void reaData() {
         mData = FirebaseDatabase.getInstance().getReference();
         mData.child("CuaHang").addChildEventListener(new ChildEventListener() {
             @Override
