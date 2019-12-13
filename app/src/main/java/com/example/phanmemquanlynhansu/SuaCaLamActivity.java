@@ -98,7 +98,6 @@ public class SuaCaLamActivity extends AppCompatActivity {
     public void getData() {
         Intent intent = getIntent();
         modelCaLam = (ModelCaLam) intent.getSerializableExtra("ModelCalam");
-        Log.e("=====",modelCaLam.getMaCaLam());
         if (modelCaLam != null) {
             txtMaCaLam.setText(modelCaLam.getMaCaLam());
             edttenCaLam.setText(modelCaLam.getTenCaLam());

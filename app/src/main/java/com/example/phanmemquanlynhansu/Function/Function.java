@@ -84,7 +84,6 @@ public class Function {
             gioLam = "0" + soGio + ":" + "0" + soPhut;
         } else gioLam = String.valueOf(soGio) + ":" + String.valueOf(soPhut);
         return gioLam;
-
     }
 
     public double luong1CL(String tongGioLam, String luong1Gio) {

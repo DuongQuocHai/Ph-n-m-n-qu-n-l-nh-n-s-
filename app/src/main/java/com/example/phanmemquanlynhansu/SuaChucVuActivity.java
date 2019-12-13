@@ -59,7 +59,6 @@ public class SuaChucVuActivity extends AppCompatActivity {
     private void getData() {
         Intent intent = getIntent();
         modelChucVu = (ModelChucVu) intent.getSerializableExtra("ModelChucVu");
-//        Log.e("------",modelCuaHang.getId()+"");
         keyId = modelChucVu.getId();
         edtEditMaCV.setText(modelChucVu.getMaChucVu());
         edtEditTenCV.setText(modelChucVu.getTenChucVu());

@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.phanmemquanlynhansu.Function.NhanVienDAO;
+import com.example.phanmemquanlynhansu.Model.ModelChucVu;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,36 +53,36 @@ public class ThemNhanVienActivity extends AppCompatActivity {
     EditText edtTen, edtSdt, edtDiaChi, edtUser, edtPass, edtRePass;
     RadioButton rdNam, rdNu;
     CircleImageView imgNhanVien, imgEditNhanVien;
-    Button btnLamMoi, btnChonHinh;
+    Button btnLamMoi;
+    ImageView btnBack;
+    TextView btnThem;
+
     View view;
 
     String ten, user, pass, rePass, chucVu, cuaHang, gioiTinh = "Nam", sdt, diaChi, urlHinh;
 
-    DatabaseReference mData;
-
     final int REQUEST_CHOOSE_PHOTO = 321;
+
+    DatabaseReference mData;
     FirebaseStorage storage;
     StorageReference mountainsRef;
     StorageReference storageRef;
+
     ModelNhanVien modelNhanVien;
+    NhanVienDAO nhanVienDAO;
 
 
-    ImageView btnBack;
-    TextView btnThem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_nhan_vien);
-
-
         addControl();
         addEnvent();
-
-
     }
 
     public void addControl() {
+        nhanVienDAO = new NhanVienDAO();
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_them_nhan_vien);
@@ -101,8 +103,8 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         imgNhanVien = findViewById(R.id.img_themnv);
         imgEditNhanVien = findViewById(R.id.img_edit_nhanvien);
         btnLamMoi = findViewById(R.id.btn_lammoi_themnv);
-        ganDsCuaHangVaoSpiner();
-        ganDsChucVuVaoSpiner();
+        nhanVienDAO.ganDsCuaHangVaoSpiner(ThemNhanVienActivity.this, spnChiNhanh, "");
+        nhanVienDAO.ganDsChucVuVaoSpiner(ThemNhanVienActivity.this, spnChucVu, "");
     }
 
     public void addEnvent() {
@@ -140,12 +142,11 @@ public class ThemNhanVienActivity extends AppCompatActivity {
 
     public void getString() {
         ten = edtTen.getText().toString();
-        user = edtTen.getText().toString();
-        pass = edtTen.getText().toString();
-        rePass = edtTen.getText().toString();
+        user = edtUser.getText().toString();
+        pass = edtPass.getText().toString();
+        rePass = edtRePass.getText().toString();
         chucVu = spnChucVu.getSelectedItem().toString();
         cuaHang = spnChiNhanh.getSelectedItem().toString();
-        sdt = edtSdt.getText().toString();
         sdt = edtSdt.getText().toString();
         diaChi = edtDiaChi.getText().toString();
     }
@@ -180,54 +181,19 @@ public class ThemNhanVienActivity extends AppCompatActivity {
                 while (!urlTask.isSuccessful()) ;
                 Uri downloadUrl = urlTask.getResult();
                 Toast.makeText(ThemNhanVienActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                Log.e("urlImage : ", downloadUrl + "");
+                Log.e("pppppppp : ", String.valueOf(urlTask.isSuccessful()));
                 modelNhanVien = new ModelNhanVien(ten, user, pass, chucVu, cuaHang, gioiTinh, sdt, diaChi, String.valueOf(downloadUrl));
                 mData.push().setValue(modelNhanVien, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                        if (databaseError != null) {
-                            Toast.makeText(ThemNhanVienActivity.this, "Lưu dữ liệu thành công", Toast.LENGTH_SHORT).show();
-                        }
+                        if (databaseError == null) {
+                            Toast.makeText(ThemNhanVienActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        }else Toast.makeText(ThemNhanVienActivity.this, "Lỗi "+databaseError, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
     }
-
-    private void ganDsCuaHangVaoSpiner() {
-        final ArrayList<String> arr = new ArrayList<>();
-        arr.add("Chọn cửa hàng");
-        mData = FirebaseDatabase.getInstance().getReference("CuaHang");
-        mData.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arr.clear();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    ModelCuaHang modelCuaHang = data.getValue(ModelCuaHang.class);
-                    arr.add(modelCuaHang.getTenCuaHang());
-                }
-                Toast.makeText(getApplicationContext(), "Load Data Success", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-        ArrayAdapter<String> adapterCuaHang = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arr);
-        adapterCuaHang.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        spnChiNhanh.setAdapter(adapterCuaHang);
-    }
-
-    private void ganDsChucVuVaoSpiner() {
-        spnChucVu = (Spinner) findViewById(R.id.spn_chucvu_themnv);
-        List<String> listChucVu = new ArrayList<>();
-        listChucVu.add("Quản lý");
-        listChucVu.add("Nhân Viên");
-        ArrayAdapter<String> adapterChucVu = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listChucVu);
-        adapterChucVu.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        spnChucVu.setAdapter(adapterChucVu);
-    }
-
 
     public void chooseImg() {
         Intent intent = new Intent(Intent.ACTION_PICK);

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public class NhanVienActivity extends AppCompatActivity {
     AdapterNhanVien adapterNhanVien;
     DatabaseReference mData;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +60,8 @@ public class NhanVienActivity extends AppCompatActivity {
 
         lvNhanVien = (ListView) findViewById(R.id.lv_nhanvien);
         list = new ArrayList<>();
-        adapterNhanVien = new AdapterNhanVien(NhanVienActivity.this,list);
-        Log.e("fffffff",list.size()+"");
+        adapterNhanVien = new AdapterNhanVien(NhanVienActivity.this, list);
+        Log.e("fffffff", list.size() + "");
         lvNhanVien.setAdapter(adapterNhanVien);
 
     }
@@ -78,9 +81,18 @@ public class NhanVienActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        lvNhanVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(NhanVienActivity.this,SuaNhanVienActivity.class);
+                intent.putExtra("ModelNhanVien",list.get(position));
+                startActivity(intent);
+            }
+        });
+
     }
 
-    public void readData(){
+    public void readData() {
 //        mData = FirebaseDatabase.getInstance().getReference("NhanVien");
 //        mData.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -107,13 +119,13 @@ public class NhanVienActivity extends AppCompatActivity {
         mData.child("NhanVien").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ModelNhanVien modelNhanVien= dataSnapshot.getValue(ModelNhanVien.class);
-//                id = dataSnapshot.getKey();
-//                modelCuaHang.setId(id);
+                ModelNhanVien modelNhanVien = dataSnapshot.getValue(ModelNhanVien.class);
+                modelNhanVien.setIdNv(dataSnapshot.getKey());
                 list.add(modelNhanVien);
-                Log.e("ttttt",modelNhanVien.getMaChucVu());
+                Log.e("ttttt", modelNhanVien.getMaChucVu());
                 adapterNhanVien.notifyDataSetChanged();
             }
+
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 

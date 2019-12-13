@@ -37,7 +37,7 @@
             android:text="Chi nhánh"
             android:textSize="20sp"/>
     </LinearLayout>
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_call_itemnv"
         android:layout_weight="0"
         android:src="@drawable/iconcall"

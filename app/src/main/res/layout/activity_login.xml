@@ -63,7 +63,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/edtuser"
+                        android:id="@+id/edt_user_login"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/background_edt"
@@ -76,7 +76,7 @@
                         android:textColorHint="#B3FFFFFF" />
 
                     <EditText
-                        android:id="@+id/edtpass"
+                        android:id="@+id/edt_pass_login"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="20dp"
@@ -92,7 +92,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnlogin"
+                android:id="@+id/btn_dangnhap_login"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linel"

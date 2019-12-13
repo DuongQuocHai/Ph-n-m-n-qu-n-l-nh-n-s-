@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class ChucVuActivity extends AppCompatActivity {
     ListView lvChucVu;
-    EditText  edtTenChucVu, edtMaChucVu, edtGhiChu;
+    EditText edtTenChucVu, edtMaChucVu, edtGhiChu;
     AdapterChucVu adapterChucVu;
     ModelChucVu modelChucVu;
     DatabaseReference mData;
@@ -40,6 +40,8 @@ public class ChucVuActivity extends AppCompatActivity {
     View view;
     AnimationDrawable animation;
     ImageView ivLoading;
+    ChildEventListener childEventListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,7 @@ public class ChucVuActivity extends AppCompatActivity {
         addEnvents();
         reaData();
     }
+
 
     private void addControl() {
         lvChucVu = findViewById(R.id.lv_chucvu);
@@ -75,6 +78,7 @@ public class ChucVuActivity extends AppCompatActivity {
         animation = (AnimationDrawable) ivLoading.getBackground();
         animation.start();
     }
+
     public void clickChucVu(View view) throws ParseException {
         switch (view.getId()) {
             case R.id.action_bar_add_chucvu:
@@ -97,16 +101,18 @@ public class ChucVuActivity extends AppCompatActivity {
 
         edtMaChucVu = dialog.findViewById(R.id.edt_machucvu);
         edtTenChucVu = dialog.findViewById(R.id.edt_tenchucvu);
-        edtGhiChu= dialog.findViewById(R.id.edt_ghichu);
+        edtGhiChu = dialog.findViewById(R.id.edt_ghichu);
 
         dialog.show();
     }
+
     public void getString() {
         maCV = edtMaChucVu.getText().toString();
         tenCV = edtTenChucVu.getText().toString();
         ghiChu = edtGhiChu.getText().toString();
 
     }
+
     public void addCuaHang() {
         mData = FirebaseDatabase.getInstance().getReference();
         getString();
@@ -114,26 +120,32 @@ public class ChucVuActivity extends AppCompatActivity {
         mData.child("ChucVu").push().setValue(modelChucVu);
         dialog.dismiss();
     }
+
     private void reaData() {
         mData = FirebaseDatabase.getInstance().getReference();
-        mData.child("ChucVu").addChildEventListener(new ChildEventListener() {
+        list.clear();
+        childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    ModelChucVu modelChucVu = dataSnapshot.getValue(ModelChucVu.class);
-                    id = dataSnapshot.getKey();
+
+                ModelChucVu modelChucVu = dataSnapshot.getValue(ModelChucVu.class);
+                id = dataSnapshot.getKey();
                 modelChucVu.setId(id);
                 list.add(modelChucVu);
                 adapterChucVu.notifyDataSetChanged();
                 ivLoading.setVisibility(View.GONE);
             }
+
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                list.clear();
+                mData.child("ChucVu").addChildEventListener(childEventListener);
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                list.clear();
+                mData.child("ChucVu").addChildEventListener(childEventListener);
             }
 
             @Override
@@ -145,6 +157,7 @@ public class ChucVuActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+        mData.child("ChucVu").addChildEventListener(childEventListener);
     }
 }

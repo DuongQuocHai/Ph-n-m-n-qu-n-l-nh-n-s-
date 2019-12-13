@@ -282,7 +282,6 @@ public class CaLamActivity extends AppCompatActivity {
         String uid = mData.push().getKey();
         ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, Double.parseDouble(luong1Ca), Double.parseDouble(luong1Gio));
         mData.child(uid).setValue(modelCaLam);
-
     }
 
     public void showTimePicker(final TextView txt) {

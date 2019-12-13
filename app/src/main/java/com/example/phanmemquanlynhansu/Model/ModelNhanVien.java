@@ -1,6 +1,8 @@
 package com.example.phanmemquanlynhansu.Model;
 
-public class ModelNhanVien {
+import java.io.Serializable;
+
+public class ModelNhanVien implements Serializable {
     String idNv, tenNv, userNv, passNv, maChucVu, maCuaHang, gioiTinhNv, sdtNv,diaChiNv, urlHinhNv;
 
     public ModelNhanVien(String tenNv, String userNv, String passNv, String maChucVu, String maCuaHang, String gioiTinhNv, String sdtNv, String diaChiNv, String urlHinhNv) {
