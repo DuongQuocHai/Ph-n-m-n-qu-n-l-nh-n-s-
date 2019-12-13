@@ -117,7 +117,9 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNhanVien();
+                if (batLoi()) {
+                    addNhanVien();
+                }
             }
         });
 
@@ -130,7 +132,18 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         rdNam.setOnCheckedChangeListener(listenerRadio);
         rdNu.setOnCheckedChangeListener(listenerRadio);
     }
-
+    public boolean batLoi() {
+        if (edtTen.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên!", Toast.LENGTH_SHORT).show();
+        } else if (edtUser.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên đăng nhập!", Toast.LENGTH_SHORT).show();
+        } else if (edtPass.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+        } else if (edtRePass.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập lại mật khẩu!", Toast.LENGTH_SHORT).show();
+        }
+            return false;
+    }
     CompoundButton.OnCheckedChangeListener listenerRadio = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -2,6 +2,7 @@ package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -53,9 +54,9 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     EditText edtTen, edtUser, edtSdt, edtDiaChi;
     Spinner spnChucVu, spnCuaHang;
     RadioButton rdNam, rdNu;
-    Button btnDoiMk, btnLuu;
-    TextView btnXoa;
-
+    Button btnDoiMk, btnLuu1;
+    TextView btnXoa, btnLuu;
+    ImageView btnBack;
     //dialog
     EditText edtOldPass, edtNewPass, edtRePass;
     Button btnHuy, btnLuudl;
@@ -95,10 +96,18 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         rdNam = findViewById(R.id.rd_nam_suanv);
         rdNu = findViewById(R.id.rd_nu_suanv);
         btnDoiMk = findViewById(R.id.btn_doimk_suanv);
-        btnLuu = findViewById(R.id.btn_luu_suanv);
+
+
     }
 
     public void addEvents() {
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_sua_nhanvien);
+        View view = getSupportActionBar().getCustomView();
+        btnLuu = view.findViewById(R.id.action_bar_sua_nhanvien);
+        btnBack = view.findViewById(R.id.action_bar_back_sua_nhanvien);
+
         rdNam.setOnCheckedChangeListener(listenerRadio);
         rdNu.setOnCheckedChangeListener(listenerRadio);
         btnEditAvatar.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +119,15 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                suaNhanVien();
+                if (batLoi()) {
+                    suaNhanVien();
+                }
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         btnXoa.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +154,18 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         }
     };
 
+    public boolean batLoi() {
+        if (edtTen.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên!", Toast.LENGTH_SHORT).show();
+        } else if (edtUser.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên đăng nhập!", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
     public void getString() {
         ten = edtTen.getText().toString();
-        user = edtTen.getText().toString();
+        user = edtUser.getText().toString();
         chucVu = spnChucVu.getSelectedItem().toString();
         cuaHang = spnCuaHang.getSelectedItem().toString();
         sdt = edtSdt.getText().toString();
@@ -222,7 +248,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         edtNewPass = dialog.findViewById(R.id.edt_mkmoi_dldoimk);
         edtRePass = dialog.findViewById(R.id.edt_nhaplaimk_dldoimk);
         btnHuy = dialog.findViewById(R.id.btn_huy_dldoimk);
-        btnLuu = dialog.findViewById(R.id.btn_luu_dldoimk);
+        btnLuu1 = dialog.findViewById(R.id.btn_luu_dldoimk);
 
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,7 +256,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        btnLuu.setOnClickListener(new View.OnClickListener() {
+        btnLuu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (doiMatKhau()){

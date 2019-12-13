@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,14 +88,23 @@ public class ChucVuActivity extends AppCompatActivity {
             case R.id.action_bar_back_chucvu:
                 break;
             case R.id.btn_them_chucvu:
-                addCuaHang();
+                if (batLoi()) {
+                    addChucVu();
+                }
                 break;
             case R.id.btn_huy_chucvu:
                 dialog.dismiss();
                 break;
         }
     }
-
+    public boolean batLoi() {
+        if (edtMaChucVu.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập mã chức vụ!", Toast.LENGTH_SHORT).show();
+        } else if (edtTenChucVu.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên chức vụ", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
     private void showDialogThemChucVu() {
         dialog = new Dialog(ChucVuActivity.this);
         dialog.setContentView(R.layout.dialog_themchucvu);
@@ -113,7 +123,7 @@ public class ChucVuActivity extends AppCompatActivity {
 
     }
 
-    public void addCuaHang() {
+    public void addChucVu() {
         mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelChucVu = new ModelChucVu(maCV, tenCV, ghiChu);

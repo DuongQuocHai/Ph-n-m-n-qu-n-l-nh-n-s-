@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -36,6 +37,8 @@ public class NhanVienActivity extends AppCompatActivity {
     ArrayList<ModelNhanVien> list;
     AdapterNhanVien adapterNhanVien;
     DatabaseReference mData;
+    ImageView ivLoading;
+    AnimationDrawable animation;
 
 
 
@@ -57,6 +60,11 @@ public class NhanVienActivity extends AppCompatActivity {
         View view = getSupportActionBar().getCustomView();
         btnBack = view.findViewById(R.id.btn_back_nhanvien);
         btnThem = view.findViewById(R.id.btn_them_nhanvien);
+
+        ivLoading = findViewById(R.id.iv_loading);
+        ivLoading.setBackgroundResource(R.drawable.loading);
+        animation = (AnimationDrawable) ivLoading.getBackground();
+        animation.start();
 
         lvNhanVien = (ListView) findViewById(R.id.lv_nhanvien);
         list = new ArrayList<>();
@@ -124,6 +132,7 @@ public class NhanVienActivity extends AppCompatActivity {
                 list.add(modelNhanVien);
                 Log.e("ttttt", modelNhanVien.getMaChucVu());
                 adapterNhanVien.notifyDataSetChanged();
+                ivLoading.setVisibility(View.GONE);
             }
 
             @Override
