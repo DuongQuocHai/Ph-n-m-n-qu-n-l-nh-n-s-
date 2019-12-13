@@ -174,13 +174,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient"/>
-    <Button
-        android:id="@+id/btn_luu_suanv"
-        android:text="lưu"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

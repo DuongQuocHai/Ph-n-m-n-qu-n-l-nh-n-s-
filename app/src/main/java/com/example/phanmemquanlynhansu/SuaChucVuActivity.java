@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,12 +70,23 @@ public class SuaChucVuActivity extends AppCompatActivity {
     public void clickSuaChucVu(View view) throws ParseException {
         switch (view.getId()) {
             case R.id.action_bar_sua_chucvu:
-                editChucVu(keyId);
+                if (batLoi()) {
+                    editChucVu(keyId);
+                }
                 break;
             case R.id.action_bar_back_sua_chucvu:
                 finish();
                 break;
         }
+    }
+
+    private boolean batLoi() {
+        if (edtEditMaCV.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập mã chức vụ!", Toast.LENGTH_SHORT).show();
+        } else if (edtEditTenCV.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên chức vụ", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     private void deleteChucVu(String keyId) {

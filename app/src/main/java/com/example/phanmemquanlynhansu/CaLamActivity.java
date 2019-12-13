@@ -125,11 +125,24 @@ public class CaLamActivity extends AppCompatActivity {
                 txtTongGioCl.setText(function.soGioLam(tgBdCl,tgKtCl));
                 break;
             case R.id.btn_them_dlthemcl:
-                addCaLam();
+                if (batLoi()) {
+                    addCaLam();
+                }
                 break;
         }
     }
-
+    public boolean batLoi() {
+        if (edttenCaLam.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên ca làm!", Toast.LENGTH_SHORT).show();
+        } else if (txtGioBd.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
+        } else if (txtGioKt.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng chọn giờ kết thúc!", Toast.LENGTH_SHORT).show();
+        } else if (edtLuong1Gio.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập lương 1 giờ làm!", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
     public void readData() {
         mData = FirebaseDatabase.getInstance().getReference();
         list.clear();

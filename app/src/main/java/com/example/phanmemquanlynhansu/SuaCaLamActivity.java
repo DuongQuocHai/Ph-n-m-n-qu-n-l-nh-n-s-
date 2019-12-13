@@ -36,6 +36,7 @@ public class SuaCaLamActivity extends AppCompatActivity {
     Function function = new Function();
 
     View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class SuaCaLamActivity extends AppCompatActivity {
         getData();
     }
 
-    public void addControl(){
+    public void addControl() {
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_sua_calam);
@@ -57,20 +58,13 @@ public class SuaCaLamActivity extends AppCompatActivity {
         txtGioKtCl = findViewById(R.id.txt_giokt_suacl);
 
     }
+
     public void clickSuaCaLam(View view) {
         switch (view.getId()) {
             case R.id.action_bar_sua_calam:
-                getString();
-                String uid = modelCaLam.getId();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("CaLam");
-                myRef.child(uid).child("luong1GioLam").setValue(Double.parseDouble(luong1Gio) );
-                myRef.child(uid).child("luongCaLam").setValue(Double.parseDouble(luong1Ca) );
-                myRef.child(uid).child("maCaLam").setValue(maCl);
-                myRef.child(uid).child("tenCaLam").setValue(tenCl);
-                myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);
-                myRef.child(uid).child("tgKetThucCaLam").setValue(gioKtCl);
-                myRef.child(uid).child("tongGioLam").setValue(tongGioCl);
+                if (batLoi()) {
+                    editCaLam();
+                }
                 break;
             case R.id.action_bar_back_sua_calam:
                 finish();
@@ -83,6 +77,7 @@ public class SuaCaLamActivity extends AppCompatActivity {
                 break;
         }
     }
+
     public void getString() {
         maCl = txtMaCaLam.getText().toString();
         tenCl = edttenCaLam.getText().toString();
@@ -93,7 +88,32 @@ public class SuaCaLamActivity extends AppCompatActivity {
         luong1Ca = txtLuong1Ca.getText().toString();
     }
 
+    public boolean batLoi() {
+        if (edttenCaLam.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên ca làm!", Toast.LENGTH_SHORT).show();
+        } else if (txtGioBdCl.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
+        } else if (txtGioKtCl.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng chọn giờ kết thúc!", Toast.LENGTH_SHORT).show();
+        } else if (edtLuong1Gio.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập lương 1 giờ làm!", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
 
+    public void editCaLam() {
+        getString();
+        String uid = modelCaLam.getId();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("CaLam");
+        myRef.child(uid).child("luong1GioLam").setValue(Double.parseDouble(luong1Gio));
+        myRef.child(uid).child("luongCaLam").setValue(Double.parseDouble(luong1Ca));
+        myRef.child(uid).child("maCaLam").setValue(maCl);
+        myRef.child(uid).child("tenCaLam").setValue(tenCl);
+        myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);
+        myRef.child(uid).child("tgKetThucCaLam").setValue(gioKtCl);
+        myRef.child(uid).child("tongGioLam").setValue(tongGioCl);
+    }
 
     public void getData() {
         Intent intent = getIntent();
@@ -155,6 +175,7 @@ public class SuaCaLamActivity extends AppCompatActivity {
         });
 
     }
+
     public void showTimePicker(final TextView txt) {
         final Calendar calendar = Calendar.getInstance();
         int gio = calendar.get(Calendar.HOUR_OF_DAY);

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Adapter.AdapterCuaHang;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
@@ -86,14 +87,25 @@ public class CuaHangActivity extends AppCompatActivity {
             case R.id.action_bar_back_cuahang:
                 break;
             case R.id.btn_them_cuahang1:
-                addCuaHang();
+                 if (batLoi()) {
+                     addCuaHang();
+                 }
                 break;
             case R.id.btn_huy_cuahang1:
                 dialog.dismiss();
                 break;
         }
     }
-
+    public boolean batLoi() {
+        if (edtMaCuaHang.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập mã cửa hàng!", Toast.LENGTH_SHORT).show();
+        } else if (edtTenCuaHang.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên cửa hàng", Toast.LENGTH_SHORT).show();
+        } else if (edtDiaChi.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập địa chỉ", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
     private void showDialogThemCaLam() {
         dialog = new Dialog(CuaHangActivity.this);
         dialog.setContentView(R.layout.dialog_themcuahang);

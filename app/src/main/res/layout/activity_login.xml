@@ -7,6 +7,11 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/gradient_background"
     tools:context=".LoginActivity">
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,32 +67,41 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/edt_user_login"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/background_edt"
-                        android:drawableLeft="@drawable/ic_account_box_black_24dp"
-                        android:drawablePadding="30dp"
-                        android:hint="Username"
-                        android:inputType="text"
-                        android:paddingLeft="10dp"
-                        android:textColor="#454444"
-                        android:textColorHint="#B3FFFFFF" />
+                        android:layout_height="60dp"
+                        app:hintEnabled="true"
+                        app:counterEnabled="true"
+                        android:id="@+id/edt_user_wrapper">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_user_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawablePadding="30dp"
+                            android:paddingLeft="10dp"
+                            android:hint="Username"
+                            android:textColor="#454444"
+                            android:textColorHint="#B3FFFFFF"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/edt_pass_login"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/background_edt"
-                        android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
-                        android:drawablePadding="30dp"
-                        android:hint="••••••"
-                        android:inputType="textPassword"
-                        android:paddingLeft="10dp"
-                        android:textColor="#454444"
-                        android:textColorHint="#B3FFFFFF" />
+                        android:layout_height="60dp"
+                        app:hintEnabled="true"
+                        app:passwordToggleEnabled="true"
+                        android:id="@+id/edt_pass_wrapper">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_pass_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="30dp"
+                            android:drawablePadding="100dp"
+                            android:paddingLeft="10dp"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:textColor="#454444"
+                            android:textColorHint="#B3FFFFFF"/>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
 

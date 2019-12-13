@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.google.firebase.database.DatabaseReference;
@@ -58,7 +59,9 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     public void clickSuaCuaHang(View view) throws ParseException {
         switch (view.getId()) {
             case R.id.action_bar_sua_cuahang:
-                editCuaHang(keyId);
+                if (batLoi()) {
+                    editCuaHang(keyId);
+                }
                 break;
             case R.id.action_bar_back_sua_cuahang:
                 finish();
@@ -66,6 +69,17 @@ public class SuaCuaHangActivity extends AppCompatActivity {
             case  R.id.txt_xoa_cuahang:
                 deleteCuaHang(keyId);
         }
+    }
+
+    private boolean batLoi() {
+        if (edtEditMaCH.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập mã cửa hàng!", Toast.LENGTH_SHORT).show();
+        } else if (edtEditTenCH.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên cửa hàng", Toast.LENGTH_SHORT).show();
+        } else if (edtEditDiaChi.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập địa chỉ", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     private void deleteCuaHang(String keyId) {
