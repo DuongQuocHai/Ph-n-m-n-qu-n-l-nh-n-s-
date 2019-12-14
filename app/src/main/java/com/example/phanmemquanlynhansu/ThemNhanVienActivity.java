@@ -72,7 +72,6 @@ public class ThemNhanVienActivity extends AppCompatActivity {
     NhanVienDAO nhanVienDAO;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,18 +131,27 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         rdNam.setOnCheckedChangeListener(listenerRadio);
         rdNu.setOnCheckedChangeListener(listenerRadio);
     }
+
     public boolean batLoi() {
         if (edtTen.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtUser.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên đăng nhập!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtPass.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtRePass.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập lại mật khẩu!", Toast.LENGTH_SHORT).show();
-        }
             return false;
+        } else if (!edtPass.getText().toString().equals(edtRePass.getText().toString())) {
+            Toast.makeText(this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
+
     CompoundButton.OnCheckedChangeListener listenerRadio = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -201,7 +209,8 @@ public class ThemNhanVienActivity extends AppCompatActivity {
                     public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                         if (databaseError == null) {
                             Toast.makeText(ThemNhanVienActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                        }else Toast.makeText(ThemNhanVienActivity.this, "Lỗi "+databaseError, Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(ThemNhanVienActivity.this, "Lỗi " + databaseError, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

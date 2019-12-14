@@ -88,16 +88,19 @@ public class LoginActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtUser.getText().length() == 0) {
-                    Toast.makeText(LoginActivity.this, "Vui lòng nhập tài khoản!", Toast.LENGTH_SHORT).show();
-                } else if ( edtPass.getText().length() == 0) {
-                    Toast.makeText(LoginActivity.this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
-                } else {
-                    ivLoading.setBackgroundResource(R.drawable.loading);
-                    animation = (AnimationDrawable) ivLoading.getBackground();
-                    animation.start();
-                    checkLogin();
-                }
+//                if (edtUser.getText().length() == 0) {
+//                    Toast.makeText(LoginActivity.this, "Vui lòng nhập tài khoản!", Toast.LENGTH_SHORT).show();
+//                } else if (edtPass.getText().length() == 0) {
+//                    Toast.makeText(LoginActivity.this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    ivLoading.setBackgroundResource(R.drawable.loading);
+//                    animation = (AnimationDrawable) ivLoading.getBackground();
+//                    animation.start();
+//                    checkLogin();
+//                }
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+//                checkLogin();
             }
         });
     }
@@ -109,15 +112,19 @@ public class LoginActivity extends AppCompatActivity {
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String key = dataSnapshot.getKey();
                 for (final DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (user.equals(data.child("userNv").getValue().toString()) && pass.equals(data.child("passNv").getValue().toString())) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        DatabaseReference dataLog = FirebaseDatabase.getInstance().getReference("logLogin");
-                        dataLog.push().setValue(user);
-                        startActivity(intent);
-                        return;
-                    } else
-                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
+                    Log.e("ppppppppp", data + "");
+//                    if (user.equals(data.child("userNv").getValue().toString()) && pass.equals(data.child("passNv").getValue().toString())) {
+//                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                        DatabaseReference dataLog = FirebaseDatabase.getInstance().getReference("logLogin");
+//                        dataLog.push().setValue(user);
+//                        startActivity(intent);
+//                        break;
+//                    } else {
+//                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    }
                 }
                 ivLoading.setVisibility(View.GONE);
             }
@@ -125,8 +132,22 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+
             }
         });
-
+//        mData.orderByChild("userNv").equalTo(user).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot != null){
+//                    Log.e("ooooooooo", String.valueOf(dataSnapshot.getValue()));
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        Log.e("huhuhu", String.valueOf(mData.orderByChild("userNv").equalTo(user)));
     }
 }

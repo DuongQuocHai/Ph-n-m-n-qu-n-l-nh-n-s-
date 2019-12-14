@@ -17,11 +17,12 @@ import com.example.phanmemquanlynhansu.ChucVuActivity;
 import com.example.phanmemquanlynhansu.CuaHangActivity;
 import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.example.phanmemquanlynhansu.NhanVienActivity;
+import com.example.phanmemquanlynhansu.PhanCaLamActivity;
 import com.example.phanmemquanlynhansu.R;
 
 public class FragmentThem extends Fragment {
     View view;
-    LinearLayout btnNhanVien,btnCaLam, btnCuaHang, btnChucVu;
+    LinearLayout btnNhanVien,btnCaLam, btnCuaHang, btnChucVu, btnPhanCaLam;
 
     @Nullable
     @Override
@@ -36,6 +37,7 @@ public class FragmentThem extends Fragment {
         btnCaLam = view.findViewById(R.id.btn_calam_fgthem);
         btnCuaHang = view.findViewById(R.id.btn_cuahang_fgthem);
         btnChucVu = view.findViewById(R.id.btn_chuc_vu_fgthem);
+        btnPhanCaLam= view.findViewById(R.id.btn_phancalam_fgthem);
     }
     public void addEvent(){
         btnNhanVien.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,13 @@ public class FragmentThem extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ChucVuActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnPhanCaLam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PhanCaLamActivity.class);
                 startActivity(intent);
             }
         });
