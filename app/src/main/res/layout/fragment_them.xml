@@ -13,28 +13,31 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_fragthem"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:src="@drawable/avatar"
+            android:src="@drawable/user"
             app:civ_border_color="#00FFFFFF"
             app:civ_border_width="2dp" />
 
         <TextView
-            android:textSize="20sp"
+            android:id="@+id/txt_ten_fragthem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Hải Đăng" />
+            android:text="Admin"
+            android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/txt_info_fragthem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="15sp"
-            android:text="Quản lý - +84789301100" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_quanly_fragthem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -43,48 +46,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Công viên phần mềm quang trung" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#ecf0f1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="0"
-                android:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/line_bottom"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Báo cáo"
-                    android:textColor="#2c3e50"
-                    android:textSize="15sp"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0"
-                    android:src="@drawable/ic_next" />
-            </LinearLayout>
-        </LinearLayout>
+            android:text="Công cụ quản lý"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:id="@+id/btn_nhanvien_fgthem"
@@ -160,7 +123,7 @@
                     android:gravity="center_vertical"
                     android:text="Ca làm"
                     android:textColor="#2c3e50"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -173,11 +136,174 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/btn_cuahang_fgthem"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ecf0f1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/line_bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Cửa hàng"
+                    android:textColor="#2c3e50"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_next" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_chuc_vu_fgthem"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ecf0f1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/line_bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Chức vụ"
+                    android:textColor="#2c3e50"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_next" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_phancalam_fgthem"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ecf0f1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/line_bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Phân ca làm"
+                    android:textColor="#2c3e50"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_xemcalamviec_fgthem"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ecf0f1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/line_bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Ai đang làm việc"
+                    android:textColor="#2c3e50"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btn_cuahang_fgthem"
         android:layout_width="match_parent"
+        android:id="@+id/btn_bangluong_fragthem"
         android:layout_height="40dp"
         android:background="#ecf0f1"
         android:gravity="center"
@@ -203,21 +329,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Cửa hàng"
+                android:text="Bảng lương"
                 android:textColor="#2c3e50"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="0"
                 android:src="@drawable/ic_next" />
-
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btn_chuc_vu_fgthem"
+        android:id="@+id/btn_dangxuat_fgthem"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#ecf0f1"
@@ -243,63 +368,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="15sp"
                 android:gravity="center_vertical"
-                android:text="Chức vụ"
-                android:textColor="#2c3e50" />
+                android:text="Đăng xuất"
+                android:textColor="#2c3e50"
+                android:textSize="15sp" />
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="0"
                 android:src="@drawable/ic_next" />
-
         </LinearLayout>
-
-
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/btn_phancalam_fgthem"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#ecf0f1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="0"
-            android:src="@mipmap/ic_launcher" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/line_bottom"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:text="Phân ca làm"
-                android:textColor="#2c3e50" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="0"
-                android:src="@drawable/ic_next" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 
 </LinearLayout>
 

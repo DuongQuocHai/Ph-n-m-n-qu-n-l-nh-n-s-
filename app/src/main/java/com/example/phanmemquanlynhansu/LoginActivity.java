@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -19,10 +20,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.phanmemquanlynhansu.Function.Function;
 import com.example.phanmemquanlynhansu.Model.ModelCaLam;
 import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     AnimationDrawable animation;
 
     DatabaseReference mData;
+    FirebaseAuth firebaseAuth;
+
+    ProgressDialog pDialog;
 
     Intent intent;
 
@@ -88,66 +97,54 @@ public class LoginActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (edtUser.getText().length() == 0) {
-//                    Toast.makeText(LoginActivity.this, "Vui lòng nhập tài khoản!", Toast.LENGTH_SHORT).show();
-//                } else if (edtPass.getText().length() == 0) {
-//                    Toast.makeText(LoginActivity.this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    ivLoading.setBackgroundResource(R.drawable.loading);
-//                    animation = (AnimationDrawable) ivLoading.getBackground();
-//                    animation.start();
-//                    checkLogin();
-//                }
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-//                checkLogin();
+                if (edtUser.getText().length() == 0) {
+                    Toast.makeText(LoginActivity.this, "Vui lòng nhập tài khoản!", Toast.LENGTH_SHORT).show();
+                } else if (edtPass.getText().length() == 0) {
+                    Toast.makeText(LoginActivity.this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+                } else if (edtUser.getText().toString().trim().equals("admin") && edtPass.getText().toString().trim().equals("admin")) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    checkLogin();
+                }
+
             }
         });
     }
 
     private void checkLogin() {
-        mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-        final String user = edtUser.getText().toString();
-        final String pass = edtPass.getText().toString();
-        mData.addValueEventListener(new ValueEventListener() {
+        pDialog = new ProgressDialog(LoginActivity.this);
+        pDialog.setMessage("Logging in ...");
+        showDialog();
+        firebaseAuth = FirebaseAuth.getInstance();
+        String email = edtUser.getText().toString().trim();
+        String pass = edtPass.getText().toString().trim();
+        firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String key = dataSnapshot.getKey();
-                for (final DataSnapshot data : dataSnapshot.getChildren()) {
-                    Log.e("ppppppppp", data + "");
-//                    if (user.equals(data.child("userNv").getValue().toString()) && pass.equals(data.child("passNv").getValue().toString())) {
-//                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                        DatabaseReference dataLog = FirebaseDatabase.getInstance().getReference("logLogin");
-//                        dataLog.push().setValue(user);
-//                        startActivity(intent);
-//                        break;
-//                    } else {
-//                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    }
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    hideDialog();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                    hideDialog();
                 }
-                ivLoading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-
             }
         });
-//        mData.orderByChild("userNv").equalTo(user).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot != null){
-//                    Log.e("ooooooooo", String.valueOf(dataSnapshot.getValue()));
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        Log.e("huhuhu", String.valueOf(mData.orderByChild("userNv").equalTo(user)));
+
+    }
+
+    public void showDialog(){
+        if (!pDialog.isShowing()){
+            pDialog.show();
+        }
+    }
+    public void hideDialog() {
+        if (pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
     }
 }

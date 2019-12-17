@@ -2,14 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
  <item
      android:id="@+id/lichcong"
-     android:title="Lịch công"
+     android:title="Lịch làm"
      android:icon="@drawable/calendar"
      />
-    <item
-        android:id="@+id/chamcong"
-        android:title="Chấm công"
-        android:icon="@drawable/lock"
-        />
     <item
         android:id="@+id/them"
         android:title="Thêm"

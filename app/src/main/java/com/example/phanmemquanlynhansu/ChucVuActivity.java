@@ -1,6 +1,8 @@
 package com.example.phanmemquanlynhansu;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -18,13 +20,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.phanmemquanlynhansu.Adapter.AdapterChucVu;
 import com.example.phanmemquanlynhansu.Adapter.AdapterCuaHang;
+import com.example.phanmemquanlynhansu.Model.ModelCaLam;
 import com.example.phanmemquanlynhansu.Model.ModelChucVu;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -97,16 +103,21 @@ public class ChucVuActivity extends AppCompatActivity {
                 break;
         }
     }
+
     public boolean batLoi() {
         if (edtMaChucVu.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã chức vụ!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtTenChucVu.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên chức vụ", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return false;
+        return true;
     }
+
     private void showDialogThemChucVu() {
         dialog = new Dialog(ChucVuActivity.this);
+        dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_themchucvu);
 
         edtMaChucVu = dialog.findViewById(R.id.edt_machucvu);
@@ -127,47 +138,62 @@ public class ChucVuActivity extends AppCompatActivity {
         mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelChucVu = new ModelChucVu(maCV, tenCV, ghiChu);
-        mData.child("ChucVu").push().setValue(modelChucVu);
-        dialog.dismiss();
+
+        mData.child("ChucVu").push().setValue(modelChucVu).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(ChucVuActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                edtMaChucVu.setText("");
+                edtGhiChu.setText("");
+                edtTenChucVu.setText("");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ChucVuActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void reaData() {
-        mData = FirebaseDatabase.getInstance().getReference();
-        list.clear();
-        childEventListener = new ChildEventListener() {
+        mData = FirebaseDatabase.getInstance().getReference("ChucVu");
+        mData.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                ModelChucVu modelChucVu = dataSnapshot.getValue(ModelChucVu.class);
-                id = dataSnapshot.getKey();
-                modelChucVu.setId(id);
-                list.add(modelChucVu);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    ModelChucVu modelChucVu = data.getValue(ModelChucVu.class);
+                    modelChucVu.setId(data.getKey());
+                    list.add(modelChucVu);
+                }
+                if (list.size() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChucVuActivity.this);
+                    builder.setIcon(R.drawable.iconnotification);
+                    builder.setCancelable(false);
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Hiện tại chưa có chức vụ, hãy chức vụ");
+                    builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            showDialogThemChucVu();
+                        }
+                    });
+                    builder.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    builder.show();
+                }
                 adapterChucVu.notifyDataSetChanged();
                 ivLoading.setVisibility(View.GONE);
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                list.clear();
-                mData.child("ChucVu").addChildEventListener(childEventListener);
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
-                mData.child("ChucVu").addChildEventListener(childEventListener);
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), "Tải dữ liệu thất bại", Toast.LENGTH_LONG).show();
             }
-        };
-        mData.child("ChucVu").addChildEventListener(childEventListener);
+        });
     }
 }

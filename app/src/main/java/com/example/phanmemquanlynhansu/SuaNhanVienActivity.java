@@ -25,14 +25,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.phanmemquanlynhansu.Function.Function;
 import com.example.phanmemquanlynhansu.Function.NhanVienDAO;
 import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -51,15 +59,16 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class SuaNhanVienActivity extends AppCompatActivity {
     ModelNhanVien modelNhanVien;
     CircleImageView imgAvatar, btnEditAvatar;
-    EditText edtTen, edtUser, edtSdt, edtDiaChi;
+    EditText edtTen, edtSdt, edtDiaChi;
     Spinner spnChucVu, spnCuaHang;
     RadioButton rdNam, rdNu;
     Button btnDoiMk, btnLuu1;
-    TextView btnXoa, btnLuu;
+    TextView btnXoa, btnLuu, edtUser, txtPass;
     ImageView btnBack;
     //dialog
     EditText edtOldPass, edtNewPass, edtRePass;
     Button btnHuy, btnLuudl;
+    Function function;
 
     NhanVienDAO nhanVienDAO;
 
@@ -70,7 +79,9 @@ public class SuaNhanVienActivity extends AppCompatActivity {
 
     int REQUEST_CHOOSE_PHOTO = 321;
 
-    String ten, user, chucVu, cuaHang, gioiTinh, sdt, diaChi;
+    String ten, user, pass, chucVu, cuaHang, gioiTinh, sdt, diaChi;
+
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +90,8 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         addControls();
         addEvents();
         getData();
+//        changePass();
+//        delete();
     }
 
     public void addControls() {
@@ -96,8 +109,6 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         rdNam = findViewById(R.id.rd_nam_suanv);
         rdNu = findViewById(R.id.rd_nu_suanv);
         btnDoiMk = findViewById(R.id.btn_doimk_suanv);
-
-
     }
 
     public void addEvents() {
@@ -157,10 +168,12 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     public boolean batLoi() {
         if (edtTen.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtUser.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên đăng nhập!", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void getString() {
@@ -170,29 +183,91 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         cuaHang = spnCuaHang.getSelectedItem().toString();
         sdt = edtSdt.getText().toString();
         diaChi = edtDiaChi.getText().toString();
+        pass = txtPass.getText().toString();
     }
 
     public void getData() {
-        nhanVienDAO = new NhanVienDAO();
         Intent intent = getIntent();
-        modelNhanVien = (ModelNhanVien) intent.getSerializableExtra("ModelNhanVien");
-        Picasso.get().load(modelNhanVien.getUrlHinhNv()).into(imgAvatar);
-        nhanVienDAO.ganDsChucVuVaoSpiner(SuaNhanVienActivity.this, spnChucVu, modelNhanVien.getMaChucVu());
-        nhanVienDAO.ganDsCuaHangVaoSpiner(SuaNhanVienActivity.this, spnCuaHang, modelNhanVien.getMaCuaHang());
-        gioiTinh = modelNhanVien.getGioiTinhNv();
-        if (gioiTinh.equals("Nam")) {
-            rdNam.setChecked(true);
+        nhanVienDAO = new NhanVienDAO();
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String status = intent.getStringExtra("userfrag");
+        if (status != null) {
+            mData = FirebaseDatabase.getInstance().getReference("NhanVien");
+            mData.orderByKey().equalTo(currentFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
+                        Picasso.get().load(modelNhanVien.getUrlHinhNv()).into(imgAvatar);
+                        nhanVienDAO.ganDsChucVuVaoSpiner(SuaNhanVienActivity.this, spnChucVu, modelNhanVien.getMaChucVu());
+                        nhanVienDAO.ganDsCuaHangVaoSpiner(SuaNhanVienActivity.this, spnCuaHang, modelNhanVien.getMaCuaHang());
+                        gioiTinh = modelNhanVien.getGioiTinhNv();
+                        if (gioiTinh.equals("Nam")) {
+                            rdNam.setChecked(true);
+                        } else {
+                            rdNu.setChecked(true);
+                        }
+                        edtTen.setText(modelNhanVien.getTenNv());
+                        edtUser.setText(modelNhanVien.getUserNv());
+                        edtSdt.setText(modelNhanVien.getSdtNv());
+                        edtDiaChi.setText(modelNhanVien.getDiaChiNv());
+                        if (!modelNhanVien.getMaChucVu().equals("Quản lý")||modelNhanVien.getUserNv().equals(currentFirebaseUser.getEmail())) {
+                            btnXoa.setVisibility(View.GONE);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         } else {
-            rdNu.setChecked(true);
+            modelNhanVien = (ModelNhanVien) intent.getSerializableExtra("ModelNhanVien");
+            Picasso.get().load(modelNhanVien.getUrlHinhNv()).into(imgAvatar);
+            nhanVienDAO.ganDsChucVuVaoSpiner(SuaNhanVienActivity.this, spnChucVu, modelNhanVien.getMaChucVu());
+            nhanVienDAO.ganDsCuaHangVaoSpiner(SuaNhanVienActivity.this, spnCuaHang, modelNhanVien.getMaCuaHang());
+            gioiTinh = modelNhanVien.getGioiTinhNv();
+            if (gioiTinh.equals("Nam")) {
+                rdNam.setChecked(true);
+            } else {
+                rdNu.setChecked(true);
+            }
+            edtTen.setText(modelNhanVien.getTenNv());
+            edtUser.setText(modelNhanVien.getUserNv());
+            edtSdt.setText(modelNhanVien.getSdtNv());
+            edtDiaChi.setText(modelNhanVien.getDiaChiNv());
+            if (currentFirebaseUser != null) {
+                if (!modelNhanVien.getIdNv().equals(currentFirebaseUser.getUid())) {
+                    btnDoiMk.setVisibility(View.GONE);
+                }if (modelNhanVien.getUserNv().equals(currentFirebaseUser.getEmail())){
+                    btnXoa.setVisibility(View.GONE);
+                }
+                mData = FirebaseDatabase.getInstance().getReference("NhanVien");
+                mData.orderByKey().equalTo(currentFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
+                            if (!modelNhanVien.getMaChucVu().equals("Quản lý")) {
+                                btnXoa.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
         }
-        edtTen.setText(modelNhanVien.getTenNv());
-        edtUser.setText(modelNhanVien.getUserNv());
-        edtSdt.setText(modelNhanVien.getSdtNv());
-        edtDiaChi.setText(modelNhanVien.getDiaChiNv());
     }
 
     private void suaNhanVien() {
         getString();
+        function = new Function();
+        function.pDialog(SuaNhanVienActivity.this);
         mData = FirebaseDatabase.getInstance().getReference("NhanVien");
         final String uid = modelNhanVien.getIdNv();
         storage = FirebaseStorage.getInstance("gs://phanmemquanlynhansu-eda6c.appspot.com");
@@ -213,6 +288,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
                 Toast.makeText(SuaNhanVienActivity.this, "Lỗi", LENGTH_SHORT).show();
+                function.pDialog(SuaNhanVienActivity.this);
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -230,6 +306,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
                 mData.child(uid).child("urlHinhNv").setValue(String.valueOf(downloadUrl));
                 mData.child(uid).child("userNv").setValue(user);
                 Toast.makeText(SuaNhanVienActivity.this, "Lưu thành công", LENGTH_SHORT).show();
+                function.pDialog(SuaNhanVienActivity.this);
                 finish();
             }
         });
@@ -242,7 +319,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     }
 
     private void dialogDoiMatKhau() {
-        final Dialog dialog = new Dialog(SuaNhanVienActivity.this);
+        dialog = new Dialog(SuaNhanVienActivity.this);
         dialog.setContentView(R.layout.dialog_doimatkhau);
         edtOldPass = dialog.findViewById(R.id.edt_mkcu_dldoimk);
         edtNewPass = dialog.findViewById(R.id.edt_mkmoi_dldoimk);
@@ -259,9 +336,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         btnLuu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (doiMatKhau()){
-                    dialog.dismiss();
-                }
+                doiMatKhau();
             }
         });
 
@@ -270,29 +345,85 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     }
 
     private boolean doiMatKhau() {
+        getString();
         String pass = edtOldPass.getText().toString();
-        String newpass = edtNewPass.getText().toString();
+        final String newpass = edtNewPass.getText().toString();
         String repass = edtRePass.getText().toString();
-
-        if (pass.trim().length() != 0 || newpass.trim().length() != 0 || repass.trim().length() != 0){
-           if (pass.equals(modelNhanVien.getPassNv())){
-               if (newpass.equals(repass)){
-                   mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-                   String uid = modelNhanVien.getIdNv();
-                   mData.child(uid).child("passNv").setValue(newpass, new DatabaseReference.CompletionListener() {
-                       @Override
-                       public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                           if (databaseError == null) {
-                               Toast.makeText(SuaNhanVienActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                           }else Toast.makeText(SuaNhanVienActivity.this, "Lỗi "+databaseError, Toast.LENGTH_SHORT).show();
-                       }
-                   });
-                   return true;
-               }else Toast.makeText(this, "Mật khẩu không trùng nhau", LENGTH_SHORT).show();
-           }else Toast.makeText(this, "Sai mật khẩu", LENGTH_SHORT).show();
-        }else Toast.makeText(this, "Hãy nhập đầy đủ các trường!", LENGTH_SHORT).show();
+        if (pass.trim().length() != 0 || newpass.trim().length() != 0 || repass.trim().length() != 0) {
+            if (pass.equals(modelNhanVien.getPassNv())) {
+                if (newpass.equals(repass)) {
+                    final FirebaseUser userF = FirebaseAuth.getInstance().getCurrentUser();
+                    AuthCredential credential = EmailAuthProvider
+                            .getCredential(user, pass);
+                    userF.reauthenticate(credential)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        userF.updatePassword(newpass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    mData = FirebaseDatabase.getInstance().getReference("NhanVien");
+                                                    String uid = modelNhanVien.getIdNv();
+                                                    mData.child(uid).child("passNv").setValue(newpass, new DatabaseReference.CompletionListener() {
+                                                        @Override
+                                                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                                            if (databaseError == null) {
+                                                                Toast.makeText(SuaNhanVienActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                                                                dialog.dismiss();
+                                                            } else
+                                                                Toast.makeText(SuaNhanVienActivity.this, "Lỗi " + databaseError, Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                } else {
+                                                    Toast.makeText(SuaNhanVienActivity.this, "Error password not updated", LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        Toast.makeText(SuaNhanVienActivity.this, "Error auth failed", LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                } else Toast.makeText(this, "Mật khẩu không trùng nhau", LENGTH_SHORT).show();
+            } else Toast.makeText(this, "Sai mật khẩu", LENGTH_SHORT).show();
+        } else Toast.makeText(this, "Hãy nhập đầy đủ các trường!", LENGTH_SHORT).show();
         return false;
     }
+
+    public void delete() {
+        getString();
+        final FirebaseUser userF = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(user, pass);
+        Log.e("0000000", "user: " + user + "--" + "pass: " + pass);
+
+        userF.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            userF.delete()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(SuaNhanVienActivity.this, "User account deleted.", LENGTH_SHORT).show();
+                                                xoaNhanVien();
+                                            } else {
+                                                Toast.makeText(SuaNhanVienActivity.this, "Lỗi", LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(SuaNhanVienActivity.this, "Error auth failed", LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+    }
+
 
     private void chooseImg() {
         Intent intent = new Intent(Intent.ACTION_PICK);

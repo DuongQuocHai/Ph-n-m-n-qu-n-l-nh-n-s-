@@ -25,7 +25,11 @@ public class ModelCaLam implements Serializable {
 
     }
 
-    public ModelCaLam( String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, double luongCaLam, double luong1GioLam) {
+    public ModelCaLam(String tenCaLam) {
+        this.tenCaLam = tenCaLam;
+    }
+
+    public ModelCaLam(String maCaLam, String tenCaLam, String tgBatDauCaLam, String tgKetThucCaLam, String tongGioLam, double luongCaLam, double luong1GioLam) {
         this.maCaLam = maCaLam;
         this.tenCaLam = tenCaLam;
         this.tgBatDauCaLam = tgBatDauCaLam;

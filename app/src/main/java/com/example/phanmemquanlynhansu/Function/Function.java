@@ -1,5 +1,7 @@
 package com.example.phanmemquanlynhansu.Function;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +30,7 @@ import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Function {
+
 
     public String convert(String str) {
         str = str.replaceAll("à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ", "a");
@@ -94,11 +97,26 @@ public class Function {
             Log.e("luong1gio", luong1Gio);
             java.util.Date giolam = null;
             giolam = converttoTime(tongGioLam);
-            luongCaLam = (giolam.getHours() + giolam.getMinutes() / 60) * Double.parseDouble(luong1Gio);
+            luongCaLam = (Double.parseDouble(String.valueOf(giolam.getHours()))  + (Double.parseDouble(String.valueOf(giolam.getMinutes())) / 60)) * Double.parseDouble(luong1Gio);
             return luongCaLam;
         }
 
     }
+
+    public void pDialog(Activity context) {
+        ProgressDialog pDialog= new ProgressDialog(context);
+        pDialog.setMessage("Vui lòng đợi...");
+        if (!pDialog.isShowing()) {
+            pDialog.show();
+        }else pDialog.dismiss();
+    }
+
+//    public void hideDialog(Activity context) {
+//        ProgressDialog pDialog= new ProgressDialog(context);
+//        if (pDialog.isShowing()) {
+//            pDialog.dismiss();
+//        }
+//    }
 
 
 }

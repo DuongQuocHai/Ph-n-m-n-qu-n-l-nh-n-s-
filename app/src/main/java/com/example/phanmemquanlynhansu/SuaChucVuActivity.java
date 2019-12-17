@@ -8,11 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.phanmemquanlynhansu.Model.ModelChucVu;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -83,16 +86,28 @@ public class SuaChucVuActivity extends AppCompatActivity {
     private boolean batLoi() {
         if (edtEditMaCV.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã chức vụ!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtEditTenCV.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên chức vụ", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void deleteChucVu(String keyId) {
         DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
-        mData.child("ChucVu").child(keyId).removeValue();
-        finish();
+        mData.child("ChucVu").child(keyId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(SuaChucVuActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SuaChucVuActivity.this, "Lỗi "+ e, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getString() {
@@ -109,7 +124,17 @@ public class SuaChucVuActivity extends AppCompatActivity {
         DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelChucVu = new ModelChucVu(maCV, tenCV, ghiChu);
-        mData.child("ChucVu").child(uid).setValue(modelChucVu);
-        finish();
+        mData.child("ChucVu").child(uid).setValue(modelChucVu).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(SuaChucVuActivity.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SuaChucVuActivity.this, "Lưu thất bại", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -6,8 +6,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -29,6 +31,9 @@ import android.widget.Toast;
 import com.example.phanmemquanlynhansu.Adapter.AdapterCaLam;
 import com.example.phanmemquanlynhansu.Function.Function;
 import com.example.phanmemquanlynhansu.Model.ModelCaLam;
+import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,8 +51,8 @@ import java.util.Timer;
 public class CaLamActivity extends AppCompatActivity {
     ListView lvCaLam;
     EditText edttenCaLam, edtLuong1Gio;
-    TextView txtTongGioCl, txtLuong1Ca, txtMaCaLam, txtGioBd, txtGioKt;
-    Button btnGioBd, btnGioKt;
+    TextView txtTongGioCl, txtLuong1Ca, txtMaCaLam, txtGioBd, txtGioKt, txtCuaHang, txtNgay;
+    Button btnGioBd, btnGioKt, btnHuy;
     String maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, luong1Gio, luong1Ca;
     DatabaseReference mData;
     Function function = new Function();
@@ -56,6 +61,12 @@ public class CaLamActivity extends AppCompatActivity {
     View view;
     ImageView ivLoading;
     AnimationDrawable animation;
+
+    Dialog dialog;
+
+    Intent intent;
+    Bundle bundle;
+    int status = 0;
 
 
     @Override
@@ -72,23 +83,25 @@ public class CaLamActivity extends AppCompatActivity {
     public void addEnvents() {
         lvCaLam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CaLamActivity.this, SuaCaLamActivity.class);
-                intent.putExtra("ModelCalam", list.get(position));
-                startActivity(intent);
-            }
-        });
-        lvCaLam.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mData = FirebaseDatabase.getInstance().getReference("CaLam");
-                mData.child(list.get(position).getId()).removeValue(new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                        Toast.makeText(CaLamActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                if (bundle != null) {
+                    status++;
+                    Intent intent = new Intent(CaLamActivity.this, ThemPhanCaLamActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("cuahang", txtCuaHang.getText().toString());
+                    bundle.putString("ngay", txtNgay.getText().toString());
+                    bundle.putSerializable("modelcl", list.get(position));
+                    intent.putExtras(bundle);
+
+                    startActivity(intent);
+                    if (status == list.size()) {
+                        finish();
                     }
-                });
-                return false;
+                } else {
+                    Intent intent = new Intent(CaLamActivity.this, SuaCaLamActivity.class);
+                    intent.putExtra("ModelCalam", list.get(position));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -105,6 +118,8 @@ public class CaLamActivity extends AppCompatActivity {
 
     public void addControl() {
         lvCaLam = findViewById(R.id.lvcalam);
+        txtCuaHang = findViewById(R.id.txt_cuahang_calam);
+        txtNgay = findViewById(R.id.txt_ngay_calam);
         list = new ArrayList<>();
         adapterCaLam = new AdapterCaLam(CaLamActivity.this, list);
         lvCaLam.setAdapter(adapterCaLam);
@@ -117,13 +132,6 @@ public class CaLamActivity extends AppCompatActivity {
                 break;
             case R.id.action_bar_back_calam:
                 break;
-            case R.id.btn_huy_dlthemcl:
-//                Dialog dialog = new Dialog(CaLamActivity.this);
-//                dialog.dismiss();
-//                showTimePicker();
-                getString();
-                txtTongGioCl.setText(function.soGioLam(tgBdCl,tgKtCl));
-                break;
             case R.id.btn_them_dlthemcl:
                 if (batLoi()) {
                     addCaLam();
@@ -131,77 +139,85 @@ public class CaLamActivity extends AppCompatActivity {
                 break;
         }
     }
+
     public boolean batLoi() {
         if (edttenCaLam.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên ca làm!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (txtGioBd.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (txtGioKt.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng chọn giờ kết thúc!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtLuong1Gio.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập lương 1 giờ làm!", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return false;
+        return true;
     }
+
     public void readData() {
-        mData = FirebaseDatabase.getInstance().getReference();
-        list.clear();
-        mData.child("CaLam").addChildEventListener(new ChildEventListener() {
+        intent = getIntent();
+        bundle = intent.getExtras();
+        if (bundle != null) {
+            txtCuaHang.setVisibility(View.VISIBLE);
+            txtNgay.setVisibility(View.VISIBLE);
+            String cuahang = bundle.getString("cuahang");
+            String ngay = bundle.getString("ngay");
+            txtCuaHang.setText(cuahang);
+            txtNgay.setText(ngay);
+        }
+        mData = FirebaseDatabase.getInstance().getReference("CaLam");
+        mData.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ModelCaLam modelCaLam = dataSnapshot.getValue(ModelCaLam.class);
-                list.add(modelCaLam);
-                modelCaLam.setId(dataSnapshot.getKey());
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    ModelCaLam modelCaLam = data.getValue(ModelCaLam.class);
+                    modelCaLam.setId(data.getKey());
+                    list.add(modelCaLam);
+                }
+                if (list.size()==0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CaLamActivity.this);
+                    builder.setIcon(R.drawable.iconnotification);
+                    builder.setCancelable(false);
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Hiện tại chưa có ca làm, hãy thêm ca làm");
+                    builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            try {
+                                showDialogThemCaLam();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    builder.show();
+                }
                 adapterCaLam.notifyDataSetChanged();
                 ivLoading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Toast.makeText(getApplicationContext(), "Tải dữ liệu thành công", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), "Tải dữ liệu thất bại", Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-//    public void readData(){
-//        mData = FirebaseDatabase.getInstance().getReference("CaLam");
-//        mData.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                    ModelCaLam modelCaLam = data.getValue(ModelCaLam.class);
-//                    modelCaLam.setId(data.getKey());
-//                    list.add(modelCaLam);
-//                }
-//                Toast.makeText(getApplicationContext(), "Load Data Success", Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
-
     public void showDialogThemCaLam() throws ParseException {
-        Dialog dialog = new Dialog(CaLamActivity.this);
-
+        dialog = new Dialog(CaLamActivity.this);
+        dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_themcalam);
         edttenCaLam = dialog.findViewById(R.id.edt_ten_dlthemcl);
         txtGioBd = dialog.findViewById(R.id.txt_giobd_dlthemcl);
@@ -212,6 +228,7 @@ public class CaLamActivity extends AppCompatActivity {
         txtLuong1Ca = dialog.findViewById(R.id.txt_luong1ca_dlthemcl);
         btnGioBd = dialog.findViewById(R.id.btn_giobd_dlthemcl);
         btnGioKt = dialog.findViewById(R.id.btn_giokt_dlthemcl);
+        btnHuy = dialog.findViewById(R.id.btn_huy_dlthemcl);
         edttenCaLam.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -274,6 +291,12 @@ public class CaLamActivity extends AppCompatActivity {
                 showTimePicker(txtGioKt);
             }
         });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         dialog.show();
     }
@@ -294,7 +317,18 @@ public class CaLamActivity extends AppCompatActivity {
         getString();
         String uid = mData.push().getKey();
         ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, Double.parseDouble(luong1Ca), Double.parseDouble(luong1Gio));
-        mData.child(uid).setValue(modelCaLam);
+        mData.child(uid).setValue(modelCaLam).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Thêm thất bại!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void showTimePicker(final TextView txt) {

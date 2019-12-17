@@ -4,14 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
-    tools:context=".CaLamActivity"
-    android:layout_margin="10dp">
+    tools:context=".CaLamActivity">
+
+    <TextView
+        android:id="@+id/txt_cuahang_calam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txt_ngay_calam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_cuahang_calam"
+        android:visibility="gone"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/lvcalam"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txt_ngay_calam" />
+
     <ImageView
         android:id="@+id/iv_loading"
         android:layout_width="40dp"

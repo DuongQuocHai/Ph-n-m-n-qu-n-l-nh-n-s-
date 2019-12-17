@@ -13,7 +13,7 @@
         android:id="@+id/img_themnv"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:src="@drawable/avatar"
+        android:src="@drawable/user"
         app:civ_border_width="1dp"
         app:civ_border_color="#909090"
         />
@@ -29,6 +29,13 @@
             android:layout_marginTop="80dp"
             />
     </FrameLayout>
+    <ProgressBar
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/progressbar"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,6 +85,7 @@
             android:id="@+id/edt_mathau_themnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:background="@android:color/transparent"
             android:gravity="right"
             />
@@ -96,6 +104,7 @@
             android:id="@+id/edt_nhaplaimk_them"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:background="@android:color/transparent"
             android:gravity="right"
             />

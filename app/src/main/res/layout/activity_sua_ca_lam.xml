@@ -74,7 +74,7 @@
             android:layout_height="62dp"
             android:layout_weight="0"
             android:onClick="clickSuaCaLam"
-            android:text="haha"
+            android:text="Chọn giờ BĐ"
             tools:ignore="OnClick" />
 
     </LinearLayout>
@@ -100,11 +100,10 @@
         <Button
             android:id="@+id/btn_giokt_suacl"
             android:layout_width="wrap_content"
-            android:layout_height="62dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Hihi"
             android:onClick="clickSuaCaLam"
-             />
+            android:text="Chọn giờ KĐ" />
 
     </LinearLayout>
     <LinearLayout
@@ -165,9 +164,11 @@
             android:textSize="20sp" />
     </LinearLayout>
     <TextView
+        android:id="@+id/btn_xoa_suacl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Xoá ca làm"
+        android:onClick="clickSuaCaLam"
         android:textColor="#FF1744"/>
 </LinearLayout>

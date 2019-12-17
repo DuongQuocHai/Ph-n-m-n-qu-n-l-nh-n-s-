@@ -1,5 +1,6 @@
 package com.example.phanmemquanlynhansu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -74,12 +77,15 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     private boolean batLoi() {
         if (edtEditMaCH.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã cửa hàng!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtEditTenCH.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên cửa hàng", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtEditDiaChi.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập địa chỉ", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void deleteCuaHang(String keyId) {
@@ -102,8 +108,19 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelCuaHang = new ModelCuaHang(maCH, tenCH, diaChi);
-        mData.child("CuaHang").child(uid).setValue(modelCuaHang);list.clear();
-        finish();
+        mData.child("CuaHang").child(uid).setValue(modelCuaHang).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(SuaCuaHangActivity.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SuaCuaHangActivity.this, "Lưu thất bại", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 

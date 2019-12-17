@@ -8,12 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.phanmemquanlynhansu.Fragment.FragmentChamCong;
 import com.example.phanmemquanlynhansu.Fragment.FragmentLichCong;
 import com.example.phanmemquanlynhansu.Fragment.FragmentThem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,10 +44,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.lichcong:
                 selectedFragment = new FragmentLichCong();
-                break;
-
-            case R.id.chamcong:
-                selectedFragment = new FragmentChamCong();
                 break;
 
             case R.id.them:

@@ -1,11 +1,13 @@
 package com.example.phanmemquanlynhansu;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,13 +26,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.phanmemquanlynhansu.Function.Function;
 import com.example.phanmemquanlynhansu.Function.NhanVienDAO;
 import com.example.phanmemquanlynhansu.Model.ModelChucVu;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,10 +51,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,21 +68,23 @@ public class ThemNhanVienActivity extends AppCompatActivity {
     Button btnLamMoi;
     ImageView btnBack;
     TextView btnThem;
-
+    Function function;
     View view;
 
     String ten, user, pass, rePass, chucVu, cuaHang, gioiTinh = "Nam", sdt, diaChi, urlHinh;
 
     final int REQUEST_CHOOSE_PHOTO = 321;
+    ProgressBar progressBar;
 
     DatabaseReference mData;
+    FirebaseAuth firebaseAuth;
     FirebaseStorage storage;
     StorageReference mountainsRef;
     StorageReference storageRef;
+    Uri filePath;
 
     ModelNhanVien modelNhanVien;
     NhanVienDAO nhanVienDAO;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +96,15 @@ public class ThemNhanVienActivity extends AppCompatActivity {
 
     public void addControl() {
         nhanVienDAO = new NhanVienDAO();
+
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_them_nhan_vien);
         view = getSupportActionBar().getCustomView();
         btnBack = view.findViewById(R.id.btn_back_themnv);
         btnThem = view.findViewById(R.id.btn_them_themnv);
+
+        progressBar = findViewById(R.id.progressbar);
 
         edtTen = findViewById(R.id.edt_ten_themnv);
         edtUser = findViewById(R.id.edt_tendn_themnv);
@@ -117,7 +134,7 @@ public class ThemNhanVienActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (batLoi()) {
-                    addNhanVien();
+                    upLoad();
                 }
             }
         });
@@ -171,48 +188,85 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         sdt = edtSdt.getText().toString();
         diaChi = edtDiaChi.getText().toString();
     }
+    public void upLoad() {
+        if (filePath != null) {
+            getString();
+            firebaseAuth = FirebaseAuth.getInstance();
+            progressBar.setVisibility(View.VISIBLE);
+            storage = FirebaseStorage.getInstance("gs://phanmemquanlynhansu-eda6c.appspot.com");
+            storageRef = storage.getReference();
+            StorageReference reference = storageRef.child("image/" + UUID.randomUUID().toString());
+            reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!urlTask.isSuccessful()) ;
+                    urlHinh = urlTask.getResult().toString();
+                    firebaseAuth.fetchSignInMethodsForEmail(edtUser.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            if (task.getResult().getSignInMethods().size() == 0) {
+                                firebaseAuth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(ThemNhanVienActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            modelNhanVien = new ModelNhanVien(ten, user, pass, chucVu, cuaHang, gioiTinh, sdt, diaChi, urlHinh);
+                                            FirebaseDatabase.getInstance()
+                                                    .getReference("NhanVien")
+                                                    .child(FirebaseAuth.getInstance()
+                                                            .getCurrentUser().getUid())
+                                                    .setValue(modelNhanVien).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    Toast.makeText(ThemNhanVienActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(ThemNhanVienActivity.this, "Lỗi " + e, Toast.LENGTH_SHORT).show();
+                                                    progressBar.setVisibility(View.GONE);
+                                                }
+                                            });
+                                        }else
+                                            Toast.makeText(ThemNhanVienActivity.this, "--------", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(ThemNhanVienActivity.this, "Tên đăng nhập đã tồn tại", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ThemNhanVienActivity.this, "Lỗi " + e, Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+                }
+            });
+        } else Toast.makeText(this, "Vui lòng chọn ảnh", Toast.LENGTH_SHORT).show();
+    }
 
-    public void addNhanVien() {
-        getString();
-        mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-        storage = FirebaseStorage.getInstance("gs://phanmemquanlynhansu-eda6c.appspot.com");
-        storageRef = storage.getReference();
-        Calendar calendar = Calendar.getInstance();
-        mountainsRef = storageRef.child("image" + calendar.getTimeInMillis() + ".png");
-        // Get the data from an ImageView as bytes
-        imgNhanVien.setDrawingCacheEnabled(true);
-        imgNhanVien.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imgNhanVien.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = mountainsRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+    void checkEmail() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.fetchSignInMethodsForEmail(edtUser.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Toast.makeText(ThemNhanVienActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                Log.d("hahahaahah", "" + task.getResult().getSignInMethods().size());
+                if (task.getResult().getSignInMethods().size() == 0) {
+                    // email not existed
+                } else {
+                    Toast.makeText(ThemNhanVienActivity.this, "Tên đăng nhập đã tồn tại", Toast.LENGTH_SHORT).show();
+                }
+
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!urlTask.isSuccessful()) ;
-                Uri downloadUrl = urlTask.getResult();
-                Toast.makeText(ThemNhanVienActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                Log.e("pppppppp : ", String.valueOf(urlTask.isSuccessful()));
-                modelNhanVien = new ModelNhanVien(ten, user, pass, chucVu, cuaHang, gioiTinh, sdt, diaChi, String.valueOf(downloadUrl));
-                mData.push().setValue(modelNhanVien, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                        if (databaseError == null) {
-                            Toast.makeText(ThemNhanVienActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                        } else
-                            Toast.makeText(ThemNhanVienActivity.this, "Lỗi " + databaseError, Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -227,14 +281,16 @@ public class ThemNhanVienActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CHOOSE_PHOTO && resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData();
+            filePath = data.getData();
             try {
-                InputStream inputStream = getContentResolver().openInputStream(uri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//                InputStream inputStream = getContentResolver().openInputStream(filePath);
+//                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imgNhanVien.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
 }

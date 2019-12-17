@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -39,7 +41,6 @@ public class NhanVienActivity extends AppCompatActivity {
     DatabaseReference mData;
     ImageView ivLoading;
     AnimationDrawable animation;
-
 
 
     @Override
@@ -92,8 +93,8 @@ public class NhanVienActivity extends AppCompatActivity {
         lvNhanVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(NhanVienActivity.this,SuaNhanVienActivity.class);
-                intent.putExtra("ModelNhanVien",list.get(position));
+                Intent intent = new Intent(NhanVienActivity.this, SuaNhanVienActivity.class);
+                intent.putExtra("ModelNhanVien", list.get(position));
                 startActivity(intent);
             }
         });
@@ -101,53 +102,39 @@ public class NhanVienActivity extends AppCompatActivity {
     }
 
     public void readData() {
-//        mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-//        mData.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                list.clear();
-//                for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                    ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
-//                    modelNhanVien.setIdNv(data.getKey());
-//                    list.add(modelNhanVien);
-//                    Log.e("vvvvv",list.size()+"");
-//                }
-//                adapterNhanVien.notifyDataSetChanged();
-//                Toast.makeText(getApplicationContext(), "Load Data Success", Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-        mData = FirebaseDatabase.getInstance().getReference();
-        list.clear();
-        mData.child("NhanVien").addChildEventListener(new ChildEventListener() {
+        mData = FirebaseDatabase.getInstance().getReference("NhanVien");
+        mData.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ModelNhanVien modelNhanVien = dataSnapshot.getValue(ModelNhanVien.class);
-                modelNhanVien.setIdNv(dataSnapshot.getKey());
-                list.add(modelNhanVien);
-                Log.e("ttttt", modelNhanVien.getMaChucVu());
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
+                    modelNhanVien.setIdNv(data.getKey());
+                    list.add(modelNhanVien);
+                }
+                if (list.size() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
+                    builder.setIcon(R.drawable.iconnotification);
+                    builder.setCancelable(false);
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Hiện tại chưa có nhân viên, hãy thêm nhân viên");
+                    builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(NhanVienActivity.this, ThemNhanVienActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    builder.show();
+                }
                 adapterNhanVien.notifyDataSetChanged();
                 ivLoading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
             }
 
             @Override
