@@ -46,7 +46,7 @@ public class ChucVuActivity extends AppCompatActivity {
     Dialog dialog;
     View view;
     AnimationDrawable animation;
-    ImageView ivLoading;
+    ImageView ivLoading, btnBack;
     ChildEventListener childEventListener;
 
     @Override
@@ -79,7 +79,14 @@ public class ChucVuActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_chucvu);
-
+        view = getSupportActionBar().getCustomView();
+        btnBack = view.findViewById(R.id.action_bar_back_chucvu);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         ivLoading = findViewById(R.id.iv_loading);
         ivLoading.setBackgroundResource(R.drawable.loading);
         animation = (AnimationDrawable) ivLoading.getBackground();
@@ -153,6 +160,7 @@ public class ChucVuActivity extends AppCompatActivity {
                 Toast.makeText(ChucVuActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
             }
         });
+        dialog.dismiss();
     }
 
     private void reaData() {

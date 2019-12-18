@@ -1,27 +1,22 @@
 package com.example.phanmemquanlynhansu;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.phanmemquanlynhansu.Model.ModelCaLam;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -31,7 +26,8 @@ public class PhanCaLamActivity extends AppCompatActivity {
     TextView txtNgaydt, txtNgayct, txtTuan, txtCuaHang;
     ListView lvNgay;
     Calendar c;
-
+    View view;
+    ImageView btnBack;
     int year, week, totalWeek, wee = 1;
 
     ArrayList<String> list;
@@ -83,6 +79,17 @@ public class PhanCaLamActivity extends AppCompatActivity {
                 bundle.putString("cuahang",txtCuaHang.getText().toString());
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_phanlich);
+        view = getSupportActionBar().getCustomView();
+        btnBack = view.findViewById(R.id.action_bar_back_phanlich);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

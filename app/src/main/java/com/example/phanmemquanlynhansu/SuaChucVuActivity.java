@@ -1,5 +1,7 @@
 package com.example.phanmemquanlynhansu;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +42,7 @@ public class SuaChucVuActivity extends AppCompatActivity {
         txtXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteChucVu(keyId);
+                xacNhanXoa();
             }
         });
 
@@ -82,7 +84,22 @@ public class SuaChucVuActivity extends AppCompatActivity {
                 break;
         }
     }
+    private void xacNhanXoa() {
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteChucVu(keyId);
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        builder.show();
+    }
     private boolean batLoi() {
         if (edtEditMaCV.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã chức vụ!", Toast.LENGTH_SHORT).show();

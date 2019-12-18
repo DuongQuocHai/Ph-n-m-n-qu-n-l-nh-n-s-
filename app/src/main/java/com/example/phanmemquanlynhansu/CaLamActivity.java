@@ -59,7 +59,7 @@ public class CaLamActivity extends AppCompatActivity {
     ArrayList<ModelCaLam> list;
     AdapterCaLam adapterCaLam;
     View view;
-    ImageView ivLoading;
+    ImageView ivLoading, btnBack;
     AnimationDrawable animation;
 
     Dialog dialog;
@@ -109,7 +109,13 @@ public class CaLamActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_calam);
         view = getSupportActionBar().getCustomView();
-
+        btnBack = view.findViewById(R.id.action_bar_back_calam);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         ivLoading = findViewById(R.id.iv_loading);
         ivLoading.setBackgroundResource(R.drawable.loading);
         animation = (AnimationDrawable) ivLoading.getBackground();

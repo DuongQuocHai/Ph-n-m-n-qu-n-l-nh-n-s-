@@ -26,6 +26,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -111,6 +113,16 @@ public class Function {
         }else pDialog.dismiss();
     }
 
+    public boolean checkEmail(String email) {
+        String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern regex = Pattern.compile(emailPattern);
+        Matcher matcher = regex.matcher(email);
+        if (matcher.find()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 //    public void hideDialog(Activity context) {
 //        ProgressDialog pDialog= new ProgressDialog(context);
 //        if (pDialog.isShowing()) {

@@ -19,7 +19,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_macuahang_edit"/>
+            android:id="@+id/edt_macuahang_edit" />
 
     </LinearLayout>
     <LinearLayout
@@ -33,7 +33,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_tencuahang_edit"/>
+            android:id="@+id/edt_tencuahang_edit" />
 
     </LinearLayout>
     <LinearLayout
@@ -47,7 +47,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_diachi_edit"/>
+            android:id="@+id/edt_diachi_edit" />
 
     </LinearLayout>
     <TextView

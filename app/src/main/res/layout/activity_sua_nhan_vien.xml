@@ -10,8 +10,7 @@
     <FrameLayout
         android:layout_width="135dp"
         android:layout_height="135dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_gravity="center">
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_suanv"
@@ -48,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="right"/>
+            android:gravity="right" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,13 +77,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="Chức vụ:"/>
+
         <Spinner
 
             android:id="@+id/spn_chucvu_suanv"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            />
+            android:backgroundTint="#000" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -101,7 +101,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            />
+            android:backgroundTint="#000"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -122,12 +122,14 @@
                 android:id="@+id/rd_nam_suanv"
                 android:text="Nam"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:buttonTint="#c44569"/>
             <RadioButton
                 android:id="@+id/rd_nu_suanv"
                 android:text="Nữ"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:buttonTint="#c44569"/>
         </RadioGroup>
 
 
@@ -147,8 +149,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:inputType="number"
-            android:gravity="right"
-            />
+            android:gravity="right" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -164,16 +165,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="right"
-            />
+            android:gravity="right"/>
     </LinearLayout>
     <Button
         android:id="@+id/btn_doimk_suanv"
         android:text="Đổi mật khẩu"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient"/>
+        android:background="@drawable/gradient" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

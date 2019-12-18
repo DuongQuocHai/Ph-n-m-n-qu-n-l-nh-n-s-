@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -144,7 +146,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                xoaNhanVien();
+                xacNhanXoa();
             }
         });
         btnDoiMk.setOnClickListener(new View.OnClickListener() {
@@ -311,7 +313,22 @@ public class SuaNhanVienActivity extends AppCompatActivity {
             }
         });
     }
+    private void xacNhanXoa() {
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                xoaNhanVien();
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        builder.show();
+    }
     private void xoaNhanVien() {
         DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
         mData.child("NhanVien").child(modelNhanVien.getIdNv()).removeValue();

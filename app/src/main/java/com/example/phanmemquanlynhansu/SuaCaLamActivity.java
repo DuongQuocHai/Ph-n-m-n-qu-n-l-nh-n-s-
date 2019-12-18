@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -79,9 +81,26 @@ public class SuaCaLamActivity extends AppCompatActivity {
                 showTimePicker(txtGioKtCl);
                 break;
             case R.id.btn_xoa_suacl:
-                xoaCaLam(keyId);
+                xacNhanXoa();
                 break;
         }
+    }
+
+    private void xacNhanXoa() {
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                xoaCaLam(keyId);
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
     }
 
     private void xoaCaLam(String keyId) {

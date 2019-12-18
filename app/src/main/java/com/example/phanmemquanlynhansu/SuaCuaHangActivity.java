@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -70,10 +72,25 @@ public class SuaCuaHangActivity extends AppCompatActivity {
                 finish();
                 break;
             case  R.id.txt_xoa_cuahang:
-                deleteCuaHang(keyId);
+                xacNhanXoa();
         }
     }
+    private void xacNhanXoa() {
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteCuaHang(keyId);
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        builder.show();
+    }
     private boolean batLoi() {
         if (edtEditMaCH.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã cửa hàng!", Toast.LENGTH_SHORT).show();

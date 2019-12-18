@@ -1,13 +1,16 @@
 package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,7 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
     TextView txtCuaHang, txtNgay, txtCaLam, btnXoa;
 
     ListView lvChiTiet;
-
+    ImageView btnBack;
     String key;
     DatabaseReference mData;
 
@@ -63,11 +65,38 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                xoaLichLam(key);
+                xacNhanXoa();
             }
         });
-    }
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_chitiet_lichlam);
+        View view = getSupportActionBar().getCustomView();
+        btnBack = view.findViewById(R.id.action_bar_back_chitiet_lichlam);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+    }
+    private void xacNhanXoa() {
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                xoaLichLam(key);
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
     public void getData() {
         Intent intent = getIntent();
         listNhanVien = new ArrayList<>();

@@ -1,12 +1,16 @@
 package com.example.phanmemquanlynhansu.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +48,9 @@ public class FragmentThem extends Fragment {
     FirebaseUser currentFirebaseUser;
     CircleImageView imgHinh;
     TextView txtTen, txtInfo;
-
+    ImageView ivLoading;
+    AnimationDrawable animation;
+    LinearLayout rellyFgThem;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,6 +76,8 @@ public class FragmentThem extends Fragment {
         imgHinh = view.findViewById(R.id.img_fragthem);
 
         layoutQuanLy = view.findViewById(R.id.layout_quanly_fragthem);
+        ivLoading = view.findViewById(R.id.iv_loading);
+        rellyFgThem = view.findViewById(R.id.relly_fgthem);
     }
 
     public void addEvent() {
@@ -123,12 +131,7 @@ public class FragmentThem extends Fragment {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentFirebaseUser != null) {
-                    FirebaseAuth.getInstance().signOut();
-                }
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                xacNhanDangXuat();
             }
         });
         btnBangLuong.setOnClickListener(new View.OnClickListener() {
@@ -146,8 +149,33 @@ public class FragmentThem extends Fragment {
                 startActivity(intent);
             }
         });
+        ivLoading.setBackgroundResource(R.drawable.loading);
+        animation = (AnimationDrawable) ivLoading.getBackground();
+        animation.start();
     }
+    private void xacNhanDangXuat() {
+        AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (currentFirebaseUser != null) {
+                    FirebaseAuth.getInstance().signOut();
+                }
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        builder.show();
+
+
+    }
     public void getData() {
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentFirebaseUser != null) {
@@ -163,6 +191,8 @@ public class FragmentThem extends Fragment {
                         if (!modelNhanVien.getMaChucVu().equals("Quản lý")){
                             layoutQuanLy.setVisibility(View.GONE);
                         }
+                        ivLoading.setVisibility(View.GONE);
+                        rellyFgThem.setVisibility(View.VISIBLE);
                     }
                 }
 

@@ -1,6 +1,7 @@
 package com.example.phanmemquanlynhansu.Fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,7 +36,8 @@ public class FragmentLichCong extends Fragment {
     View view;
     ArrayList<String> list;
     ArrayAdapter adapter;
-
+    ImageView ivLoading;
+    AnimationDrawable animation;
     ListView lvLichLam;
 
     DatabaseReference mData;
@@ -54,8 +57,7 @@ public class FragmentLichCong extends Fragment {
 
     public void addControls() {
         lvLichLam = view.findViewById(R.id.lv_fraglichlam);
-        btnRefresh = view.findViewById(R.id.btn_refresh_fraglichlam);
-
+        ivLoading = view.findViewById(R.id.iv_loading);
     }
     public void addEvents() {
             lvLichLam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,12 +68,9 @@ public class FragmentLichCong extends Fragment {
                     startActivity(intent);
                 }
             });
-            btnRefresh.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    readData();
-                }
-            });
+        ivLoading.setBackgroundResource(R.drawable.loading);
+        animation = (AnimationDrawable) ivLoading.getBackground();
+        animation.start();
     }
     public void readData() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -103,7 +102,7 @@ public class FragmentLichCong extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                             Log.e("dataaaaa-----",list.size()+"");
-
+                            ivLoading.setVisibility(View.GONE);
                         }
 
                         @Override

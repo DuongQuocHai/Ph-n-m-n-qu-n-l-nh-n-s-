@@ -49,7 +49,7 @@ public class CuaHangActivity extends AppCompatActivity {
     View view;
     ProgressBar progressBarCuaHang;
     AnimationDrawable animation;
-    ImageView ivLoading;
+    ImageView ivLoading, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,14 @@ public class CuaHangActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_cuahang);
-
+        view = getSupportActionBar().getCustomView();
+        btnBack = view.findViewById(R.id.action_bar_back_cuahang);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void clickCuaHang(View view) throws ParseException {
@@ -169,6 +176,7 @@ public class CuaHangActivity extends AppCompatActivity {
                 Toast.makeText(CuaHangActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
             }
         });
+        dialog.dismiss();
     }
 
     public void reaData() {

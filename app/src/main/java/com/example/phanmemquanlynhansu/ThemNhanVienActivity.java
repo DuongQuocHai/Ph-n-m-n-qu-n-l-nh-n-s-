@@ -1,16 +1,12 @@
 package com.example.phanmemquanlynhansu;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -28,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.phanmemquanlynhansu.Function.Function;
 import com.example.phanmemquanlynhansu.Function.NhanVienDAO;
-import com.example.phanmemquanlynhansu.Model.ModelChucVu;
-import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
 import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,26 +31,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -138,7 +123,12 @@ public class ThemNhanVienActivity extends AppCompatActivity {
                 }
             }
         });
-
+        btnLamMoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lamMoi();
+            }
+        });
         imgEditNhanVien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,22 +138,50 @@ public class ThemNhanVienActivity extends AppCompatActivity {
         rdNam.setOnCheckedChangeListener(listenerRadio);
         rdNu.setOnCheckedChangeListener(listenerRadio);
     }
-
+    public void lamMoi() {
+        edtTen.setText("");
+        edtUser.setText("");
+        edtPass.setText("");
+        edtRePass.setText("");
+        edtSdt.setText("");
+        edtDiaChi.setText("");
+        rdNam.setChecked(true);
+    }
+    private static boolean checkEmail(String email) {
+        String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern regex = Pattern.compile(emailPattern);
+        Matcher matcher = regex.matcher(email);
+        if (matcher.find()) {
+            return false;
+        }
+        return true;
+    }
     public boolean batLoi() {
+        String email = edtUser.getText().toString();
         if (edtTen.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên!", Toast.LENGTH_SHORT).show();
             return false;
         } else if (edtUser.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập tên đăng nhập!", Toast.LENGTH_SHORT).show();
             return false;
+        } else if (checkEmail(email)) {
+            Toast.makeText(this, "Tên đăng nhập phải là Email!", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (edtPass.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (edtPass.getText().length() < 6) {
+            Toast.makeText(this, "Mật khẩu phải trên 6 chữ số!", Toast.LENGTH_SHORT).show();
             return false;
         } else if (edtRePass.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập lại mật khẩu!", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!edtPass.getText().toString().equals(edtRePass.getText().toString())) {
             Toast.makeText(this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (edtSdt.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập số điện thoại!", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -220,7 +238,6 @@ public class ThemNhanVienActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     progressBar.setVisibility(View.GONE);
                                                     Toast.makeText(ThemNhanVienActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                                                    finish();
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override

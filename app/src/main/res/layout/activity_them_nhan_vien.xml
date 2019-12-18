@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="right"/>
+            android:gravity="right" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,8 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="right"
-            />
+            android:gravity="right" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,8 +105,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:background="@android:color/transparent"
-            android:gravity="right"
-            />
+            android:gravity="right" />
     </LinearLayout>
 
     <RelativeLayout
@@ -126,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            />
+            android:backgroundTint="#000"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -143,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            />
+            android:backgroundTint="#000"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -165,8 +163,10 @@
                 android:text="Nam"
                 android:checked="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:buttonTint="#c44569"/>
             <RadioButton
+                android:buttonTint="#c44569"
                 android:id="@+id/rd_nu_themnv"
                 android:text="Nữ"
                 android:layout_width="wrap_content"
@@ -190,8 +190,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:inputType="number"
-            android:gravity="right"
-            />
+            android:gravity="right" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -215,5 +214,6 @@
         android:text="Làm mới"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient"/>
+        android:background="@drawable/gradient"
+        android:layout_marginTop="20dp" />
 </LinearLayout>

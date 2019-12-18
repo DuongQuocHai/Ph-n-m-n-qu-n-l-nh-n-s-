@@ -2,6 +2,7 @@ package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,13 +36,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ThemPhanCaLamActivity extends AppCompatActivity {
-    TextView txtNgay, txtCuaHang, txtCaLam;
+    TextView txtNgay, txtCuaHang, txtCaLam, txtThem;
     ListView lvPhanCl;
     DatabaseReference mData;
     ArrayList<ModelNhanVien> listNhanVien;
     AdapterThemPhanCaLam adapter;
     Button btnThem, btnHuy, btnDsNhanVien, btnLammoi;
-
+    ImageView btnBack;
     ModelCaLam modelCaLam;
     ModelNhanVien modelNhanVien;
     Intent intent;
@@ -60,8 +62,6 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
     public void addControls() {
         txtNgay = findViewById(R.id.txt_ngay_themphancl);
         lvPhanCl = findViewById(R.id.lv_themphancl);
-        btnThem = findViewById(R.id.btn_them_themphancl);
-        btnHuy = findViewById(R.id.btn_huy_themphancl);
         txtCaLam = findViewById(R.id.txt_calam_themphancl);
         txtCuaHang = findViewById(R.id.txt_cuahang_themphancl);
         btnDsNhanVien = findViewById(R.id.btn_dsnhanvien_themphancl);
@@ -90,12 +90,25 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
                 readData();
             }
         });
-        btnThem.setOnClickListener(new View.OnClickListener() {
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_them_phanlich);
+        View view = getSupportActionBar().getCustomView();
+        btnBack = view.findViewById(R.id.action_bar_back_them_phanlich);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        txtThem = view.findViewById(R.id.action_bar_them_phanlich);
+        txtThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addCaLamViec();
             }
         });
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.phanmemquanlynhansu;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -27,7 +28,7 @@ import java.util.Calendar;
 public class XemCaLamViecActivity extends AppCompatActivity {
     TextView txtThang, txtCuaHang;
     ListView lvCaLamViec;
-
+    ImageView btnBack;
     int year, month;
     String cuahang;
     ModelCuaHang modelCuaHang;
@@ -63,6 +64,17 @@ public class XemCaLamViecActivity extends AppCompatActivity {
                 Intent intent = new Intent(XemCaLamViecActivity.this,ChiTietLichLamActivity.class);
                 intent.putExtra("keylichlam",list.get(position));
                 startActivity(intent);
+            }
+        });
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_xemcalam);
+        View view = getSupportActionBar().getCustomView();
+        btnBack = view.findViewById(R.id.action_bar_back_xemcalam);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

@@ -72,7 +72,9 @@
                         android:layout_height="60dp"
                         app:hintEnabled="true"
                         app:counterEnabled="true"
-                        android:id="@+id/edt_user_wrapper">
+                        android:id="@+id/edt_user_wrapper"
+                        android:backgroundTint="#fff"
+                        android:foregroundTint="#fff">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_user_login"
                             android:layout_width="match_parent"
@@ -81,7 +83,9 @@
                             android:paddingLeft="10dp"
                             android:hint="Username"
                             android:textColor="#454444"
-                            android:textColorHint="#B3FFFFFF"/>
+                            android:textColorHint="#B3FFFFFF"
+                            android:backgroundTint="#fff"
+                            android:foregroundTint="#fff"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -89,7 +93,9 @@
                         android:layout_height="60dp"
                         app:hintEnabled="true"
                         app:passwordToggleEnabled="true"
-                        android:id="@+id/edt_pass_wrapper">
+                        android:id="@+id/edt_pass_wrapper"
+                        android:backgroundTint="#fff"
+                        android:foregroundTint="#fff">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_pass_login"
                             android:layout_width="match_parent"
@@ -100,7 +106,9 @@
                             android:hint="Password"
                             android:inputType="textPassword"
                             android:textColor="#454444"
-                            android:textColorHint="#B3FFFFFF"/>
+                            android:textColorHint="#B3FFFFFF"
+                            android:backgroundTint="#fff"
+                            android:foregroundTint="#fff"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>

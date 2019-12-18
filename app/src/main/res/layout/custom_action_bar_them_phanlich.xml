@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/abril_fatface"
+        android:text="Phân ca"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <ImageButton
+            android:layout_centerVertical="true"
+            android:id="@+id/action_bar_back_them_phanlich"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back"
+            android:onClick="clickSuaCuaHang"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/action_bar_them_phanlich"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#FFF"
+            android:text="Thêm"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
