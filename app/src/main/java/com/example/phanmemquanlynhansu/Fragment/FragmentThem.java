@@ -151,8 +151,9 @@ public class FragmentThem extends Fragment {
             }
         });
         ivLoading.setBackgroundResource(R.drawable.loading);
-        animation = (AnimationDrawable) ivLoading.getBackground();
-        animation.start();
+//        animation = (AnimationDrawable) ivLoading.getBackground();
+//        animation.start();
+        rellyFgThem.setVisibility(View.VISIBLE);
     }
 
     private void xacNhanDangXuat() {
@@ -194,8 +195,8 @@ public class FragmentThem extends Fragment {
                         if (!modelNhanVien.getMaChucVu().equals("Quản lý")) {
                             layoutQuanLy.setVisibility(View.GONE);
                         }
-                        ivLoading.setVisibility(View.GONE);
-                        rellyFgThem.setVisibility(View.VISIBLE);
+//                        ivLoading.setVisibility(View.GONE);
+//                        rellyFgThem.setVisibility(View.VISIBLE);
                     }
                 }
                 @Override

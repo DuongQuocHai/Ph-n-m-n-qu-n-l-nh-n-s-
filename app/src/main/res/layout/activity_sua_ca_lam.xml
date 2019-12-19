@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SuaCaLamActivity"
-    android:layout_margin="10dp">
+    android:layout_margin="14dp">
 
 
     <LinearLayout
@@ -27,7 +27,8 @@
             android:id="@+id/txt_ma_suacl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -64,18 +65,18 @@
         <TextView
             android:id="@+id/txt_giobd_suacl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:gravity="center" />
 
-        <Button
-            android:id="@+id/btn_giobd_suacl"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="62dp"
-            android:layout_weight="0"
-            android:onClick="clickSuaCaLam"
-            android:text="Chọn giờ BĐ"
-            tools:ignore="OnClick" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_alarm"
+            tools:ignore="OnClick"
+            android:id="@+id/btn_giobd_suacl"
+            android:onClick="clickSuaCaLam"/>
 
     </LinearLayout>
     <LinearLayout
@@ -93,17 +94,19 @@
         <TextView
             android:id="@+id/txt_giokt_suacl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btn_giokt_suacl"
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:onClick="clickSuaCaLam"
-            android:text="Chọn giờ KĐ" />
+            android:src="@drawable/ic_add_alarm"
+            tools:ignore="OnClick"
+            android:id="@+id/btn_giokt_suacl"
+            android:onClick="clickSuaCaLam"/>
 
     </LinearLayout>
     <LinearLayout

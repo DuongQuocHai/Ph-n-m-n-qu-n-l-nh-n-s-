@@ -10,13 +10,16 @@
         android:text="Tên ca"
         android:textSize="20sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/txt_tgca_itcalam"
         android:layout_weight="0"
-        android:text="Tên ca"
+        android:text="Thời gian"
         android:textSize="20sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_calendar"
+        android:drawablePadding="5dp"/>
 
 </LinearLayout>

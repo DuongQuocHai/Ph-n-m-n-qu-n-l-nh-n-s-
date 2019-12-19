@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:fontFamily="@font/abril_fatface"
+        android:fontFamily="@font/yeseva_one"
         android:text="Ca làm"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />

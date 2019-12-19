@@ -18,14 +18,19 @@
                 android:text="Cửa hàng: "
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="14dp"/>
+
             <TextView
                 android:id="@+id/txt_cuahang_phancl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="14dp"
+                android:gravity="right"
                 android:text="cuahang"
                 android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -35,7 +40,12 @@
                 android:text="Tuần hiện tại: "
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
             <ImageView
                 android:id="@+id/btn_truoc_phancl"
                 android:src="@drawable/iconbefore"
@@ -47,13 +57,14 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/btn_sau_phancl"
                 android:src="@drawable/iconafter"
                 android:layout_width="30dp"
-                android:layout_height="30dp"/>
-
+                android:layout_height="30dp"
+                />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -63,14 +74,16 @@
                 android:text="Ngày đầu tuần: "
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"/>
             <TextView
                 android:id="@+id/txt_ngaydt_phancl"
                 android:text="13/4/2019"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content"/>
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="14dp"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -80,20 +93,33 @@
                 android:text="Ngày cuối tuần: "
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"/>
             <TextView
                 android:id="@+id/txt_ngayct_phancl"
                 android:text="13/4/2019"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content"/>
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="14dp"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chọn ngày"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:fontFamily="@font/alfa_slab_one" />
         <ListView
             android:id="@+id/lv_phancl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

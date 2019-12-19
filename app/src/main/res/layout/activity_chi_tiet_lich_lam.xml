@@ -14,20 +14,22 @@
         android:layout_height="wrap_content"
         android:text="Cửa hàng"
         android:gravity="center"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/txt_ngay_chitietcl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thứ 2, chúdalskjdal" />
+        android:text="Thứ 2, ngày"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/txt_calam_chitietcl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ca Sáng" />
+        android:text="Ca Sáng"
+        android:textSize="20sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -35,7 +37,6 @@
         android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
         android:text="Danh Sách Nhân Viên"
-        android:textColor="#3D5AFE"
         android:textSize="20sp" />
     <ListView
         android:id="@+id/lv_chitietcl"
