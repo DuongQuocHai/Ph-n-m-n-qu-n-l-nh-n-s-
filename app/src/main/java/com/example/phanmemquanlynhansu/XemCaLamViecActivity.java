@@ -93,7 +93,7 @@ public class XemCaLamViecActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(XemCaLamViecActivity.this, android.R.layout.simple_list_item_1, list);
         lvCaLamViec.setAdapter(adapter);
         mData = FirebaseDatabase.getInstance().getReference("CaLamViec");
-        mData.orderByKey().startAt(cuahang).endAt(cuahang+"\uf8ff").addListenerForSingleValueEvent(new ValueEventListener() {
+        mData.orderByKey().startAt(cuahang+"_2019-12").endAt(cuahang+"_2019-12"+"\uf8ff").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();

@@ -121,7 +121,7 @@ public class PhanCaLamActivity extends AppCompatActivity {
         c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
         c.add(Calendar.DATE, week * 7);
         // Print dates of the current week starting on Monday
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, yyyy-MM-dd", Locale.getDefault());
         for (int i = 0; i < 7; i++) {
             listt.add(sdf.format(c.getTime()));
             c.add(Calendar.DAY_OF_WEEK, 1);

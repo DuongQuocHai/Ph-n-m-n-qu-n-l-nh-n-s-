@@ -43,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentThem extends Fragment {
     View view;
-    LinearLayout btnNhanVien, btnCaLam, btnCuaHang, btnChucVu, btnPhanCaLam, btnXemCaLamViec, btnDangXuat,layoutQuanLy,btnBangLuong;
+    LinearLayout btnNhanVien, btnCaLam, btnCuaHang, btnChucVu, btnPhanCaLam, btnXemCaLamViec, btnDangXuat, layoutQuanLy, btnBangLuong;
     DatabaseReference mData;
     FirebaseUser currentFirebaseUser;
     CircleImageView imgHinh;
@@ -51,6 +51,7 @@ public class FragmentThem extends Fragment {
     ImageView ivLoading;
     AnimationDrawable animation;
     LinearLayout rellyFgThem;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -145,7 +146,7 @@ public class FragmentThem extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SuaNhanVienActivity.class);
-                intent.putExtra("userfrag","1");
+                intent.putExtra("userfrag", "1");
                 startActivity(intent);
             }
         });
@@ -153,10 +154,11 @@ public class FragmentThem extends Fragment {
         animation = (AnimationDrawable) ivLoading.getBackground();
         animation.start();
     }
+
     private void xacNhanDangXuat() {
-        AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-        builder.setMessage("Bạn có muốn xoá?");
-        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Bạn muốn đăng xuất ?");
+        builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (currentFirebaseUser != null) {
@@ -166,7 +168,7 @@ public class FragmentThem extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
             }
-        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -176,6 +178,7 @@ public class FragmentThem extends Fragment {
 
 
     }
+
     public void getData() {
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentFirebaseUser != null) {
@@ -188,19 +191,25 @@ public class FragmentThem extends Fragment {
                         Picasso.get().load(modelNhanVien.getUrlHinhNv()).into(imgHinh);
                         txtTen.setText(modelNhanVien.getTenNv());
                         txtInfo.setText(modelNhanVien.getMaChucVu() + " - " + modelNhanVien.getUserNv());
-                        if (!modelNhanVien.getMaChucVu().equals("Quản lý")){
+                        if (!modelNhanVien.getMaChucVu().equals("Quản lý")) {
                             layoutQuanLy.setVisibility(View.GONE);
                         }
                         ivLoading.setVisibility(View.GONE);
                         rellyFgThem.setVisibility(View.VISIBLE);
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    rellyFgThem.setVisibility(View.VISIBLE);
+                    ivLoading.setVisibility(View.GONE);
                 }
             });
+        }else {
+            rellyFgThem.setVisibility(View.VISIBLE);
+            ivLoading.setVisibility(View.GONE);
         }
+//        if (currentFirebaseUser.getUid().equals("5jUXYvVHR7ebByRKDL9cNtunY8i1")){
+//
+//        }
     }
 }

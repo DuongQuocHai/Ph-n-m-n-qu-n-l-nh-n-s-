@@ -77,7 +77,7 @@ public class FragmentLichCong extends Fragment {
         if (user != null) {
             list = new ArrayList<>();
             getListLichLam(user.getUid());
-        }
+        }else ivLoading.setVisibility(View.GONE);
     }
 
     public void getListLichLam(final String idUser) {
@@ -88,35 +88,43 @@ public class FragmentLichCong extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
-                for (final DataSnapshot data : dataSnapshot.getChildren()) {
-                    mData.child(data.getKey()).child("listNhanVien")
-                            .orderByChild("idNv")
-                            .equalTo(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                                list.add(data.getKey());
-                                Log.e("dataaaaa",dataSnapshot1+"");
-                                Log.e("dataaaaa---",list.size()+"");
+                Log.e("iiiiii",dataSnapshot+"");
+                if (dataSnapshot.getValue()!=null){
+                    for (final DataSnapshot data : dataSnapshot.getChildren()) {
+                        mData.child(data.getKey()).child("listNhanVien")
+                                .orderByChild("idNv")
+                                .equalTo(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                                    list.add(data.getKey());
+                                    Log.e("dataaaaa",dataSnapshot1+"");
+                                    Log.e("dataaaaa---",list.size()+"");
+                                }
+                                adapter.notifyDataSetChanged();
+                                Log.e("dataaaaa-----",list.size()+"");
+                                ivLoading.setVisibility(View.GONE);
+                                if (list.size()==0){
+                                    Toast.makeText(getContext(), "Bạn chưa có lịch làm", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            adapter.notifyDataSetChanged();
-                            Log.e("dataaaaa-----",list.size()+"");
-                            ivLoading.setVisibility(View.GONE);
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+                }else {
+                    ivLoading.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Bạn chưa có lịch làm", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                ivLoading.setVisibility(View.GONE);
             }
         });
 

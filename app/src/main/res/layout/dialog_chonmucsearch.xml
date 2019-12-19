@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tìm kiếm theo: "
+            android:textColor="#fff"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_ten_dlsearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="#00FFFFFF"
+            android:drawableLeft="@drawable/ic_check"
+            android:paddingLeft="10dp"
+            android:text="Tên"
+            android:textAllCaps="false"
+            android:textColor="#2c3e50"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_cuahang_dlsearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:drawableLeft="@drawable/ic_check"
+            android:paddingLeft="10dp"
+            android:text="Cửa hàng"
+            android:textAllCaps="false"
+            android:textColor="#2c3e50"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_chucvu_dlsearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:drawableLeft="@drawable/ic_check"
+            android:paddingLeft="10dp"
+            android:text="Chức vụ"
+            android:textAllCaps="false"
+            android:textColor="#2c3e50"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

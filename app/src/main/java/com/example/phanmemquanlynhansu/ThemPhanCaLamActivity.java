@@ -143,6 +143,9 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
                 adapter = new AdapterThemPhanCaLam(ThemPhanCaLamActivity.this, listNhanVien);
                 lvPhanCl.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                if (listNhanVien.size()==0){
+                    Toast.makeText(ThemPhanCaLamActivity.this, "Cửa hàng chưa có nhân viên, hãy thêm nhân viên", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
