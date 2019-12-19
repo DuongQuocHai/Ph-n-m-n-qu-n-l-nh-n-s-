@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:layout_height="match_parent">
+    android:orientation="horizontal">
+
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_weight="0"
+        android:id="@+id/img_nhanvien_itemphancl"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_weight="0"
         android:src="@drawable/avatar"
         app:civ_border_color="#00FFFFFF"
-        android:id="@+id/img_nhanvien_itemphancl"
         app:civ_border_width="2dp" />
-        android:layout_weight="1"
+
+    <TextView
+        android:id="@+id/txt_ten_itemphancl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp">
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/txt_ten_itemphancl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tên nhân viên"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:text="Tên nhân viên"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_chucvu_itemphancl"

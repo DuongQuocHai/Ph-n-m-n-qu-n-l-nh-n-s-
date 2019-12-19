@@ -57,10 +57,12 @@
             android:text="Chọn giờ BĐ"
             android:layout_weight="0"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"/>
+            android:layout_height="30dp"
+            android:textAllCaps="false"
+            android:background="@drawable/background_btn"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -84,7 +86,8 @@
             android:layout_weight="0"
             android:textAllCaps="false"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="30dp"
+            android:background="@drawable/background_btn"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,7 +106,8 @@
             android:id="@+id/edt_luong1h_dlthemcl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="number"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -175,7 +179,8 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_btn"/>
+            android:background="@drawable/background_btn"
+            android:layout_margin="10dp"/>
         <Button
             android:id="@+id/btn_them_dlthemcl"
             android:onClick="clickCaLam"
@@ -183,7 +188,8 @@
             android:background="@drawable/background_btn"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

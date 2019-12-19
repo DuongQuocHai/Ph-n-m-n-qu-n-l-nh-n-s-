@@ -63,7 +63,8 @@
             android:text="Huỷ"
             android:id="@+id/btn_huy_cuahang1"
             android:onClick="clickCuaHang"
-            android:background="@drawable/background_btn"/>
+            android:background="@drawable/background_btn"
+            android:layout_margin="10dp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +72,8 @@
             android:text="Thêm"
             android:id="@+id/btn_them_cuahang1"
             android:onClick="clickCuaHang"
-            android:background="@drawable/background_btn"/>
+            android:background="@drawable/background_btn"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

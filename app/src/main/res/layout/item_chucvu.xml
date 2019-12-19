@@ -15,20 +15,23 @@
             android:id="@+id/txt_ma_itchucvu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mã chức vụ"
-            android:textStyle="bold" />
+            android:text="Mã chức vụ"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/txt_ten_itchucvu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tên chức vụ" />
+            android:hint="Tên chức vụ"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/txt_ghichu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ghi chú" />
+            android:hint="Ghi chú"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 
