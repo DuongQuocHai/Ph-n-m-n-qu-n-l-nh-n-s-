@@ -390,7 +390,6 @@ public class SuaNhanVienActivity extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
                                                     mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-                                                    Log.e("======", uid);
                                                     mData.child(uid).child("passNv").setValue(newpass, new DatabaseReference.CompletionListener() {
                                                         @Override
                                                         public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
@@ -425,7 +424,6 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         final FirebaseUser userF = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider
                 .getCredential(user, pass);
-        Log.e("0000000", "user: " + user + "--" + "pass: " + pass);
 
         userF.reauthenticate(credential)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

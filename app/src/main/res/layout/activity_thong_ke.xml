@@ -6,51 +6,74 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".XemCaLamViecActivity">
+    tools:context=".ThongKeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cửa hàng: "
-            android:textColor="@color/colorText"
-            android:minWidth="150dp"
-            android:textStyle="bold"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/txt_cuahang_xemclviec"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="cuahang"
-            android:textSize="20sp"
-            android:textColor="#B53471"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lịch làm tháng: "
+            android:minWidth="130dp"
+            android:text="Cửa hàng : "
+            android:textColor="#B53471"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txt_cuahang_thongke"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Cửa hàng 1 "
+            android:textColor="#B53471"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="130dp"
+            android:text="Nhân viên CH: "
             android:textColor="@color/colorText"
-            android:gravity="center_vertical"
-            android:minWidth="150dp"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_sonhanvien_thongke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="130dp"
+            android:text="Tháng : "
+            android:textColor="#ff793f"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,13 +81,13 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/btn_truoc_xemcl"
+                android:id="@+id/btn_truoc_thongke"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/iconbefore" />
 
             <TextView
-                android:id="@+id/txt_thang_xemcl"
+                android:id="@+id/txt_thang_thongke"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -72,24 +95,37 @@
                 android:textSize="18sp" />
 
             <ImageView
-                android:id="@+id/btn_sau_xemcl"
+                android:id="@+id/btn_sau_thongke"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/iconafter" />
         </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
-        android:text="Danh sách lịch làm"
-        android:textColor="#227093"
+        android:text="Tổng lương cửa hàng"
+        android:textColor="#5758BB"
         android:textSize="20sp" />
-    <ListView
-        android:layout_marginTop="10dp"
-        android:id="@+id/lv_xemclviec"
+    <ProgressBar
+        android:id="@+id/pr_thongke"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/txt_tongluong_thongke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="#ff4d4d"
+        android:visibility="gone"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
 </LinearLayout>

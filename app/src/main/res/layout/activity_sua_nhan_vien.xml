@@ -61,6 +61,8 @@
             android:text="Tên đăng nhập:" />
         <TextView
             android:id="@+id/edt_tendn_suanv"
+            android:textSize="18sp"
+            android:text="hahah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

@@ -28,8 +28,9 @@ import java.util.Calendar;
 public class XemCaLamViecActivity extends AppCompatActivity {
     TextView txtThang, txtCuaHang;
     ListView lvCaLamViec;
-    ImageView btnBack;
+    ImageView btnBack, btnBefore, btnAfter;
     int year, month;
+    String thang, nam;
     String cuahang;
     ModelCuaHang modelCuaHang;
 
@@ -55,14 +56,17 @@ public class XemCaLamViecActivity extends AppCompatActivity {
     public void addControls() {
         txtCuaHang = findViewById(R.id.txt_cuahang_xemclviec);
         lvCaLamViec = findViewById(R.id.lv_xemclviec);
+        txtThang = findViewById(R.id.txt_thang_xemcl);
+        btnBefore = findViewById(R.id.btn_truoc_xemcl);
+        btnAfter = findViewById(R.id.btn_sau_xemcl);
     }
 
     public void addEvents() {
         lvCaLamViec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(XemCaLamViecActivity.this,ChiTietLichLamActivity.class);
-                intent.putExtra("keylichlam",list.get(position));
+                Intent intent = new Intent(XemCaLamViecActivity.this, ChiTietLichLamActivity.class);
+                intent.putExtra("keylichlam", list.get(position));
                 startActivity(intent);
             }
         });
@@ -77,14 +81,73 @@ public class XemCaLamViecActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pressBefore();
+            }
+        });
+        btnAfter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pressAfter();
+            }
+        });
 
     }
 
     public void readData() {
         Intent intent = getIntent();
+        Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH) + 1;
+        thang = String.valueOf(month);
+        nam = String.valueOf(year);
+        if (month < 10) {
+            thang = "0" + month;
+        }
+        txtThang.setText(nam + "-" + thang);
         modelCuaHang = (ModelCuaHang) intent.getSerializableExtra("macuahang");
         cuahang = modelCuaHang.getTenCuaHang();
         txtCuaHang.setText(cuahang);
+        getListLichLam();
+    }
+
+    public void pressAfter() {
+        month++;
+        if (month > 12) {
+            month = 1;
+            year++;
+            thang = String.valueOf(month);
+            nam = String.valueOf(year);
+        }
+        if (month<10){
+            thang = "0" + month;
+            txtThang.setText(nam + "-" + thang);
+            getListLichLam();
+            return;
+
+        }
+        thang = String.valueOf(month);
+        nam = String.valueOf(year);
+        txtThang.setText(nam + "-" + thang);
+        getListLichLam();
+    }
+
+    public void pressBefore() {
+        month--;
+        if (month < 10) {
+            thang = "0" + month;
+            if (month < 1) {
+                month = 12;
+                year--;
+                thang = String.valueOf(month);
+                nam = String.valueOf(year);
+            }
+        } else {
+            thang = String.valueOf(month);
+        }
+        txtThang.setText(nam + "-" + thang);
         getListLichLam();
     }
 
@@ -93,7 +156,7 @@ public class XemCaLamViecActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(XemCaLamViecActivity.this, android.R.layout.simple_list_item_1, list);
         lvCaLamViec.setAdapter(adapter);
         mData = FirebaseDatabase.getInstance().getReference("CaLamViec");
-        mData.orderByKey().startAt(cuahang+"_2019-12").endAt(cuahang+"_2019-12"+"\uf8ff").addListenerForSingleValueEvent(new ValueEventListener() {
+        mData.orderByKey().startAt(cuahang + "_" + nam + "-" + thang).endAt(cuahang + "_" + nam + "-" + thang + "\uf8ff").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
@@ -103,8 +166,7 @@ public class XemCaLamViecActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 if (list.size() == 0) {
                     Toast.makeText(XemCaLamViecActivity.this, "Chưa có ca làm việc", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(XemCaLamViecActivity.this, list.size() + "", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

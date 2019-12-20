@@ -47,6 +47,7 @@ public class NhanVienActivity extends AppCompatActivity {
     AnimationDrawable animation;
     EditText edtSearch;
     Button btnTenNv, btnChucVuNv, btnCuaHangNV;
+    Intent intent;
 
 
     @Override
@@ -83,7 +84,6 @@ public class NhanVienActivity extends AppCompatActivity {
         lvNhanVien = (ListView) findViewById(R.id.lv_nhanvien);
         list = new ArrayList<>();
         adapterNhanVien = new AdapterNhanVien(NhanVienActivity.this, list);
-        Log.e("fffffff", list.size() + "");
         lvNhanVien.setAdapter(adapterNhanVien);
 
     }
@@ -106,9 +106,17 @@ public class NhanVienActivity extends AppCompatActivity {
         lvNhanVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(NhanVienActivity.this, SuaNhanVienActivity.class);
-                intent.putExtra("ModelNhanVien", list.get(position));
-                startActivity(intent);
+                intent = getIntent();
+                String status = intent.getStringExtra("fragThem");
+                if (status != null) {
+                    intent = new Intent(NhanVienActivity.this, BangLuongActivity.class);
+                    intent.putExtra("ModelNhanVien", list.get(position));
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(NhanVienActivity.this, SuaNhanVienActivity.class);
+                    intent.putExtra("ModelNhanVien", list.get(position));
+                    startActivity(intent);
+                }
             }
         });
         btnRefresh.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +182,6 @@ public class NhanVienActivity extends AppCompatActivity {
 
     public void showDialogSearch() {
         final Dialog dialog = new Dialog(NhanVienActivity.this);
-        dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_chonmucsearch);
 
         Button btnTen = dialog.findViewById(R.id.btn_ten_dlsearch);

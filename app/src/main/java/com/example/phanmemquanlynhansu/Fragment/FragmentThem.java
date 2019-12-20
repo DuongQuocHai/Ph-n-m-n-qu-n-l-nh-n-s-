@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,14 +44,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentThem extends Fragment {
     View view;
-    LinearLayout btnNhanVien, btnCaLam, btnCuaHang, btnChucVu, btnPhanCaLam, btnXemCaLamViec, btnDangXuat, layoutQuanLy, btnBangLuong;
+    LinearLayout btnNhanVien, btnCaLam, btnCuaHang,
+            btnChucVu, btnPhanCaLam, btnXemCaLamViec,
+            btnDangXuat, layoutQuanLy, btnBangLuong, btnThongKe;
     DatabaseReference mData;
     FirebaseUser currentFirebaseUser;
     CircleImageView imgHinh;
     TextView txtTen, txtInfo;
-    ImageView ivLoading;
     AnimationDrawable animation;
     LinearLayout rellyFgThem;
+    ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -63,6 +66,7 @@ public class FragmentThem extends Fragment {
     }
 
     public void addControl() {
+
         btnNhanVien = view.findViewById(R.id.btn_nhanvien_fgthem);
         btnCaLam = view.findViewById(R.id.btn_calam_fgthem);
         btnCuaHang = view.findViewById(R.id.btn_cuahang_fgthem);
@@ -71,14 +75,15 @@ public class FragmentThem extends Fragment {
         btnXemCaLamViec = view.findViewById(R.id.btn_xemcalamviec_fgthem);
         btnDangXuat = view.findViewById(R.id.btn_dangxuat_fgthem);
         btnBangLuong = view.findViewById(R.id.btn_bangluong_fragthem);
+        btnThongKe = view.findViewById(R.id.btn_thongke_fragthem);
 
         txtTen = view.findViewById(R.id.txt_ten_fragthem);
         txtInfo = view.findViewById(R.id.txt_info_fragthem);
         imgHinh = view.findViewById(R.id.img_fragthem);
 
         layoutQuanLy = view.findViewById(R.id.layout_quanly_fragthem);
-        ivLoading = view.findViewById(R.id.iv_loading);
         rellyFgThem = view.findViewById(R.id.relly_fgthem);
+        progressBar = view.findViewById(R.id.pr_fragthem);
     }
 
     public void addEvent() {
@@ -138,7 +143,8 @@ public class FragmentThem extends Fragment {
         btnBangLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), BangLuongActivity.class);
+                Intent intent = new Intent(getContext(), NhanVienActivity.class);
+                intent.putExtra("fragThem", "1");
                 startActivity(intent);
             }
         });
@@ -150,10 +156,15 @@ public class FragmentThem extends Fragment {
                 startActivity(intent);
             }
         });
-        ivLoading.setBackgroundResource(R.drawable.loading);
-//        animation = (AnimationDrawable) ivLoading.getBackground();
-//        animation.start();
-        rellyFgThem.setVisibility(View.VISIBLE);
+        btnThongKe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CuaHangActivity.class);
+                intent.putExtra("phancalam", "3");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void xacNhanDangXuat() {
@@ -181,6 +192,8 @@ public class FragmentThem extends Fragment {
     }
 
     public void getData() {
+        rellyFgThem.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentFirebaseUser != null) {
             mData = FirebaseDatabase.getInstance().getReference("NhanVien");
@@ -195,19 +208,22 @@ public class FragmentThem extends Fragment {
                         if (!modelNhanVien.getMaChucVu().equals("Quản lý")) {
                             layoutQuanLy.setVisibility(View.GONE);
                         }
-//                        ivLoading.setVisibility(View.GONE);
-//                        rellyFgThem.setVisibility(View.VISIBLE);
+                        rellyFgThem.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+//
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    rellyFgThem.setVisibility(View.VISIBLE);
-                    ivLoading.setVisibility(View.GONE);
+
+
                 }
             });
-        }else {
+        } else {
             rellyFgThem.setVisibility(View.VISIBLE);
-            ivLoading.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+
         }
 //        if (currentFirebaseUser.getUid().equals("5jUXYvVHR7ebByRKDL9cNtunY8i1")){
 //

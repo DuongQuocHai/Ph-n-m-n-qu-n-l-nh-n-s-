@@ -5,120 +5,154 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingHorizontal="10dp"
     tools:context=".PhanCaLamActivity">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:orientation="horizontal">
+
             <TextView
-                android:text="Cửa hàng: "
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginLeft="14dp"/>
+                android:text="Cửa hàng : "
+                android:textColor="@color/colorText"
+                android:minWidth="150dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt_cuahang_phancl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="14dp"
-                android:gravity="right"
+                android:gravity="center"
                 android:text="cuahang"
+                android:textColor="#B53471"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                android:text="Tuần hiện tại: "
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"/>
+                android:minWidth="150dp"
+                android:text="Tuần hiện tại : "
+                android:textColor="@color/colorText"
+                android:textSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
-            <ImageView
-                android:id="@+id/btn_truoc_phancl"
-                android:src="@drawable/iconbefore"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
-            <TextView
-                android:id="@+id/txt_tuan_phancl"
-                android:text="haha"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/btn_sau_phancl"
-                android:src="@drawable/iconafter"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                />
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/btn_truoc_phancl"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/iconbefore" />
+
+                <TextView
+                    android:id="@+id/txt_tuan_phancl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:text="T6-2019"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/btn_sau_phancl"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/iconafter" />
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                android:text="Ngày đầu tuần: "
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"/>
+                android:layout_height="match_parent"
+                android:minWidth="150dp"
+                android:text="Ngày đầu tuần : "
+                android:textColor="@color/colorText"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/txt_ngaydt_phancl"
-                android:text="13/4/2019"
-                android:textSize="20sp"
                 android:layout_width="match_parent"
-                android:gravity="right"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="14dp"/>
+                android:gravity="center"
+                android:text="13/4/2019"
+                android:textColor="@color/colorText"
+                android:textSize="18sp" />
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                android:text="Ngày cuối tuần: "
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"/>
+                android:minWidth="150dp"
+                android:text="Ngày cuối tuần : "
+                android:textColor="@color/colorText"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/txt_ngayct_phancl"
-                android:text="13/4/2019"
-                android:textSize="20sp"
                 android:layout_width="match_parent"
-                android:gravity="right"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="14dp"/>
+                android:gravity="center"
+                android:text="13/4/2019"
+                android:textColor="@color/colorText"
+                android:textSize="18sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chọn ngày"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:fontFamily="@font/alfa_slab_one" />
-        <ListView
-            android:id="@+id/lv_phancl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alfa_slab_one"
+                android:gravity="center"
+                android:text="Chọn ngày"
+                android:textColor="#227093"
+                android:textSize="20sp" />
+
+            <ListView
+                android:layout_marginTop="5dp"
+                android:id="@+id/lv_phancl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 

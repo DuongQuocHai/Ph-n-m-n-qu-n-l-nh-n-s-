@@ -55,7 +55,6 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     private void getData() {
         Intent intent = getIntent();
         modelCuaHang = (ModelCuaHang) intent.getSerializableExtra("ModelCuaHang");
-//        Log.e("------",modelCuaHang.getId()+"");
         keyId = modelCuaHang.getId();
         edtEditMaCH.setText(modelCuaHang.getMaCuaHang());
         edtEditTenCH.setText(modelCuaHang.getTenCuaHang());

@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,15 +31,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ChiTietLichLamActivity extends AppCompatActivity {
-    TextView txtCuaHang, txtNgay, txtCaLam, btnXoa;
+    TextView txtCuaHang, txtNgay, txtCaLam, btnXoa, txtLuongCl, txtTgcl;
+    ProgressBar progressBar;
+    LinearLayout ly_main;
 
     ListView lvChiTiet;
     ImageView btnBack;
     String key;
     DatabaseReference mData;
+
 
     ArrayList<ModelNhanVien> listNhanVien;
     AdapterThemPhanCaLam adapter;
@@ -60,8 +67,13 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
         txtNgay = findViewById(R.id.txt_ngay_chitietcl);
         lvChiTiet = findViewById(R.id.lv_chitietcl);
         btnXoa = findViewById(R.id.btn_xoa_chitietcl);
+        txtLuongCl = findViewById(R.id.txt_luongcalam_chitietcl);
+        txtTgcl = findViewById(R.id.txt_tgcl_chitietcl);
+        progressBar = findViewById(R.id.pr_chitietcl);
+        ly_main= findViewById(R.id.ly_main_chitietcl);
     }
-    public void addEvents(){
+
+    public void addEvents() {
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +93,9 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
         });
 
     }
+
     private void xacNhanXoa() {
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn xoá?");
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -97,10 +110,10 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
     public void getData() {
         Intent intent = getIntent();
         listNhanVien = new ArrayList<>();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             mData = FirebaseDatabase.getInstance().getReference("NhanVien");
@@ -109,9 +122,10 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
-                        if (!modelNhanVien.getMaChucVu().equals("Quản lý")){
+                        if (!modelNhanVien.getMaChucVu().equals("Quản lý")) {
                             btnXoa.setVisibility(View.GONE);
                         }
+
                     }
                 }
 
@@ -121,8 +135,6 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
                 }
             });
         }
-
-
         key = intent.getStringExtra("keylichlam");
         mData = FirebaseDatabase.getInstance().getReference("CaLamViec");
         mData.orderByKey().equalTo(key).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -133,15 +145,21 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
                     ModelCaLamViec modelCaLamViec = data.getValue(ModelCaLamViec.class);
                     listNhanVien = modelCaLamViec.getListNhanVien();
                     modelCaLam = modelCaLamViec.getModelCaLam();
-                    txtCaLam.setText(modelCaLam.getTenCaLam() + ": "+ modelCaLam.getTgBatDauCaLam()+" - "+modelCaLam.getTgKetThucCaLam());
+                    txtCaLam.setText(modelCaLam.getTenCaLam() + ": ");
+                    String tgcl = modelCaLam.getTgBatDauCaLam() + " - " + modelCaLam.getTgKetThucCaLam();
+                    txtTgcl.setText(tgcl);
+                    double luong = modelCaLam.getLuongCaLam();
+                    txtLuongCl.setText(NumberFormat.getNumberInstance(Locale.getDefault()).format(luong));
                     txtCuaHang.setText(modelCaLamViec.getCuaHang());
                     txtNgay.setText(modelCaLamViec.getNgay());
                 }
                 adapter = new AdapterThemPhanCaLam(ChiTietLichLamActivity.this, listNhanVien);
                 lvChiTiet.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-                Log.e("sssss", listNhanVien + "");
+                ly_main.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -149,7 +167,8 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
         });
 
     }
-    public void xoaLichLam(String key){
+
+    public void xoaLichLam(String key) {
         mData = FirebaseDatabase.getInstance().getReference();
         mData.child("CaLamViec").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -160,7 +179,7 @@ public class ChiTietLichLamActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ChiTietLichLamActivity.this, "Lỗi "+ e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChiTietLichLamActivity.this, "Lỗi " + e, Toast.LENGTH_SHORT).show();
             }
         });
     }

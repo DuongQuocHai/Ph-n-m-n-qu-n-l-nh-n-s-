@@ -86,6 +86,10 @@ public class CuaHangActivity extends AppCompatActivity {
                         intent = new Intent(CuaHangActivity.this, XemCaLamViecActivity.class);
                         intent.putExtra("macuahang", list.get(position));
                         startActivity(intent);
+                    } else if (status.equals("3")) {
+                        intent = new Intent(CuaHangActivity.this, ThongKeActivity.class);
+                        intent.putExtra("macuahang", list.get(position));
+                        startActivity(intent);
                     }
                 } else {
                     intent = new Intent(CuaHangActivity.this, SuaCuaHangActivity.class);
@@ -190,7 +194,7 @@ public class CuaHangActivity extends AppCompatActivity {
                     modelCuaHang.setId(data.getKey());
                     list.add(modelCuaHang);
                 }
-                if (list.size()==0){
+                if (list.size() == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CuaHangActivity.this);
                     builder.setIcon(R.drawable.iconnotification);
                     builder.setCancelable(false);

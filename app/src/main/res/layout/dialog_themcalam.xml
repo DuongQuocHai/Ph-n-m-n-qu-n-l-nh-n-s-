@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Tạo ca"
+        android:textColor="#fff"
         android:textSize="30sp" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,8 +36,10 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:orientation="horizontal">
 
         <TextView
@@ -55,6 +58,7 @@
         <Button
             android:id="@+id/btn_giobd_dlthemcl"
             android:text="Chọn giờ BĐ"
+            android:textColor="#fff"
             android:layout_weight="0"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -62,9 +66,10 @@
             android:background="@drawable/background_btn"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:orientation="horizontal">
 
         <TextView
@@ -83,6 +88,7 @@
         <Button
             android:id="@+id/btn_giokt_dlthemcl"
             android:text="Chọn giờ KT"
+            android:textColor="#fff"
             android:layout_weight="0"
             android:textAllCaps="false"
             android:layout_width="wrap_content"
@@ -92,6 +98,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -112,6 +120,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -131,6 +141,8 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -151,6 +163,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 

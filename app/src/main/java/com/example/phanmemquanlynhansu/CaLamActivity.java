@@ -42,10 +42,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Timer;
 
 public class CaLamActivity extends AppCompatActivity {
@@ -66,6 +68,7 @@ public class CaLamActivity extends AppCompatActivity {
 
     Intent intent;
     Bundle bundle;
+    double luongcl;
     int status = 0;
 
 
@@ -184,7 +187,7 @@ public class CaLamActivity extends AppCompatActivity {
                     modelCaLam.setId(data.getKey());
                     list.add(modelCaLam);
                 }
-                if (list.size()==0){
+                if (list.size() == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CaLamActivity.this);
                     builder.setIcon(R.drawable.iconnotification);
                     builder.setCancelable(false);
@@ -235,6 +238,8 @@ public class CaLamActivity extends AppCompatActivity {
         btnGioBd = dialog.findViewById(R.id.btn_giobd_dlthemcl);
         btnGioKt = dialog.findViewById(R.id.btn_giokt_dlthemcl);
         btnHuy = dialog.findViewById(R.id.btn_huy_dlthemcl);
+
+
         edttenCaLam.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -277,7 +282,8 @@ public class CaLamActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtLuong1Ca.setText(String.valueOf(function.luong1CL(txtTongGioCl.getText().toString(), edtLuong1Gio.getText().toString())));
+                luongcl = function.luong1CL(txtTongGioCl.getText().toString(), edtLuong1Gio.getText().toString());
+                txtLuong1Ca.setText(NumberFormat.getNumberInstance(Locale.getDefault()).format(luongcl));
             }
 
             @Override
@@ -322,7 +328,7 @@ public class CaLamActivity extends AppCompatActivity {
         mData = FirebaseDatabase.getInstance().getReference("CaLam");
         getString();
         String uid = mData.push().getKey();
-        ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, Double.parseDouble(luong1Ca), Double.parseDouble(luong1Gio));
+        ModelCaLam modelCaLam = new ModelCaLam(maCl, tenCl, tgBdCl, tgKtCl, tongGioCl, luongcl, Double.parseDouble(luong1Gio));
         mData.child(uid).setValue(modelCaLam).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

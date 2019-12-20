@@ -36,7 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ThemPhanCaLamActivity extends AppCompatActivity {
-    TextView txtNgay, txtCuaHang, txtCaLam, txtThem;
+    TextView txtNgay, txtCuaHang, txtCaLam, txtThem, txtTgcl;
     ListView lvPhanCl;
     DatabaseReference mData;
     ArrayList<ModelNhanVien> listNhanVien;
@@ -47,7 +47,7 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
     ModelNhanVien modelNhanVien;
     Intent intent;
     Bundle bundle;
-    String cuahang, ngay,calam;
+    String cuahang, ngay, calam;
 
 
     @Override
@@ -66,6 +66,8 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
         txtCuaHang = findViewById(R.id.txt_cuahang_themphancl);
         btnDsNhanVien = findViewById(R.id.btn_dsnhanvien_themphancl);
         btnLammoi = findViewById(R.id.btn_lammoi_themphancl);
+        txtTgcl = findViewById(R.id.txt_tgcl_themphancl);
+
     }
 
     public void addEvents() {
@@ -127,7 +129,9 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
             txtCuaHang.setText(cuahang);
             txtNgay.setText(ngay);
             calam = modelCaLam.getTenCaLam();
-            txtCaLam.setText(calam);
+            txtCaLam.setText(calam+": ");
+            String tgcl = modelCaLam.getTgBatDauCaLam() + " - " + modelCaLam.getTgKetThucCaLam();
+            txtTgcl.setText(tgcl);
         }
         listNhanVien = new ArrayList<>();
         mData = FirebaseDatabase.getInstance().getReference("NhanVien");
@@ -143,7 +147,7 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
                 adapter = new AdapterThemPhanCaLam(ThemPhanCaLamActivity.this, listNhanVien);
                 lvPhanCl.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-                if (listNhanVien.size()==0){
+                if (listNhanVien.size() == 0) {
                     Toast.makeText(ThemPhanCaLamActivity.this, "Cửa hàng chưa có nhân viên, hãy thêm nhân viên", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -154,21 +158,22 @@ public class ThemPhanCaLamActivity extends AppCompatActivity {
             }
         });
     }
+
     public void addCaLamViec() {
         mData = FirebaseDatabase.getInstance().getReference("CaLamViec");
         String keyNgay = ngay.substring(ngay.lastIndexOf(",") + 2);
-        String uid = cuahang+"_"+keyNgay+"_"+calam;
+        String uid = cuahang + "_" + keyNgay + "_" + calam;
         ModelCaLamViec modelCaLamViec = new ModelCaLamViec(ngay, cuahang, modelCaLam, listNhanVien);
         mData.child(uid).setValue(modelCaLamViec).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(),"Thêm thành công!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_LONG).show();
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(),"Thêm thất bại!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Thêm thất bại!", Toast.LENGTH_LONG).show();
             }
         });
     }
