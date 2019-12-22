@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:text="Mật khẩu mới: " />
         <EditText
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edt_mkmoi_dldoimk"/>
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:text="Nhập lại mật khẩu: " />
         <EditText
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edt_nhaplaimk_dldoimk"/>

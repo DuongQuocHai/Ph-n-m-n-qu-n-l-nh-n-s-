@@ -57,7 +57,7 @@ public class AdapterNhanVien extends BaseAdapter {
 
     private class viewHolder{
         CircleImageView imgHinh;
-        TextView txtTen,txtCuaHang,txtChucvu;
+        TextView txtTen,txtCuaHang,txtChucvu,txtStt;
         ImageView btnGoi;
     }
 
@@ -70,12 +70,15 @@ public class AdapterNhanVien extends BaseAdapter {
         holder.txtTen = row.findViewById(R.id.txt_ten_itemnv);
         holder.txtChucvu = row.findViewById(R.id.txt_chucvu_itemnv);
         holder.txtCuaHang = row.findViewById(R.id.txt_cuahang_itemnv);
+        holder.txtStt = row.findViewById(R.id.txt_stt_itemnv);
         holder.btnGoi= row.findViewById(R.id.btn_call_itemnv);
         final ModelNhanVien modelNhanVien = list.get(position);
 
         holder.txtTen.setText(modelNhanVien.getTenNv());
         holder.txtChucvu.setText(modelNhanVien.getMaChucVu());
         holder.txtCuaHang.setText(modelNhanVien.getMaCuaHang());
+        holder.txtStt.setText((position+1)+"");
+
         Picasso.get().load(modelNhanVien.getUrlHinhNv()).into(holder.imgHinh);
 
         holder.btnGoi.setOnClickListener(new View.OnClickListener() {

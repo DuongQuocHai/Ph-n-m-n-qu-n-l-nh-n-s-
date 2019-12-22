@@ -8,16 +8,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
+import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,6 +33,10 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     ModelCuaHang modelCuaHang;
     String maCH, tenCH, diaChi, keyId;
     ArrayList<ModelCuaHang> list;
+    DatabaseReference mData;
+
+    String tench;
+    boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,8 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         addControls();
         addEvents();
         getData();
+        checkCuaHang();
+
 
     }
 
@@ -52,6 +63,7 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         edtEditDiaChi = findViewById(R.id.edt_diachi_edit);
 
     }
+
     private void getData() {
         Intent intent = getIntent();
         modelCuaHang = (ModelCuaHang) intent.getSerializableExtra("ModelCuaHang");
@@ -60,6 +72,7 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         edtEditTenCH.setText(modelCuaHang.getTenCuaHang());
         edtEditDiaChi.setText(modelCuaHang.getDiaChi());
     }
+
     public void clickSuaCuaHang(View view) throws ParseException {
         switch (view.getId()) {
             case R.id.action_bar_sua_cuahang:
@@ -70,12 +83,37 @@ public class SuaCuaHangActivity extends AppCompatActivity {
             case R.id.action_bar_back_sua_cuahang:
                 finish();
                 break;
-            case  R.id.txt_xoa_cuahang:
+            case R.id.txt_xoa_cuahang:
                 xacNhanXoa();
         }
     }
+
+    public void checkCuaHang() {
+        mData = FirebaseDatabase.getInstance().getReference();
+        mData.child("NhanVien").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
+                        tench = modelNhanVien.getMaCuaHang();
+                        if (tench.equals(modelCuaHang.getTenCuaHang())) {
+                            check = false;
+                            break;
+                        }
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void xacNhanXoa() {
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn xoá?");
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -90,6 +128,7 @@ public class SuaCuaHangActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
     private boolean batLoi() {
         if (edtEditMaCH.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã cửa hàng!", Toast.LENGTH_SHORT).show();
@@ -105,9 +144,11 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     }
 
     private void deleteCuaHang(String keyId) {
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
-        mData.child("CuaHang").child(keyId).removeValue();
-        finish();
+        if (check){
+            mData = FirebaseDatabase.getInstance().getReference();
+            mData.child("CuaHang").child(keyId).removeValue();
+            finish();
+        }else Toast.makeText(this, "Hãy xóa nhân viên trước khi xóa cửa hàng", Toast.LENGTH_LONG).show();
     }
 
     private void getString() {
@@ -121,7 +162,7 @@ public class SuaCuaHangActivity extends AppCompatActivity {
     }
 
     private void editCuaHang(String uid) {
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+        mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelCuaHang = new ModelCuaHang(maCH, tenCH, diaChi);
         mData.child("CuaHang").child(uid).setValue(modelCuaHang).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -138,7 +179,6 @@ public class SuaCuaHangActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

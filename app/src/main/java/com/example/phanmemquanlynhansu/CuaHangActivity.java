@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.example.phanmemquanlynhansu.Adapter.AdapterCuaHang;
 import com.example.phanmemquanlynhansu.Model.ModelCaLam;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
+import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -50,6 +52,7 @@ public class CuaHangActivity extends AppCompatActivity {
     ProgressBar progressBarCuaHang;
     AnimationDrawable animation;
     ImageView ivLoading, btnBack;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +132,8 @@ public class CuaHangActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
 
     public boolean batLoi() {
         if (edtMaCuaHang.getText().length() == 0) {

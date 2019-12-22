@@ -27,6 +27,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:padding="5dp"
             android:background="@drawable/radius"
             android:drawablePadding="20dp"
             android:hint="Tìm kiếm"

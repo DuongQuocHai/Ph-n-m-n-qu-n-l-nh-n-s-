@@ -21,12 +21,16 @@ import android.widget.Toast;
 
 import com.example.phanmemquanlynhansu.Function.Function;
 import com.example.phanmemquanlynhansu.Model.ModelCaLam;
+import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +43,7 @@ public class SuaCaLamActivity extends AppCompatActivity {
 
     ModelCaLam modelCaLam;
     Function function = new Function();
+    boolean check = true;
 
     View view;
 
@@ -86,92 +91,13 @@ public class SuaCaLamActivity extends AppCompatActivity {
         }
     }
 
-    private void xacNhanXoa() {
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
-        builder.setMessage("Bạn có muốn xoá?");
-        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                xoaCaLam(keyId);
-            }
-        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.show();
-    }
-
-    private void xoaCaLam(String keyId) {
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
-        mData.child("CaLam").child(keyId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(SuaCaLamActivity.this, "Xóa ca làm thành công", Toast.LENGTH_SHORT).show();
-                finish();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SuaCaLamActivity.this, "Lỗi "+ e , Toast.LENGTH_SHORT).show();
-            }
-        });
-        finish();
-    }
-
-    public void getString() {
-        maCl = txtMaCaLam.getText().toString();
-        tenCl = edttenCaLam.getText().toString();
-        gioBdCl = txtGioBdCl.getText().toString();
-        gioKtCl = txtGioKtCl.getText().toString();
-        tongGioCl = txtTongGioCl.getText().toString();
-        luong1Gio = edtLuong1Gio.getText().toString();
-        luong1Ca = txtLuong1Ca.getText().toString();
-    }
-
-    public boolean batLoi() {
-        if (edttenCaLam.getText().length() == 0) {
-            Toast.makeText(this, "Vui lòng nhập tên ca làm!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (txtGioBdCl.getText().length() == 0) {
-            Toast.makeText(this, "Vui lòng chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (txtGioKtCl.getText().length() == 0) {
-            Toast.makeText(this, "Vui lòng chọn giờ kết thúc!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (edtLuong1Gio.getText().length() == 0) {
-            Toast.makeText(this, "Vui lòng nhập lương 1 giờ làm!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    public void editCaLam() {
-        getString();
-        String uid = modelCaLam.getId();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("CaLam");
-        myRef.child(uid).child("luong1GioLam").setValue(Double.parseDouble(luong1Gio));
-        myRef.child(uid).child("luongCaLam").setValue(Double.parseDouble(luong1Ca));
-        myRef.child(uid).child("maCaLam").setValue(maCl);
-        myRef.child(uid).child("tenCaLam").setValue(tenCl);
-        myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);
-        myRef.child(uid).child("tgKetThucCaLam").setValue(gioKtCl);
-        myRef.child(uid).child("tongGioLam").setValue(tongGioCl);
-        Toast.makeText(this, "Sửa thàng công", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
     public void getData() {
-
         Intent intent = getIntent();
         modelCaLam = (ModelCaLam) intent.getSerializableExtra("ModelCalam");
         keyId = modelCaLam.getId();
         if (modelCaLam != null) {
             txtMaCaLam.setText(modelCaLam.getMaCaLam());
-            edttenCaLam.setText (modelCaLam.getTenCaLam());
+            edttenCaLam.setText(modelCaLam.getTenCaLam());
             txtGioBdCl.setText(modelCaLam.getTgBatDauCaLam());
             txtGioKtCl.setText(modelCaLam.getTgKetThucCaLam());
             edtLuong1Gio.setText(modelCaLam.getLuong1GioLam() + "");
@@ -227,6 +153,86 @@ public class SuaCaLamActivity extends AppCompatActivity {
         });
 
     }
+
+    private void xacNhanXoa() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Bạn có muốn xoá?");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                xoaCaLam(keyId);
+            }
+        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+
+    private void xoaCaLam(String keyId) {
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+        mData.child("CaLam").child(keyId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(SuaCaLamActivity.this, "Xóa ca làm thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SuaCaLamActivity.this, "Lỗi " + e, Toast.LENGTH_SHORT).show();
+            }
+        });
+        finish();
+    }
+
+    public void getString() {
+        maCl = txtMaCaLam.getText().toString();
+        tenCl = edttenCaLam.getText().toString();
+        gioBdCl = txtGioBdCl.getText().toString();
+        gioKtCl = txtGioKtCl.getText().toString();
+        tongGioCl = txtTongGioCl.getText().toString();
+        luong1Gio = edtLuong1Gio.getText().toString();
+        luong1Ca = txtLuong1Ca.getText().toString();
+    }
+
+
+
+    public boolean batLoi() {
+        if (edttenCaLam.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập tên ca làm!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (txtGioBdCl.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (txtGioKtCl.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng chọn giờ kết thúc!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (edtLuong1Gio.getText().length() == 0) {
+            Toast.makeText(this, "Vui lòng nhập lương 1 giờ làm!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public void editCaLam() {
+        getString();
+        String uid = modelCaLam.getId();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("CaLam");
+        myRef.child(uid).child("luong1GioLam").setValue(Double.parseDouble(luong1Gio));
+        myRef.child(uid).child("luongCaLam").setValue(Double.parseDouble(luong1Ca));
+        myRef.child(uid).child("maCaLam").setValue(maCl);
+        myRef.child(uid).child("tenCaLam").setValue(tenCl);
+        myRef.child(uid).child("tgBatDauCaLam").setValue(gioBdCl);
+        myRef.child(uid).child("tgKetThucCaLam").setValue(gioKtCl);
+        myRef.child(uid).child("tongGioLam").setValue(tongGioCl);
+        Toast.makeText(this, "Sửa thàng công", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
 
     public void showTimePicker(final TextView txt) {
         final Calendar calendar = Calendar.getInstance();

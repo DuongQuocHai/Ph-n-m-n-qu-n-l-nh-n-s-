@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -72,6 +73,7 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     EditText edtOldPass, edtNewPass, edtRePass;
     Button btnHuy, btnLuudl;
     Function function;
+    LinearLayout lyMain;
 
     NhanVienDAO nhanVienDAO;
 
@@ -81,13 +83,15 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     StorageReference storageRef;
     FirebaseUser currentFirebaseUser;
 
-    ProgressBar progressBar;
+    ProgressBar progressBar,progressBarMain;
 
     int REQUEST_CHOOSE_PHOTO = 321;
 
     String ten, user, pass, chucVu, cuaHang, gioiTinh, sdt, diaChi;
 
     Dialog dialog;
+    Intent intent;
+    String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +119,8 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         rdNam = findViewById(R.id.rd_nam_suanv);
         rdNu = findViewById(R.id.rd_nu_suanv);
         btnDoiMk = findViewById(R.id.btn_doimk_suanv);
+        progressBarMain = findViewById(R.id.pr_suanv);
+        lyMain = findViewById(R.id.ly_main_suanv);
     }
 
     public void addEvents() {
@@ -137,7 +143,10 @@ public class SuaNhanVienActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (batLoi()) {
-                    suaNhanVien();
+                    if (status != null) {
+                        suaNhanVien(currentFirebaseUser.getUid());
+                    } else
+                        suaNhanVien(modelNhanVien.getIdNv());
                 }
             }
         });
@@ -192,10 +201,12 @@ public class SuaNhanVienActivity extends AppCompatActivity {
     }
 
     public void getData() {
-        Intent intent = getIntent();
+        lyMain.setVisibility(View.GONE);
+        progressBarMain.setVisibility(View.VISIBLE);
+        intent = getIntent();
         nhanVienDAO = new NhanVienDAO();
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String status = intent.getStringExtra("userfrag");
+        status = intent.getStringExtra("userfrag");
         if (status != null) {
             mData = FirebaseDatabase.getInstance().getReference("NhanVien");
             mData.orderByKey().equalTo(currentFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -216,6 +227,8 @@ public class SuaNhanVienActivity extends AppCompatActivity {
                         edtUser.setText(modelNhanVien.getUserNv());
                         edtSdt.setText(modelNhanVien.getSdtNv());
                         edtDiaChi.setText(modelNhanVien.getDiaChiNv());
+                        lyMain.setVisibility(View.VISIBLE);
+                        progressBarMain.setVisibility(View.GONE);
                         if (!modelNhanVien.getMaChucVu().equals("Quản lý") || modelNhanVien.getUserNv().equals(currentFirebaseUser.getEmail())) {
                             btnXoa.setVisibility(View.GONE);
                         }
@@ -242,6 +255,8 @@ public class SuaNhanVienActivity extends AppCompatActivity {
             edtUser.setText(modelNhanVien.getUserNv());
             edtSdt.setText(modelNhanVien.getSdtNv());
             edtDiaChi.setText(modelNhanVien.getDiaChiNv());
+            lyMain.setVisibility(View.VISIBLE);
+            progressBarMain.setVisibility(View.GONE);
             if (currentFirebaseUser != null) {
                 if (!modelNhanVien.getIdNv().equals(currentFirebaseUser.getUid())) {
                     btnDoiMk.setVisibility(View.GONE);
@@ -270,12 +285,12 @@ public class SuaNhanVienActivity extends AppCompatActivity {
         }
     }
 
-    private void suaNhanVien() {
+    private void suaNhanVien(final String uid) {
         getString();
         function = new Function();
         function.pDialog(SuaNhanVienActivity.this);
         mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-        final String uid = modelNhanVien.getIdNv();
+//        final String uid = modelNhanVien.getIdNv();
         storage = FirebaseStorage.getInstance("gs://phanmemquanlynhansu-eda6c.appspot.com");
         storageRef = storage.getReference();
         Calendar calendar = Calendar.getInstance();

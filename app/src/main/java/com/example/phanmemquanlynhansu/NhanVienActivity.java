@@ -55,7 +55,14 @@ public class NhanVienActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nhan_vien);
         addControls();
-        readData();
+        intent = getIntent();
+        String cuahang12 = intent.getStringExtra("cuahang");
+        if (cuahang12 != null) {
+            thucHienSearch("maCuaHang", cuahang12);
+            Log.e("llllll",cuahang12);
+        } else {
+            readData();
+        }
         addEvents();
 
 
@@ -138,46 +145,48 @@ public class NhanVienActivity extends AppCompatActivity {
     }
 
     public void readData() {
-        mData = FirebaseDatabase.getInstance().getReference("NhanVien");
-        mData.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
-                    modelNhanVien.setIdNv(data.getKey());
-                    list.add(modelNhanVien);
-                }
-                if (list.size() == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
-                    builder.setIcon(R.drawable.iconnotification);
-                    builder.setCancelable(false);
-                    builder.setTitle("Thông báo");
-                    builder.setMessage("Hiện tại chưa có nhân viên, hãy thêm nhân viên");
-                    builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(NhanVienActivity.this, ThemNhanVienActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    builder.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    });
-                    builder.show();
-                }
-                adapterNhanVien.notifyDataSetChanged();
-                ivLoading.setVisibility(View.GONE);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            mData = FirebaseDatabase.getInstance().getReference("NhanVien");
+            mData.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    list.clear();
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
+                        modelNhanVien.setIdNv(data.getKey());
+                        list.add(modelNhanVien);
+                    }
+                    if (list.size() == 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
+                        builder.setIcon(R.drawable.iconnotification);
+                        builder.setCancelable(false);
+                        builder.setTitle("Thông báo");
+                        builder.setMessage("Hiện tại chưa có nhân viên, hãy thêm nhân viên");
+                        builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(NhanVienActivity.this, ThemNhanVienActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        builder.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        });
+                        builder.show();
+                    }
+                    adapterNhanVien.notifyDataSetChanged();
+                    ivLoading.setVisibility(View.GONE);
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
     }
 
     public void showDialogSearch() {

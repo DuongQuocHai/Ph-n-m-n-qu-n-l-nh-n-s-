@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.phanmemquanlynhansu.Model.ModelChucVu;
 import com.example.phanmemquanlynhansu.Model.ModelCuaHang;
+import com.example.phanmemquanlynhansu.Model.ModelNhanVien;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -31,6 +36,10 @@ public class SuaChucVuActivity extends AppCompatActivity {
     String maCV, tenCV, ghiChu, keyId;
     TextView txtXoa;
     ArrayList<ModelChucVu> list;
+    DatabaseReference mData;
+    boolean check = true;
+    String tencv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +47,7 @@ public class SuaChucVuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sua_chuc_vu);
         addControls();
         getData();
+        checkChucVu();
 
         txtXoa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +94,34 @@ public class SuaChucVuActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void checkChucVu() {
+        mData = FirebaseDatabase.getInstance().getReference();
+        mData.child("NhanVien").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        ModelNhanVien modelNhanVien = data.getValue(ModelNhanVien.class);
+                        tencv = modelNhanVien.getMaChucVu();
+                        if (tencv.equals(modelChucVu.getTenChucVu())) {
+                            check = false;
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void xacNhanXoa() {
-        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn xoá?");
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -100,6 +136,7 @@ public class SuaChucVuActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
     private boolean batLoi() {
         if (edtEditMaCV.getText().length() == 0) {
             Toast.makeText(this, "Vui lòng nhập mã chức vụ!", Toast.LENGTH_SHORT).show();
@@ -112,7 +149,8 @@ public class SuaChucVuActivity extends AppCompatActivity {
     }
 
     private void deleteChucVu(String keyId) {
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+        if (check) {
+        mData = FirebaseDatabase.getInstance().getReference();
         mData.child("ChucVu").child(keyId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -122,11 +160,12 @@ public class SuaChucVuActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SuaChucVuActivity.this, "Lỗi "+ e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SuaChucVuActivity.this, "Lỗi " + e, Toast.LENGTH_SHORT).show();
             }
         });
+        } else
+            Toast.makeText(this, "Hãy xóa nhân viên trước khi xóa chức vụ", Toast.LENGTH_LONG).show();
     }
-
     private void getString() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -138,7 +177,7 @@ public class SuaChucVuActivity extends AppCompatActivity {
     }
 
     private void editChucVu(String uid) {
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+        mData = FirebaseDatabase.getInstance().getReference();
         getString();
         modelChucVu = new ModelChucVu(maCV, tenCV, ghiChu);
         mData.child("ChucVu").child(uid).setValue(modelChucVu).addOnSuccessListener(new OnSuccessListener<Void>() {

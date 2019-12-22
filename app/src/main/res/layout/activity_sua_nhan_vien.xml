@@ -3,186 +3,219 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".SuaNhanVienActivity">
-    <FrameLayout
-        android:layout_width="135dp"
-        android:layout_height="135dp"
-        android:layout_gravity="center">
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/img_suanv"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:src="@drawable/avatar"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#909090"
-            />
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/img_editimg_suanv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_edit"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#fff"
-            android:layout_gravity="right"
-            android:layout_marginTop="80dp"
-            />
-    </FrameLayout>
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/pr_suanv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Họ và tên:"/>
-        <EditText
-            android:id="@+id/edt_ten_suanv"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/ly_main_suanv"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_suanv"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/avatar"
+                app:civ_border_color="#909090"
+                app:civ_border_width="1dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_editimg_suanv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/ic_edit"
+                app:civ_border_color="#fff"
+                app:civ_border_width="1dp" />
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="right" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên đăng nhập:" />
-        <TextView
-            android:id="@+id/edt_tendn_suanv"
-            android:textSize="18sp"
-            android:text="hahah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="right"
-            />
-    </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Chức vụ:"/>
-
-        <Spinner
-
-            android:id="@+id/spn_chucvu_suanv"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:backgroundTint="#000" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Chi nhánh:"/>
-        <Spinner
-            android:id="@+id/spn_chinhanh_suanv"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:backgroundTint="#000"/>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="Giới tính:"/>
-        <RadioGroup
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:id="@+id/rd_nam_suanv"
-                android:text="Nam"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#c44569"/>
-            <RadioButton
-                android:id="@+id/rd_nu_suanv"
-                android:text="Nữ"
+                android:text="Họ và tên:" />
+
+            <EditText
+                android:id="@+id/edt_ten_suanv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#c44569"/>
-        </RadioGroup>
+                android:text="Tên đăng nhập:" />
 
+            <TextView
+                android:id="@+id/edt_tendn_suanv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:text="hahah"
+                android:textSize="18sp" />
+        </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Số điện thoại:" />
-        <EditText
-            android:id="@+id/edt_sdt_suanv"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:inputType="number"
-            android:gravity="right" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Địa chỉ:"/>
-        <EditText
-            android:id="@+id/edt_diachi_suanv"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Chức vụ:" />
+
+            <Spinner
+
+                android:id="@+id/spn_chucvu_suanv"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="#000" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="right"/>
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Chi nhánh:" />
+
+            <Spinner
+                android:id="@+id/spn_chinhanh_suanv"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="#000" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Giới tính:" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rd_nam_suanv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#c44569"
+                    android:text="Nam" />
+
+                <RadioButton
+                    android:id="@+id/rd_nu_suanv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#c44569"
+                    android:text="Nữ" />
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại:" />
+
+            <EditText
+                android:id="@+id/edt_sdt_suanv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ:" />
+
+            <EditText
+                android:id="@+id/edt_diachi_suanv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_doimk_suanv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/gradient"
+            android:text="Đổi mật khẩu" />
+
+        <TextView
+            android:id="@+id/btn_xoa_suanv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Xoá nhân viên"
+            android:textColor="#FF1744" />
     </LinearLayout>
-    <Button
-        android:id="@+id/btn_doimk_suanv"
-        android:text="Đổi mật khẩu"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textColor="#FF1744"
-        android:text="Xoá nhân viên"
-        android:id="@+id/btn_xoa_suanv"
-        />
 
 </LinearLayout>

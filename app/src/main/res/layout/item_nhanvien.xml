@@ -5,8 +5,20 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:gravity="center"
+    android:background="#fff"
     android:orientation="horizontal"
     >
+    <TextView
+        android:text="1"
+        android:id="@+id/txt_stt_itemnv"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:background="#c44569"
+        android:layout_width="wrap_content"
+        android:minWidth="25dp"
+        android:padding="2dp"
+        android:layout_height="match_parent"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_nhanvien_itemnv"
@@ -23,29 +35,35 @@
         android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/txt_ten_itemnv"
+            android:textColor="#3867d6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tên nhân viên"
             android:textStyle="bold"
             android:textSize="20sp"/>
+
         <TextView
             android:id="@+id/txt_chucvu_itemnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chức vụ"
-            android:textSize="20sp"/>
+            android:textColor="@color/colorText"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/txt_cuahang_itemnv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chi nhánh"
-            android:textSize="20sp"/>
+            android:textColor="@color/colorText"
+            android:textSize="18sp"/>
     </LinearLayout>
+
     <ImageView
         android:id="@+id/btn_call_itemnv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_weight="0"
-        android:src="@drawable/iconcall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:src="@drawable/ic_phone" />
 
 </LinearLayout>

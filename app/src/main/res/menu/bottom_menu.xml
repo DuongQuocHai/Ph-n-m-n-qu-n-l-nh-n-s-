@@ -3,11 +3,11 @@
  <item
      android:id="@+id/lichcong"
      android:title="Lịch làm"
-     android:icon="@drawable/calendar"
+     android:icon="@drawable/ic_lichcong"
      />
     <item
         android:id="@+id/them"
         android:title="Thêm"
-        android:icon="@drawable/more"
+        android:icon="@drawable/ic_more"
         />
 </menu>

@@ -99,6 +99,14 @@ public class ThongKeActivity extends AppCompatActivity {
                 pressAfter();
             }
         });
+        txtTongNv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ThongKeActivity.this,NhanVienActivity.class);
+                intent.putExtra("cuahang",txtCuaHang.getText().toString());
+                startActivity(intent);
+            }
+        });
     }
 
     public void readData() {
@@ -148,9 +156,7 @@ public class ThongKeActivity extends AppCompatActivity {
                     txtTongLuong.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
